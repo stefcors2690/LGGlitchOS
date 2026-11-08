@@ -1,9 +1,9 @@
 # AGENTS.md — StefCors GL1tCh 0S Codex instructions
 
-You are implementing StefCors GL1tCh 0S, a cyberpunk TV launcher UI intended for LG OLED G5. Read PROJECT_SPEC.md and ROADMAP.md before changing code.
+You are implementing StefCors GL1tCh 0S, a cyberpunk TV launcher UI intended for LG OLED G5. Read START_HERE.md, PROJECT_STATUS.md, PROJECT_SPEC.md and ROADMAP.md before changing code.
 
 ## Working agreement
-1. Work incrementally, one roadmap phase at a time. Before changes, state planned files and acceptance criteria; after changes, summarize actual edits, tests and limitations.
+1. Work incrementally, one roadmap microphase at a time. Before changes, state planned files and acceptance criteria; after changes, summarize actual edits, tests and limitations.
 2. Favor React, TypeScript strict mode, Vite, accessible semantic components and modular architecture. Keep platform calls behind typed interfaces.
 3. Implement desktop/browser mock mode first. Do not assume webOS SDK, root access or privileged APIs are available.
 4. Never implement exploits, system patches, autostart hooks or remote remapping without a separate explicit user instruction and a verified recovery plan.
@@ -28,3 +28,13 @@ Before implementing or changing visual UI, read `VISUAL_REFERENCE_GUIDE.md` and 
 
 ## v3 addendum — animated logo
 Read `ANIMATION_SPEC.md`; use `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.svg` as the canonical brand asset. The previous NEON OS wording is legacy and must not appear in the shipped UI. Keep original application logos sourced from official/licensed assets or the TV where permitted; never generate counterfeit app logos.
+
+## Project continuity — required at every handoff
+
+- Use `ROADMAP.md` microphase IDs; work on one microphase at a time. Split oversized steps before implementation.
+- Before work, reconcile `PROJECT_STATUS.md` and roadmap states with actual files and local Git changes. Preserve unrelated user changes.
+- At the end of each microphase or session that changes the project, update `ROADMAP.md` statuses and `PROJECT_STATUS.md`: date, actual work, active/next microphase, decisions, checks with outcomes, limitations and unresolved blockers.
+- If interrupted or incomplete, leave concrete remaining steps and affected files. Never mark an unchecked acceptance criterion complete.
+- Update README for available commands/setup, PROJECT_SPEC for changed contracts or scope, and visual/animation docs when their rules change. Update START_HERE if the entry workflow changes.
+- Keep enough context in repository files for a different IDE to resume without chat history. These documentation updates are part of completion, not optional follow-up work.
+- The original First assignment describes the MVP target; execute it through the microphases, not as a single large implementation.
