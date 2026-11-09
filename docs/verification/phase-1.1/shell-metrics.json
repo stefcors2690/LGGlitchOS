@@ -1,0 +1,207 @@
+{
+  "baseUrl": "http://127.0.0.1:5187",
+  "cityChecks": {
+    "reducedMotion": true,
+    "assetsLoaded": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "shuttleTimelineAdvances": true,
+    "keyboardPause": true,
+    "visibilityEventPauseResume": true,
+    "bothFlightWindowsVisible": true,
+    "gradientFallback": true
+  },
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "right": 1920,
+        "bottom": 1080
+      },
+      "header": {
+        "x": 76.796875,
+        "y": 48,
+        "width": 1766.40625,
+        "height": 126.703125,
+        "right": 1843.203125,
+        "bottom": 174.703125
+      },
+      "footer": {
+        "x": 76.796875,
+        "y": 998.890625,
+        "width": 1766.40625,
+        "height": 33.109375,
+        "right": 1843.203125,
+        "bottom": 1032
+      },
+      "widgets": [
+        {
+          "x": 76.796875,
+          "y": 792.796875,
+          "width": 569.59375,
+          "height": 177.296875,
+          "right": 646.390625,
+          "bottom": 970.09375
+        },
+        {
+          "x": 675.1875,
+          "y": 792.796875,
+          "width": 569.609375,
+          "height": 177.296875,
+          "right": 1244.796875,
+          "bottom": 970.09375
+        },
+        {
+          "x": 1273.59375,
+          "y": 792.796875,
+          "width": 569.609375,
+          "height": 177.296875,
+          "right": 1843.203125,
+          "bottom": 970.09375
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "fontSize": "27.84px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 2160,
+        "right": 3840,
+        "bottom": 2160
+      },
+      "header": {
+        "x": 153.59375,
+        "y": 96,
+        "width": 3532.8125,
+        "height": 253.4375,
+        "right": 3686.40625,
+        "bottom": 349.4375
+      },
+      "footer": {
+        "x": 153.59375,
+        "y": 1997.765625,
+        "width": 3532.8125,
+        "height": 66.234375,
+        "right": 3686.40625,
+        "bottom": 2064
+      },
+      "widgets": [
+        {
+          "x": 153.59375,
+          "y": 1587.5625,
+          "width": 1139.203125,
+          "height": 352.609375,
+          "right": 1292.796875,
+          "bottom": 1940.171875
+        },
+        {
+          "x": 1350.390625,
+          "y": 1587.5625,
+          "width": 1139.203125,
+          "height": 352.609375,
+          "right": 2489.59375,
+          "bottom": 1940.171875
+        },
+        {
+          "x": 2547.1875,
+          "y": 1587.5625,
+          "width": 1139.21875,
+          "height": 352.609375,
+          "right": 3686.40625,
+          "bottom": 1940.171875
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "fontSize": "55.68px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 957,
+        "right": 390,
+        "bottom": 957
+      },
+      "header": {
+        "x": 40,
+        "y": 25,
+        "width": 310,
+        "height": 120.25,
+        "right": 350,
+        "bottom": 145.25
+      },
+      "footer": {
+        "x": 40,
+        "y": 870.25,
+        "width": 310,
+        "height": 61.75,
+        "right": 350,
+        "bottom": 932
+      },
+      "widgets": [
+        {
+          "x": 40,
+          "y": 547.328125,
+          "width": 310,
+          "height": 92.640625,
+          "right": 350,
+          "bottom": 639.96875
+        },
+        {
+          "x": 40,
+          "y": 654.96875,
+          "width": 310,
+          "height": 92.640625,
+          "right": 350,
+          "bottom": 747.609375
+        },
+        {
+          "x": 40,
+          "y": 762.609375,
+          "width": 310,
+          "height": 92.640625,
+          "right": 350,
+          "bottom": 855.25
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": true,
+      "fontSize": "14.5px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    }
+  ],
+  "svgAnimation": {
+    "reducedMotion": "none",
+    "normal": "shake",
+    "elapsedMs": 18199.308999998553
+  }
+}

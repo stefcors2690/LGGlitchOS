@@ -17,10 +17,16 @@ export class MockPlatformAdapter implements PlatformAdapter {
   private readonly apps: AppInfo[] = [
     { id: 'demo-cinema', name: 'Cinema demo', mode: 'demo' },
     { id: 'demo-music', name: 'Musica demo', mode: 'demo' },
+    { id: 'demo-video', name: 'Video demo', mode: 'demo' },
+    { id: 'demo-games', name: 'Giochi demo', mode: 'demo' },
+    { id: 'demo-live', name: 'Dirette demo', mode: 'demo' },
+    { id: 'demo-gallery', name: 'Foto demo', mode: 'demo' },
+    { id: 'demo-library', name: 'Libreria demo', mode: 'demo' },
   ];
   private inputs: InputInfo[] = [
     { id: 'demo-hdmi-1', name: 'HDMI 1 demo', kind: 'hdmi', active: true, mode: 'demo' },
     { id: 'demo-hdmi-2', name: 'HDMI 2 demo', kind: 'hdmi', active: false, mode: 'demo' },
+    { id: 'demo-hdmi-3', name: 'HDMI 3 demo', kind: 'hdmi', active: false, mode: 'demo' },
     { id: 'demo-tv', name: 'TV demo', kind: 'tv', active: false, mode: 'demo' },
   ];
   private devices: SmartHomeDevice[] = [

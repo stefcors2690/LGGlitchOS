@@ -1,0 +1,35 @@
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.apps-section { flex-shrink: 0; min-width: 0; }
+.app-rail { display: flex; gap: calc(var(--tv-unit) * 1.15); padding: calc(var(--tv-unit) * 1.1) var(--space-1); overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--color-border) transparent; }
+.app-slot { flex: 1 0 calc(var(--tv-unit) * 11); min-width: 0; }
+.app-card { position: relative; width: 100%; height: calc(var(--tv-unit) * 7.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--tv-unit) * .2); color: var(--color-text); font: inherit; background: radial-gradient(ellipse at 50% 0%, #12617b70, transparent 85%), linear-gradient(145deg, #101c35ed, #060b19ed); border: 1px solid #00c8e7b3; border-radius: calc(var(--tv-unit) * .7); box-shadow: inset 0 0 var(--space-2) #00ddf518, 0 0 var(--space-1) #00ddf529; cursor: pointer; transition: transform var(--duration-focus), box-shadow var(--duration-focus), border-color var(--duration-focus); }
+.app-card::after { content: ''; position: absolute; inset: 3px; border: 1px solid #00ddf51a; border-radius: inherit; pointer-events: none; }
+.app-slot:nth-child(3n) .app-card { background: radial-gradient(ellipse at 50% 0%, #70306b70, transparent 85%), #0a1124ed; }
+.app-card[aria-pressed='true'] { border: 2px solid #ff65df; background: radial-gradient(ellipse at 50% 0%, #70126299, transparent 85%), #100a1ded; box-shadow: inset 0 0 var(--space-2) #ff39cf33, 0 0 var(--space-1) #ff39cfcc, 0 0 var(--space-2) #ff39cf55; transform: scale(1.055) translateY(-2%); }
+.app-card[aria-pressed='true']::after { border-color: #ff39cf80; }
+.app-card:focus-visible { outline: var(--focus-ring); outline-offset: 5px; }
+.app-card:hover { border-color: #fff; }
+.app-card[aria-disabled='true'] { cursor: default; }
+.app-symbol { width: calc(var(--tv-unit) * 2.8); height: calc(var(--tv-unit) * 2.8); color: #c0eafa; }
+.app-name { font-size: var(--text-body); max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-demo { color: var(--color-muted); font-size: calc(var(--tv-unit) * .8); text-transform: uppercase; letter-spacing: .12em; }
+.rail-feedback, .rail-notice { font-size: var(--text-small); color: var(--color-muted); min-height: 1.5em; padding: 0 var(--space-1); }
+@media (max-width: 900px), (max-aspect-ratio: 4/3) { .app-slot { flex: 0 0 calc(var(--tv-unit) * 14); } .app-card { height: calc(var(--tv-unit) * 10); } .app-demo { font-size: 10px; } }
+
+/* Beveled double holographic frame follows the approved rail, independent of the marks. */
+.app-card, .app-slot:nth-child(3n) .app-card, .app-card[aria-pressed='true'] { border: 0; border-radius: 0; background: none; box-shadow: none; }
+.app-card::before { content: ''; position: absolute; inset: 0; clip-path: polygon(8% 0, 92% 0, 100% 12%, 100% 88%, 92% 100%, 8% 100%, 0 88%, 0 12%); background: radial-gradient(ellipse at 50% 0%, #12617b80, transparent 85%), #081224eb; }
+.app-slot:nth-child(3n) .app-card::before { background: radial-gradient(ellipse at 50% 0%, #70306b70, transparent 85%), #0a1124ed; }
+.app-card[aria-pressed='true']::before { background: radial-gradient(ellipse at 50% 0%, #70126299, transparent 85%), #100a1ded; }
+.app-card::after { display: none; }
+.app-frame { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #00d9f2; stroke-width: 1; filter: drop-shadow(0 0 3px #00ddf570); pointer-events: none; overflow: visible; }
+.app-frame-inner { opacity: .3; }
+.app-card[aria-pressed='true'] .app-frame { stroke: #ff6be6; stroke-width: 2.3; filter: drop-shadow(0 0 3px #ff39cf) drop-shadow(0 0 6px #ff39cf90); }
+.app-symbol, .app-name, .app-demo { position: relative; }
+/* Keep the rail at the reference's ~54% screen height without reserving an extra row. */
+.apps-section { position: relative; }
+.rail-feedback { position: absolute; top: 100%; left: 0; right: 0; }
+@media (max-width: 900px), (max-aspect-ratio: 4/3) { .rail-feedback { position: static; } }
+/* Keep keyboard focus within the beveled frame so scroll clipping cannot cut it off. */
+.app-card:focus-visible { outline: none; box-shadow: none; }
+.app-card:focus-visible .app-frame-inner { stroke: var(--color-cyan); opacity: 1; stroke-width: 1.5; }

@@ -1,0 +1,28 @@
+.city-backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; background: linear-gradient(#080f21, #17324a 50%, #070c1b); }
+.city-layer, .city-fog, .city-scrim { position: absolute; inset: 0; }
+.city-layer { background-position: center; background-size: cover; background-repeat: no-repeat; }
+.city-image { background-image: url('../../../references/background.png'); }
+.city-fog { inset: 15% -8% 25%; background: radial-gradient(ellipse at 65% 60%, #238aa324, transparent 60%); animation: city-fog 56s ease-in-out infinite alternate; }
+.city-rain { position: absolute; inset: -60px; opacity: 0.12; background-image: repeating-linear-gradient(103deg, transparent 0 65px, #9ac5dc80 66px, transparent 67px 132px); mask-image: linear-gradient(transparent, #000 25%, #000 65%, transparent); animation: city-rain 1.4s linear infinite; }
+.city-scrim { background: linear-gradient(90deg, #070c1b80 0%, #070c1b59 26%, #070c1b0d 60%, #070c1b0d), linear-gradient(#070c1b99 0%, #070c1b26 24%, #070c1b0d 45%, #070c1b66 75%, #070c1bb3); }
+.city-flight { position: absolute; left: -12%; width: 9%; top: 31%; opacity: 0; animation: city-flight 43s linear infinite; animation-delay: -24s; }
+.city-flight-far { top: 22%; width: 4.5%; animation-duration: 67s; animation-delay: -14s; animation-direction: reverse; }
+.city-shuttle { display: block; width: 100%; aspect-ratio: 160 / 48; background: url('../../assets/city/shuttle.svg') center / contain no-repeat; }
+.city-flight-far .city-shuttle { transform: scaleX(-1); opacity: 0.6; }
+.city-backdrop[data-motion='still'] * { animation-play-state: paused; }
+.city-backdrop[data-motion='still'] .city-flight, .city-backdrop[data-motion='still'] .city-rain { visibility: hidden; }
+
+@keyframes city-fog { from { transform: translateX(-3%); opacity: 0.5; } to { transform: translateX(3%); opacity: 0.85; } }
+@keyframes city-rain { from { transform: translate(0, -30px); } to { transform: translate(-7px, 30px); } }
+/* Long quiet portion; the craft is visible for ~10 seconds of each 43s cycle. */
+@keyframes city-flight {
+  0%, 64% { transform: translate(0, 0); opacity: 0; }
+  66% { transform: translate(0, 0); opacity: 0; }
+  69% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  94%, 100% { transform: translate(1400%, -65%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .city-backdrop * { animation: none !important; }
+  .city-flight, .city-rain { display: none; }
+}

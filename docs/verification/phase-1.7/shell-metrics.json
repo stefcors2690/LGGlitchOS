@@ -1,0 +1,271 @@
+{
+  "baseUrl": "http://127.0.0.1:5187",
+  "smartHomeChecks": {
+    "keyboardOnOff": true,
+    "focusMemoryAndBoundary": true,
+    "stateSurvivesSectionChange": true
+  },
+  "inputChecks": {
+    "keyboardActivation": true,
+    "singleActiveSource": true,
+    "rememberedFocusAndRail": true,
+    "stateSurvivesSectionChange": true
+  },
+  "watchChecks": {
+    "keyboardResumeWithoutPlayback": true,
+    "demoProgressUnchanged": true,
+    "returnToRememberedRail": true,
+    "focusRecoveredOnLeavingHome": true
+  },
+  "dpadChecks": {
+    "keyboardOnlyFlow": true,
+    "nativeEnterOnceAndRepeatIgnored": true,
+    "focusRetainedAcrossRerenders": true,
+    "hiddenAndDisabledSkipped": true,
+    "backReturnsHome": true,
+    "hiddenFocusRecovered": true,
+    "enabledMotionRowReachable": true,
+    "okAlias": true,
+    "nativeTabPreserved": true,
+    "narrowRailScrollsFocusedCardIntoView": true
+  },
+  "railChecks": {
+    "keyboardLaunch": true,
+    "selectionPreservedAcrossSections": true,
+    "cardCount": 7
+  },
+  "headerChecks": {
+    "keyboardSelectionRetainsFocus": true,
+    "allFiveSections": true,
+    "clockMatchesBrowser": true,
+    "clockUpdates": true
+  },
+  "cityChecks": {
+    "reducedMotion": true,
+    "assetsLoaded": [
+      true,
+      true,
+      true
+    ],
+    "primaryBackground": "user-provided PNG",
+    "shuttleTimelineAdvances": true,
+    "keyboardPause": true,
+    "visibilityEventPauseResume": true,
+    "bothFlightWindowsVisible": true,
+    "gradientFallback": true
+  },
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "rail": {
+        "x": 76.796875,
+        "y": 543.140625,
+        "width": 1766.40625,
+        "height": 182.375,
+        "right": 1843.203125,
+        "bottom": 725.515625
+      },
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "right": 1920,
+        "bottom": 1080
+      },
+      "header": {
+        "x": 76.796875,
+        "y": 48,
+        "width": 1766.40625,
+        "height": 103.671875,
+        "right": 1843.203125,
+        "bottom": 151.671875
+      },
+      "footer": {
+        "x": 76.796875,
+        "y": 998.890625,
+        "width": 1766.40625,
+        "height": 33.109375,
+        "right": 1843.203125,
+        "bottom": 1032
+      },
+      "widgets": [
+        {
+          "x": 76.796875,
+          "y": 773.5,
+          "width": 569.59375,
+          "height": 196.59375,
+          "right": 646.390625,
+          "bottom": 970.09375
+        },
+        {
+          "x": 675.1875,
+          "y": 773.5,
+          "width": 569.609375,
+          "height": 196.59375,
+          "right": 1244.796875,
+          "bottom": 970.09375
+        },
+        {
+          "x": 1273.59375,
+          "y": 773.5,
+          "width": 569.609375,
+          "height": 196.59375,
+          "right": 1843.203125,
+          "bottom": 970.09375
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "fontSize": "27.84px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "rail": {
+        "x": 153.59375,
+        "y": 1093.140625,
+        "width": 3532.8125,
+        "height": 364.78125,
+        "right": 3686.40625,
+        "bottom": 1457.921875
+      },
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 2160,
+        "right": 3840,
+        "bottom": 2160
+      },
+      "header": {
+        "x": 153.59375,
+        "y": 96,
+        "width": 3532.8125,
+        "height": 207.34375,
+        "right": 3686.40625,
+        "bottom": 303.34375
+      },
+      "footer": {
+        "x": 153.59375,
+        "y": 1997.765625,
+        "width": 3532.8125,
+        "height": 66.234375,
+        "right": 3686.40625,
+        "bottom": 2064
+      },
+      "widgets": [
+        {
+          "x": 153.59375,
+          "y": 1553.90625,
+          "width": 1139.203125,
+          "height": 386.265625,
+          "right": 1292.796875,
+          "bottom": 1940.171875
+        },
+        {
+          "x": 1350.390625,
+          "y": 1553.90625,
+          "width": 1139.203125,
+          "height": 386.265625,
+          "right": 2489.59375,
+          "bottom": 1940.171875
+        },
+        {
+          "x": 2547.1875,
+          "y": 1553.90625,
+          "width": 1139.21875,
+          "height": 386.265625,
+          "right": 3686.40625,
+          "bottom": 1940.171875
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "fontSize": "55.68px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "rail": {
+        "x": 40,
+        "y": 433.1875,
+        "width": 310,
+        "height": 122,
+        "right": 350,
+        "bottom": 555.1875
+      },
+      "shell": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 1113.1875,
+        "right": 390,
+        "bottom": 1113.1875
+      },
+      "header": {
+        "x": 40,
+        "y": 25,
+        "width": 310,
+        "height": 125,
+        "right": 350,
+        "bottom": 150
+      },
+      "footer": {
+        "x": 40,
+        "y": 1026.4375,
+        "width": 310,
+        "height": 61.75,
+        "right": 350,
+        "bottom": 1088.1875
+      },
+      "widgets": [
+        {
+          "x": 40,
+          "y": 597.4375,
+          "width": 310,
+          "height": 128,
+          "right": 350,
+          "bottom": 725.4375
+        },
+        {
+          "x": 40,
+          "y": 740.4375,
+          "width": 310,
+          "height": 128,
+          "right": 350,
+          "bottom": 868.4375
+        },
+        {
+          "x": 40,
+          "y": 883.4375,
+          "width": 310,
+          "height": 128,
+          "right": 350,
+          "bottom": 1011.4375
+        }
+      ],
+      "imageLoaded": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": true,
+      "fontSize": "14.5px",
+      "reducedMotion": true,
+      "canonicalSource": "bundled data URI",
+      "stillSourceSelected": true
+    }
+  ],
+  "svgAnimation": {
+    "reducedMotion": "none",
+    "normal": "shake",
+    "elapsedMs": 18199.272
+  }
+}

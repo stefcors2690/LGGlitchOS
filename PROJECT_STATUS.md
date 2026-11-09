@@ -4,15 +4,24 @@ Ultimo aggiornamento: 2026-11-09.
 
 ## Stato verificato
 
-Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header, area scena, area app e tre zone widget sono strutturali e statici. Sono presenti ESLint, Vitest (21 test) e adapter mock tipizzato, ancora non collegato alla UI. Home interattiva e sfondo città assenti.
+Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include immagine `references/background.png` scelta dall’utente, foschia/pioggia e due navette aggiuntive occasionali. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (79 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
 
 - Microfase attiva: nessuna.
-- Prossima microfase: `1.1 — Sfondo e livelli visivi` in `ROADMAP.md`.
-- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4` (macrofase 0 conclusa).
-- Bloccanti per 1.1: nessuno identificato.
+- Prossima microfase: `2.1 — Overlay e Back` in `ROADMAP.md`.
+- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`.
+- Fase 1: chiusa su approvazione esplicita dell’utente dopo debug browser e modifiche richieste.
+- Bloccanti per 2.1: nessuno identificato.
 - Gate futuri: firmware/webOS esatti e accesso al G5 non disponibili; integrazioni e sostituzione Home non verificate.
 
 ## Decisioni da preservare
+
+- Ultima decisione utente: rimossi controllo Movimento e logo e Pausa sfondo. Nessuna impostazione manuale; vecchio storage ignorato. Animazioni automatiche salvo reduced motion di sistema/pagina nascosta. Questa regola sostituisce le precedenti preferenze persistenti.
+
+- Riscontro utente nel debug browser: soddisfatto della UI; richiesta e applicata pulizia dei testi introduttivi sovrapposti allo sfondo in tutte le sezioni, come Home. Titoli/descrizioni restano accessibili ma visivamente nascosti; controlli e badge Demo preservati. Non dedurre da questo riscontro prove Console/Network o percorsi specifici non riportati.
+
+- Richiesta utente: dopo 1.8, eseguire una sessione di debug interattivo browser della Home completa prima della fase 2. Il debug è già disponibile con npm run dev/DevTools; percorso in README e checkpoint in ROADMAP. Non confondere verifica headless con sessione interattiva svolta dall’utente.
+
+- Priorità esplicita utente: massima fedeltà agli screenshot di riferimento; niente reinterpretazioni semplificate. Confrontare screenshot 1080p/4K con 00 (brand) e 01 (layout), usando background.png; registrare scostamenti. La shell/header attuale richiede ancora allineamento visivo, senza dichiarare fedeltà completa.
 
 - Sviluppo in microfasi, una alla volta; prima preview browser con mock tipizzati.
 - Stack previsto: React, TypeScript strict, Vite; niente grandi librerie o servizi senza approvazione.
@@ -26,14 +35,39 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 
 1. Leggere `START_HERE.md` e i documenti nell'ordine indicato.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
-3. Per 1.1, creare sfondo originale o con licenza documentata e fallback statico, separando scena e controlli. Rileggere i documenti visuali e ispezionare riferimenti 00/01. Conservare margini, tema e logo verificati in 0.4; non usare il mockup come sfondo dell’intera UI.
+3. Riprendere da 2.1 — Overlay e Back sulla Home unica approvata: dialoghi accessibili, Escape/Back e ripristino focus. Preservare assenza menu/controlli movimento, animazioni automatiche e riduzione di sistema. La fase 1 è chiusa; non riproporre il checkpoint browser come bloccante.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
 5. Aggiornare stato, prossimo passo e storico in questo file, più roadmap e documentazione interessata.
 
 ## Verifiche attuali e limiti
 
+- 1.8: Impostazioni con movimento ridotto globale e consenso animazione logo, salvati in localStorage (glitchos.motion.v1). Preferenza sistema prioritaria, aggiornamento live, pagina nascosta ferma sfondo e seleziona logo statico. Riduzione utente disabilita anche transizioni CSS. Pausa sfondo resta separata e volatile. Errori storage gestiti con avviso sessione. `npm run check`: 78 test, lint/typecheck/build OK. Evidenze in docs/verification/phase-1.8/report.md; debug interattivo con utente ancora da svolgere.
+
+- 1.7: SmartHomeWidget Home con luce/presa demo e role switch/aria-checked. Comandi tramite smartHome.setState, nessun aggiornamento ottimistico, blocco concorrenza e risposte dopo smontaggio ignorate. Stato mock conservato tra sezioni, azzerato su reload. Errori, capability assenti e lista vuota distinti. `npm run check`: 74 test, lint/typecheck/build OK. Evidenze browser in docs/verification/phase-1.7/report.md. Nessuna Home Assistant o domotica reale; sezione Domotica ancora introduttiva.
+
+- 1.6: widget Home con HDMI 1/2/3 e TV demo, stato attivo aggiornato solo dopo successo adapter, lock contro comandi concorrenti e feedback accessibile. Il cambio sezione rilegge lo stato mock; reload pagina lo azzera. Sezione Ingressi ancora introduttiva; nessuno stato o cambio HDMI reale. `npm run check`: 69 test, lint/typecheck/build OK. Evidenze browser in docs/verification/phase-1.6/report.md.
+
+- 1.5: `npm run check` OK (64 test e build). Continua a guardare usa solo Neon District demo (80 min, posizione 38 min, 47,5%, 42 min rimanenti), miniatura da background.png approvato e feedback senza playback. Nessuna integrazione con storico streaming.
+- Nuova zona widgets sotto il rail. Down raggiunge watch-neon-district, Up torna alla card ricordata; il widget è presente solo in Home. Messaggio di azione locale al componente, azzerato uscendo da Home; progresso demo immutato.
+- Evidenze aggiornate in docs/verification/phase-1.5/report.md. Debug browser interattivo a fine fase 1 pianificato ma non ancora svolto con l’utente.
+
+- 1.4: `npm run check` OK: lint, typecheck, 58 test e build. 21 nuovi casi per grafo e tasti. Browser: percorso a sole frecce/Enter, OK, repeat ignorato per attivazioni, focus stabile durante clock/lancio, memoria, regioni nascoste e controllo disabilitato saltati, ritorno Home, recupero focus, controllo pausa raggiungibile.
+- Nuovo src/navigation/: focusGraph.ts e useTvFocus.ts. Grafo header → controls (se disponibile) → rail, bordi senza wrap, memoria per zona; nessun autofocus al caricamento, primo tasto direzionale aggancia la sezione header corrente. Back torna Home; dialoghi e cronologia delle sezioni saranno estesi in 2.1.
+- Grafica 1.3 preservata: confronto screenshot 1080p/4K, evidenze in docs/verification/phase-1.4/report.md. Nessuna API telecomando webOS o intercettazione di Home; tasti effettivamente consegnati dal G5 ancora da verificare.
+
+- 1.3: `npm run check` OK (37 test e build). Nuovi test per catalogo, capability assenti, catalogo vuoto, errori/rejection e avvio simulato senza falso successo. Browser: avvio con Enter, focus conservato, selezione conservata tra sezioni, 7 card e layout 1080p/4K/mobile.
+- Rail in features/apps con fallback neutri originali, cornici smussate doppie cyan/magenta e stato demo visibile; istanza MockPlatformAdapter in App.tsx. Hero promozionale nascosto visivamente solo in Home per liberare la città come nel riferimento.
+- Evidenze e confronto visivo: docs/verification/phase-1.3/report.md. Nessuna fedeltà completa dichiarata: loghi reali mancanti, header ancora da rifinire e widget non implementati. Nessuna integrazione TV o nuova dipendenza.
+
+- 1.2: `npm run check` OK, 31 test e build. Browser: selezione delle cinque sezioni, aria-current unico, focus conservato dopo Enter, orologio coerente con il browser e aggiornato, layout 1080p/4K/mobile. Evidenze in docs/verification/phase-1.2/report.md.
+- Header: ShellHeader e definizioni sections.ts; pulsanti nativi con aria-controls sul main, contenuto introduttivo per ciascuna sezione e widget solo nella Home. LocalClock usa Date/Intl locale, timer 1s e aggiornamento su visibilitychange; nessun meteo o dato TV reale.
+
+- Correzione 1.1: `npm run check` OK (29 test, lint/typecheck/build). Sfondo PNG dell’utente importato direttamente e distribuito da Vite; nessuna nuova dipendenza. I due skyline vettoriali precedenti sono conservati come storico, non usati dalla UI.
+- Verifica Chrome: layout 1080p/4K/mobile, SVG caricati, reduced motion e pause manuale/visibilitychange, timeline navette e fallback grafico. Evidenze aggiornate in docs/verification/phase-1.1-background/report.md. L’evento visibilitychange è emulato, non una prova sul ciclo di vita webOS.
+- Animazioni CSS deterministiche 43/67s per le navette, 56s foschia; nessun frame React. Il PNG resta fermo, inclusi i veicoli già dipinti; solo le navette aggiunte e gli effetti separati si animano. Pausa sfondo non ferma il logo, che conserva la sua policy separata.
+
 - 0.4: `npm run check` OK (21 test, lint/typecheck/build). Verifica browser riproducibile con `node scripts/verify-shell.mjs`; rapporto docs/verification/phase-0.4.md.
-- La shell non contiene pulsanti interattivi o focus manager. Focus token pronti; D-pad resta in 1.4, impostazione movimento in 1.8 e idle dimming in 2.3. Leggibilità da divano e prestazioni G5 non verificate.
+- La shell include focus manager D-pad e controlli nativi Tab/Enter/Spazio. Impostazioni persistenti del movimento restano in 1.8 e pausa idle/dimming in 2.3. Leggibilità da divano e prestazioni G5 non verificate.
 
 - 0.3: `npm run check` riuscito (lint, typecheck, 21 test e build). Nessuna integrazione UI dell’adapter ancora effettuata. Lo stato mock è volatile; non contiene meteo, progresso streaming, firmware o dati TV reali. Domotica limitata a switch booleani.
 
@@ -50,6 +84,105 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 - Nessun test sul dispositivo LG eseguito.
 
 ## Storico sintetico
+
+### 2026-11-09 — Chiusura fase 1 approvata
+
+- Utente richiede esplicitamente di considerare chiusa la fase 1 dopo riscontro browser e correzioni layout. Roadmap e punto di ripresa aggiornati: prossima 2.1, non iniziata.
+- Stato approvato: Home unica senza menu superiore, senza testi promozionali sulla scena o controlli movimento; animazioni automatiche, mock e badge Demo.
+- Restano valide le evidenze precedenti (79 test, lint/typecheck/build e Chrome) e i limiti hardware/visivi documentati. Nessun controllo manuale Console/Network aggiuntivo dichiarato. Sessione solo documentale, verifica git diff --check.
+
+### 2026-11-09 — Animazioni fisse senza controlli
+
+- Rimossi disclosure/preferenze e pausa dalla shell; hook non legge né salva più preferenze locali. Logo e sfondo automatici, riduzione sistema e visibilità preservate.
+- npm run check OK: 79 test, lint/typecheck/build. Chrome e confronto screenshot 1080p/4K riusciti; vecchio storage ignorato e riduzione sistema live confermati.
+- Rimosso componente MotionSettings, aggiornati rendering test e collaudo Chrome per assenza controlli, vecchio storage ignorato e reduced motion live. Evidenze in docs/verification/fixed-motion/.
+
+
+### 2026-11-09 — Home unica richiesta dall’utente
+
+- Eliminato menu superiore; app, ingressi e domotica sempre disponibili nella Home. Preferenze movimento in details/summary dalla scena, senza cambio pagina.
+- Focus iniziale/Back sulla prima app; Escape chiude le preferenze. Nuova zona settings solo quando aperta; observer gestisce chiusura details. Nessuna perdita di stato mock per navigazione.
+- Verifica Chrome Home unica riuscita su 1080p/4K/mobile e D-pad; screenshot ispezionati, rapporto docs/verification/one-page/report.md.
+- Script browser aggiornato per layout e percorsi Home unica; precedente script conservato esplicitamente come legacy. Riferimenti estetici conservati con eccezione del menu autorizzata dall’utente.
+
+
+### 2026-11-09 — Pulizia testi delle sezioni dopo feedback browser
+
+- Estesa la presentazione pulita Home a tutte le scene in TvShell/global.css: nascosti visivamente eyebrow, titolo e descrizione introduttivi e rimossa nota decorativa Neon City. Titolo semantico e controlli funzionali preservati.
+- Verifica modifica: npm run check (lint, typecheck, 78 test e build) e git diff --check OK. Nuovi screenshot automatizzati non acquisiti in questa sessione; resa da ricontrollare nella preview utente.
+- Utente soddisfatto della preview con questa correzione richiesta. Checkpoint debug resta da completare per verifiche specifiche non riferite; nessuna nuova fase implementativa iniziata.
+
+### 2026-11-09 — 1.8: Impostazioni movimento
+
+- Aggiunti motion/preferences.ts e test, features/settings/MotionSettings.tsx e settings.css; policy collegata a shell/header/logo. Preferenze validate e persistite, fallback se storage non disponibile.
+- Riduzione sistema prevale su utente; logo statico derivato dal canonico quando vietato o pagina nascosta. Pausa sfondo non modifica preferenze logo. Quattro nuovi test (78 totali), prove Chrome di persistenza, precedenza e navigazione.
+- Documenti sincronizzati; prossima attività checkpoint debug interattivo browser, non fase 2. Nessuna dipendenza o funzionalità TV introdotta.
+
+### 2026-11-09 — 1.7: Widget domotica demo
+
+- Aggiunti features/smart-home/{SmartHomeWidget.tsx,deviceActions.ts,deviceActions.test.ts,smart-home.css}, sostituito ultimo placeholder Home. Cornice segmentata cyan/magenta e simboli originali casa/lampadina/alimentazione.
+- Due switch dal contratto esistente, con badge Demo, stato testuale, feedback accessibile e nessun falso successo su errore. Cinque test nuovi, 74 complessivi. Nessuna dipendenza, rete o modifica ai contratti.
+- Script Chrome esteso per on/off, focus/bordi, memoria e persistenza tra sezioni; evidenze in docs/verification/phase-1.7/. Prossima 1.8 e successivo checkpoint debug interattivo browser.
+
+### 2026-11-09 — 1.6: Widget ingressi demo
+
+- Aggiunti features/inputs/{InputsWidget.tsx,inputActions.ts,inputActions.test.ts,inputs.css}; sostituito il placeholder Home e aggiunto HDMI 3 al mock per allineare le quattro sorgenti del riferimento.
+- Cornice segmentata e icone originali HDMI/TV; selezione attiva magenta distinta dal focus cyan. Capability, catalogo vuoto, errori e rejection gestiti. Cinque nuovi test, 69 totali.
+- Verifica browser estesa a cambio ingresso, unicità attivo, memoria focus e persistenza tra sezioni. Nessuna dipendenza o API TV. Prossima 1.7; checkpoint debug interattivo dopo 1.8 conservato.
+
+### 2026-11-09 — 1.5 completata: Continua a guardare demo
+
+- Aggiunti features/continue-watching/{ContinueWatching.tsx,demoWatch.ts,demoWatch.test.ts,watch.css}; sostituito il primo placeholder nella shell. Contenuto originale fittizio, miniatura dal PNG approvato, progress accessibile e cornice smussata cyan/magenta.
+- Nuova zona focus widgets, sei test aggiunti tra progresso/azione e grafo. Ripresa simulata senza video, rete o alterazione del progresso.
+- `npm run check`: OK, 64 test. Script browser esteso a Down/Enter/Up, focus conservato, progresso immutato e recupero lasciando Home. Screenshot e confronto in docs/verification/phase-1.5/.
+- Registrata richiesta di debug browser interattivo dopo 1.8; istruzioni README e checkpoint roadmap. Nessuna dipendenza aggiunta o collaudo G5. Prossima 1.6.
+
+
+### 2026-11-09 — 1.4 completata: focus manager D-pad
+
+- Aggiunti navigation/focusGraph.ts, focusGraph.test.ts e useTvFocus.ts. Shell collegata tramite ref; header, pausa sfondo e card hanno identificativi/zone stabili.
+- Frecce senza wrap, memoria per zona, skip hidden/inert/disabled, scroll nearest immediato. Invio nativo senza doppio click, OK/Accept/Select sintetizzati, ripetizioni di attivazione ignorate. Escape/Back/Backspace torna Home e focalizza il suo pulsante.
+- MutationObserver recupera focus rimosso/nascosto/disabilitato; nessun reset sui normali rerender. Nessuna modifica CSS, libreria o API TV.
+- `npm run check`: OK (58 test, lint/typecheck/build). Verifica Chrome estesa al percorso D-pad e focus; report/screenshot in docs/verification/phase-1.4/. Documenti sincronizzati, prossima 1.5.
+
+
+### 2026-11-09 — 1.3 completata: rail applicazioni demo
+
+- Aggiunti features/apps/{AppRail.tsx,appActions.ts,appActions.test.ts,apps.css}; ampliato catalogo mock a sette app generiche. App.tsx mantiene un’unica istanza adapter; rail montato persistente, visibile in Home/App.
+- Card olografiche con cornici smussate a doppio contorno, selezione magenta, focus cyan e simboli neutri originali. Loading/error/empty e avvio non supportato distinti. Feedback live di avvio simulato, blocco chiamate concorrenti e gestione rejection.
+- Home liberata dal testo promozionale; rail allineato alla fascia ~54% della superficie. Corretto overflow mobile fissando la colonna del root grid e contenendo il rail con scroll interno.
+- `npm run check`: OK, 37 test. Verifiche Chrome su Enter, selezione persistente e layout; screenshot confrontati con references 00/01. Scostamenti e limiti in docs/verification/phase-1.3/report.md. Nessuna nuova dipendenza; prossima 1.4.
+
+
+### 2026-11-09 — Vincolo rafforzato di fedeltà visiva
+
+- Registrata richiesta di massima fedeltà in AGENTS e VISUAL_REFERENCE_GUIDE: confronto visivo obbligatorio e differenze residue esplicite a ogni fase visiva.
+- Nessuna modifica UI o test applicativo in questa sessione; verifica documentale con git diff --check. Prossima fase 1.3 invariata, con allineamento del rail ai riferimenti approvati.
+
+
+### 2026-11-09 — 1.2 completata: header, sezioni e orologio
+
+- Aggiunti app/ShellHeader.tsx, app/sections.ts, features/clock/{LocalClock.tsx,formatClock.ts,formatClock.test.ts}; TvShell gestisce selezione e contenuti, CSS per header responsivo e stato corrente magenta.
+- Pulsanti Home/App/Ingressi/Domotica/Impostazioni selezionabili con Tab/Enter/Spazio o pointer; focus conservato, main denominato dal titolo di sezione. Meteo assente. Nessun router o nuova dipendenza.
+- Orologio reale del browser, formato italiano 24h, data locale e timezone del dispositivo; test per cambio giorno e ora legale. Cleanup timer/listener alla rimozione componente.
+- `npm run check`: OK (31 test e build); script Chrome esteso a header/sezioni/orologio e attesa decodifica sfondo prima degli screenshot. Evidenze in docs/verification/phase-1.2/. Nessun test G5. Prossima: 1.3.
+
+
+### 2026-11-09 — Correzione 1.1: sfondo scelto dall’utente
+
+- Integrato references/background.png direttamente in city.css/Vite, sostituendo i due skyline SVG e togliendo il drift dell’immagine intera. Sorgente PNG preservata senza modifiche; provenienza: fornita dall’utente, licenza esterna non verificata.
+- Conservati navette aggiuntive, atmosfera, pausa/reduced motion/visibility e fallback gradiente. Overlay attenuati per mostrare l’immagine, badge e testi protetti per contrasto.
+- `npm run check`: OK (29 test e build). Evidenze browser aggiornate in docs/verification/phase-1.1-background/; il report precedente rimanda alla correzione. Nessun test hardware. Prossima fase invariata: 1.2.
+
+
+### 2026-11-09 — 1.1 completata: città e navette
+
+- Aggiornata la roadmap su richiesta utente per includere navette originali occasionali dietro la UI.
+- Aggiunti features/background/CityBackdrop.tsx e city.css, due SVG città e navetta, README provenienza e generatore Python deterministico. Nessun asset copiato dai mockup o di terze parti.
+- Policy/hook in src/motion per reduced motion, pagina nascosta e pausa manuale; 8 casi unitari aggiunti. TvShell include scena e pulsante pausa nativo; CSS mantiene overlay di contrasto e input separati.
+- `npm run check`: OK (29 test, lint/typecheck/build). Verifica browser estesa per pausa keyboard, reduced motion, eventi visibilitychange, asset, timeline e finestre di visibilità delle due navette, fallback. Screenshot 1080p/4K/mobile e voli in docs/verification/phase-1.1/.
+- Documentazione sincronizzata; nessuna prova sul G5 o benchmark fps. La pausa per inattività resta in 2.3; impostazioni complete e persistenza in 1.8. Prossimo passo: 1.2.
+
 
 ### 2026-11-09 — 0.4 completata: tema e shell TV
 

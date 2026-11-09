@@ -1,0 +1,18 @@
+.inputs-widget.widget-placeholder { padding: var(--space-2); }
+.inputs-widget.holographic-panel { background: none; border-color: transparent; border-radius: 0; box-shadow: none; }
+.inputs-widget.holographic-panel::before { display: none; }
+.inputs-frame { position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); pointer-events: none; overflow: visible; }
+.inputs-cyan, .inputs-magenta { fill: none; stroke-width: 2; }
+.inputs-cyan { stroke: #00ddf5; filter: drop-shadow(0 0 3px #00ddf590); }
+.inputs-magenta { stroke: #ff65df; filter: drop-shadow(0 0 3px #ff39cf90); }
+.inputs-heading { position: relative; display: flex; align-items: center; gap: var(--space-1); padding-bottom: var(--space-1); border-bottom: 1px solid #39708880; }
+.inputs-widget .inputs-heading { font-size: calc(var(--tv-unit) * 1.25); margin: 0 0 var(--space-1); }
+.inputs-heading svg { width: var(--space-3); height: var(--space-3); color: #a6eaff; }
+.inputs-heading > span { margin-left: auto; font-size: calc(var(--tv-unit) * .8); color: var(--color-muted); text-transform: uppercase; }
+.input-buttons { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--space-1); }
+.input-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-1); min-width: 0; min-height: calc(var(--tv-unit) * 5); padding: var(--space-1); color: #b6eaff; background: linear-gradient(140deg,#122b41e8,#08111ee8); border: 1px solid #39b4da80; border-radius: calc(var(--tv-unit) * .7); font: inherit; font-size: calc(var(--tv-unit) * 1.05); cursor: pointer; }
+.input-button svg { width: 75%; height: calc(var(--tv-unit) * 2); }
+.input-button[aria-pressed="true"] { color: #fff2ff; background: linear-gradient(135deg,#421542ec,#0c101eee); border-color: #ff75e5; box-shadow: inset 0 0 8px #ff39cf60, 0 0 9px #ff39cf70; clip-path: polygon(10% 0,90% 0,100% 10%,100% 90%,90% 100%,10% 100%,0 90%,0 10%); }
+.input-button:focus-visible { outline-offset: 3px; clip-path: none; }
+.inputs-widget .input-feedback { position: absolute; top: 100%; left: 0; right: 0; color: var(--color-text); font-size: calc(var(--tv-unit) * .85); text-shadow: 0 1px 3px #070c1b; }
+@media (max-width: 900px), (max-aspect-ratio: 4/3) { .inputs-widget .input-feedback { position: relative; } .input-button { min-height: 80px; font-size: 13px; } .inputs-heading > span { font-size: 10px; } }

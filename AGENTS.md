@@ -38,3 +38,11 @@ Read `ANIMATION_SPEC.md`; use `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.sv
 - Update README for available commands/setup, PROJECT_SPEC for changed contracts or scope, and visual/animation docs when their rules change. Update START_HERE if the entry workflow changes.
 - Keep enough context in repository files for a different IDE to resume without chat history. These documentation updates are part of completion, not optional follow-up work.
 - The original First assignment describes the MVP target; execute it through the microphases, not as a single large implementation.
+
+## Priorità visiva esplicita — 2026-11-09
+
+L’utente richiede **massima fedeltà visiva ai riferimenti**, non una reinterpretazione o un dashboard generico. Branding: `references/00_brand_home.png`; composizione/layout: `references/01_home_approved.png`; sfondo effettivo: `references/background.png`. Gli altri mockup restano secondari e non devono introdurre una direzione diversa.
+
+Riprodurre gerarchia, proporzioni, posizioni, densità, margini, tipografia leggibile, cornici olografiche, glow cyan/magenta e trattamento del focus. Usare componenti reali e loghi terzi autentici o fallback neutri; non incorporare il mockup completo come UI e non presentare i dati dei mockup come reali.
+
+Prima di completare una fase visiva, confrontare gli screenshot 1080p/4K con i riferimenti prioritari e documentare differenze residue e verifiche. Le funzionalità di fasi future possono restare incomplete, ma lo stile e la geometria degli elementi già implementati devono convergere al riferimento. Non dichiarare fedeltà completa finché restano differenze evidenti; evitare semplificazioni o cambi di direzione non richiesti. L’attuale shell/header è una base funzionante e richiede ancora allineamento visivo al riferimento.

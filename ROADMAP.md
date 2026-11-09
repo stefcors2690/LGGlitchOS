@@ -8,7 +8,7 @@ Le macrofasi conservano la numerazione delle specifiche originali. L'unità di l
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** macrofase 0 completata (`0.1`–`0.4`). **Prossima:** `1.1`.
+**Stato corrente:** macrofase 0 e microfasi `1.1`–`1.8` completate. **Fase 1 chiusa e approvata dall’utente. Prossima:** `2.1 — Overlay e Back`.
 Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`.
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
@@ -43,51 +43,59 @@ A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche 
 
 ### 1.1 — Sfondo e livelli visivi
 
-- Stato: `DA FARE`
-- Ambito: Creare sfondo originale o con licenza documentata e fallback statico; separare scena e controlli.
-- Accettazione: Nessun mockup usato come intera UI; contrasto e provenienza asset verificati.
+- Stato: `COMPLETATA`
+- Ambito: Usare lo sfondo approvato dall’utente `references/background.png`, con fallback statico, atmosfera animata leggera e navette aggiuntive che attraversano occasionalmente la città dietro la UI; separare scena e controlli.
+- Accettazione: Nessun mockup usato come intera UI; contrasto e provenienza asset verificati. Navette con passaggi distanziati e profondità diverse, senza intercettare input; movimento disattivabile, fermo con reduced motion e pagina nascosta. Idle dimming e pausa per inattività restano in 2.3.
 
 ### 1.2 — Header e sezioni
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Creare Home, App, Ingressi, Domotica, Impostazioni e orologio locale.
 - Accettazione: Sezioni selezionabili, semantica accessibile; meteo assente o esplicitamente demo.
 
 ### 1.3 — Rail applicazioni
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Creare card da catalogo mock, selezione e feedback di avvio simulato.
 - Accettazione: Demo visibile; loghi autentici con provenienza o fallback neutri; nessuna promessa di avvio reale.
 
 ### 1.4 — Navigazione D-pad essenziale
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Implementare focus deterministico tra header e rail, frecce e OK/Enter.
 - Accettazione: Focus sempre visibile e stabile dopo rerender; test dei percorsi principali.
 
 ### 1.5 — Widget Continua a guardare
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Creare contenuti e avanzamento demo con azione simulata.
 - Accettazione: Stato demo esplicito, etichette leggibili e accesso da tastiera.
 
 ### 1.6 — Widget ingressi
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Creare sorgenti mock e selezione simulata.
 - Accettazione: Navigazione da rail a widget verificata; nessuno stato HDMI presentato come reale.
 
 ### 1.7 — Widget domotica
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Creare dispositivi demo e comandi tramite adapter mock.
 - Accettazione: Stato aggiornato in simulazione, errori gestiti e test della logica.
 
 ### 1.8 — Impostazioni movimento
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Aggiungere movimento ridotto, rispetto preferenza di sistema e controllo animazione logo.
 - Accettazione: Preferenze applicate a tutti gli effetti; test di precedenza e persistenza se implementata.
+
+### Chiusura fase 1 — Debug interattivo nel browser
+
+- Stato: `COMPLETATA` — fase 1 chiusa per approvazione esplicita dell’utente dopo il riscontro browser e le correzioni richieste.
+- Riscontro browser: utente soddisfatto; rimossi su richiesta i testi introduttivi sullo sfondo da tutte le sezioni. Chiusura accettata dall’utente; non sono dichiarati controlli manuali Console/Network o percorsi specifici non riportati. Le verifiche automatiche restano nei rapporti.
+- Richiesta utente: dedicare una sessione alla Home completa nel browser, con dev server, DevTools e prove guidate reali di navigazione e resa visiva.
+- Accettazione: confrontare references 00/01 a 1080p/4K, provare D-pad/Back/OK e widget senza mouse, controllare console e richieste di rete, movimento ridotto e difetti visibili. Registrare esiti e correzioni in PROJECT_STATUS e nel rapporto di verifica. I test headless già eseguiti non sostituiscono questa sessione interattiva.
+- Debug browser già disponibile durante lo sviluppo: procedura in README. Questo checkpoint non richiede deploy sulla TV.
 
 ## 2 — Qualità di interazione
 
@@ -213,7 +221,15 @@ A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche 
 - Ambito: Solo per azioni specificamente autorizzate: verificare comportamento, recupero e aggiornamenti.
 - Accettazione: Esiti reali e procedura di ritorno allo stock documentati; nessuna garanzia di compatibilità futura.
 
+## Modifica layout approvata durante debug
+
+- Decisione successiva: nessun controllo Movimento e logo o Pausa sfondo; animazioni fisse con sola riduzione automatica di sistema e sospensione su pagina nascosta. Le preferenze salvate in 1.8 non sono più lette.
+
+- Home unica su richiesta utente: eliminato menu superiore, funzioni sempre in Home e preferenze movimento espandibili. Le descrizioni delle fasi completate rappresentano lo storico; la decisione corrente sostituisce la struttura a cinque sezioni.
+
 ## Vincoli trasversali
+
+- Massima fedeltà visiva richiesta dall’utente: confronto screenshot 1080p/4K con riferimenti 00/01 e documentazione degli scostamenti prima di completare ogni fase visiva; nessuna reinterpretazione semplificata.
 
 - Brand esatto `StefCors GL1tCh 0S`; logo canonico `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.svg` e regole di `ANIMATION_SPEC.md`.
 - Riferimenti prioritari: `00_brand_home.png` per branding, `01_home_approved.png` per layout. Componenti reali, loghi terzi autentici o fallback neutri.

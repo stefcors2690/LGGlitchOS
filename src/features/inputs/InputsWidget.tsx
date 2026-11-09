@@ -1,0 +1,59 @@
+import { useEffect, useRef, useState } from 'react';
+import type { InputInfo, PlatformAdapter } from '../../platform/contracts';
+import { activateInput, loadInputs } from './inputActions';
+import type { InputsState } from './inputActions';
+import './inputs.css';
+
+export function InputsWidget({ platform }: { readonly platform: PlatformAdapter }) {
+  const [state, setState] = useState<InputsState | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState('');
+  const lock = useRef(false);
+  const generation = useRef(0);
+  useEffect(() => {
+    const current = ++generation.current;
+    void loadInputs(platform).then(result => { if (generation.current === current) setState(result); });
+    return () => { generation.current = current + 1; };
+  }, [platform]);
+
+  async function activate(input: InputInfo) {
+    if (lock.current || state?.status !== 'ready' || state.disabledReason !== undefined) return;
+    lock.current = true;
+    const current = generation.current;
+    setBusy(true);
+    const result = await activateInput(platform, input.id);
+    if (generation.current === current) {
+      if (result.ok) {
+        setState(previous => previous?.status === 'ready' ? { ...previous, inputs: previous.inputs.map(item => ({ ...item, active: item.id === result.data.id })) } : previous);
+        setMessage(result.mode === 'demo' ? `Cambio simulato: ${result.data.name}. Nessun ingresso TV reale modificato.` : `Ingresso selezionato: ${result.data.name}.`);
+      } else setMessage(`Cambio non riuscito: ${result.error.message}`);
+      setBusy(false);
+    }
+    lock.current = false;
+  }
+
+  return <section className="inputs-widget holographic-panel widget-placeholder" aria-labelledby="inputs-title">
+    <svg className="inputs-frame" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M25 3H575L597 23V177L575 197H25L3 177V23Z" fill="#0b1427" fillOpacity=".95" stroke="#385a73" />
+      <path d="M28 9H572L590 27V173L572 190H28L10 173V27Z" fill="none" stroke="#4e7790" strokeOpacity=".5" />
+      <path className="inputs-cyan" d="M25 197 3 177V23L25 3H575L597 23M530 11h35" />
+      <path className="inputs-magenta" d="M597 145V177L575 197H80M14 40V25L30 11" />
+    </svg>
+    <h2 id="inputs-title" className="inputs-heading"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="4" width="26" height="20" rx="2" /><path d="M8 11h16v6H8zM10 29h12" /></svg>Ingressi<span>Demo</span></h2>
+    {!state && <p role="status">Caricamento ingressi demo…</p>}
+    {state?.status === 'error' && <p role="alert">{state.message}</p>}
+    {state?.status === 'ready' && <>
+      {state.inputs.length === 0 && <p>Nessun ingresso disponibile.</p>}
+      <div className="input-buttons" aria-label="Sorgenti demo">
+        {state.inputs.map(input => <button key={input.id} type="button" className="input-button" data-tv-id={`input-${input.id}`} data-tv-zone="widgets"
+          aria-label={`${input.name} · ${input.mode === 'demo' ? 'Cambio simulato' : 'Seleziona ingresso'}`} aria-pressed={input.active}
+          aria-disabled={busy || state.disabledReason !== undefined} onClick={() => { void activate(input); }}>
+          <svg viewBox="0 0 64 40" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            {input.kind === 'hdmi' ? <path d="M7 9h50v17l-10 8H17L7 26zM15 17h34v7H15" /> : <path d="M17 4h30v25H17zM32 29v7M23 37h18" />}
+          </svg><span>{input.name.replace(/ demo$/, '')}</span>
+        </button>)}
+      </div>
+      <p className="input-feedback" role="status" aria-atomic="true">{state.disabledReason ?? message}</p>
+    </>}
+  </section>;
+}

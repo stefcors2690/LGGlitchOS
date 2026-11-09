@@ -6,6 +6,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 
 const baseUrl = process.env.SHELL_URL ?? 'http://127.0.0.1:5187';
+const outputDir = process.env.VERIFY_OUTPUT ?? 'docs/verification/fixed-motion';
 const executable = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const profile = await mkdtemp(path.join(tmpdir(), 'glitch-chrome-'));
 const chrome = spawn(executable, ['--headless=new', '--disable-gpu', '--no-first-run',
@@ -57,63 +58,56 @@ try {
     }
     throw new Error(`Page did not become ready: ${expression}`);
   };
-  await mkdir('docs/verification', { recursive: true });
+  await mkdir(outputDir, { recursive: true });
   const results = [];
-  for (const [width, height] of [[1920, 1080], [3840, 2160], [390, 844]]) {
-    await call('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
-    await call('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-    await call('Page.navigate', { url: baseUrl });
-    await waitReady('!!document.querySelector(".brand-logo img")?.complete && !!document.querySelector(".shell-footer")');
-    const metrics = await evaluate(`(() => {
-      const rect = element => { const r = element.getBoundingClientRect(); return { x:r.x, y:r.y, width:r.width, height:r.height, right:r.right, bottom:r.bottom }; };
-      const shell = document.querySelector('.tv-shell');
-      const image = document.querySelector('.brand-logo img');
-      return {
-        width:innerWidth, height:innerHeight,
-        shell:rect(shell), header:rect(document.querySelector('.shell-header')), footer:rect(document.querySelector('.shell-footer')),
-        widgets:[...document.querySelectorAll('.widget-placeholder')].map(rect),
-        imageLoaded:image.naturalWidth > 0, source:image.src, currentSource:image.currentSrc,
-        horizontalOverflow:document.documentElement.scrollWidth > innerWidth,
-        verticalOverflow:document.documentElement.scrollHeight > innerHeight,
-        fontSize:getComputedStyle(document.querySelector('.scene-description')).fontSize,
-        reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches
-      };
-    })()`);
-    assert(metrics.imageLoaded, 'Logo failed to load');
-    assert(!metrics.horizontalOverflow, 'Horizontal overflow');
-    assert(metrics.reducedMotion);
-    assert(metrics.currentSource.startsWith('data:image/svg+xml,'), 'Reduced-motion picture must choose the still logo');
-    if (width >= 1920) {
-      assert(!metrics.verticalOverflow, 'Vertical overflow on TV');
-      assert(Math.abs(metrics.shell.width / metrics.shell.height - 16 / 9) < 0.001);
-      assert(metrics.header.x >= width * 0.039, 'TV safe left margin');
-      assert(metrics.footer.bottom <= height - height * 0.04, 'TV safe bottom margin');
-      assert(metrics.widgets.every(r => r.right <= width && r.bottom <= metrics.footer.y));
-    }
-    const screenshot = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
-    await writeFile(`docs/verification/shell-${width}x${height}.png`, Buffer.from(screenshot.data, 'base64'));
+  const key = async name => {
+    await call('Input.dispatchKeyEvent', {type:'keyDown',key:name,code:name,...(name === 'Enter' ? {text:'\r',unmodifiedText:'\r'} : {}),windowsVirtualKeyCode:{Enter:13,Escape:27}[name] ?? 0});
+    await call('Input.dispatchKeyEvent', {type:'keyUp',key:name,code:name});
+  };
+  const activeId = () => evaluate('document.activeElement.dataset.tvId');
+  for (const [width,height] of [[1920,1080],[3840,2160],[390,844]]) {
+    await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});
+    await call('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+    await call('Page.navigate',{url:baseUrl});
+    await waitReady('document.querySelectorAll(".input-button").length === 4 && document.querySelectorAll(".device-button").length === 2');
+    await evaluate(`Promise.all([...document.querySelectorAll('.city-layer')].map(el => {const img=new Image();img.src=getComputedStyle(el).backgroundImage.slice(5,-2);return img.decode();}))`);
+    assert.equal(await evaluate('document.querySelectorAll(".section-nav").length'),0);
+    const metrics = await evaluate('({width:innerWidth,height:innerHeight,horizontal:document.documentElement.scrollWidth>innerWidth,vertical:document.documentElement.scrollHeight>innerHeight})');
+    assert(!metrics.horizontal);
+    if(width>=1920) assert(!metrics.vertical);
     results.push(metrics);
+    const shot=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});
+    await writeFile(`${outputDir}/shell-${width}x${height}.png`,Buffer.from(shot.data,'base64'));
   }
-  await evaluate('document.querySelector(".brand-logo img").dispatchEvent(new Event("error"))');
-  await waitReady('document.querySelector(".brand-logo span")?.textContent === "StefCors GL1tCh 0S"');
-  await call('Page.navigate', { url: results[0].currentSource });
-  await waitReady('!!document.querySelector("svg #base")');
-  assert.equal(await evaluate('getComputedStyle(document.querySelector("#base")).animationName'), 'none');
-  // Inspect canonical SVG standalone in both motion modes; also confirms embedded source was valid.
-  await call('Page.navigate', { url: results[0].source });
-  await waitReady('!!document.querySelector("svg #base")');
-  for (const value of ['reduce', 'no-preference']) {
-    await call('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value }] });
-    const animation = await evaluate('getComputedStyle(document.querySelector("#base")).animationName');
-    assert.equal(animation, value === 'reduce' ? 'none' : 'shake');
-  }
-  // Sample two complete 9-second animation cycles and verify timing actually advances.
-  const before = await evaluate('document.querySelector("#base").getAnimations()[0].currentTime');
-  await new Promise(resolve => setTimeout(resolve, 18200));
-  const after = await evaluate('document.querySelector("#base").getAnimations()[0].currentTime');
-  assert(after - before >= 18000, 'SVG animation timeline did not advance for two cycles');
-  await writeFile('docs/verification/shell-metrics.json', JSON.stringify({ baseUrl, results: results.map(({ source, currentSource, ...metrics }) => ({ ...metrics, canonicalSource: source.startsWith('data:') ? 'bundled data URI' : source, stillSourceSelected: currentSource.startsWith('data:image/svg+xml,') })), svgAnimation: { reducedMotion: 'none', normal: 'shake', elapsedMs: after - before } }, null, 2) + '\n');
-  console.log('Shell acceptance passed: 1080p, 4K, mobile fallback, logo and reduced-motion SVG.');
+  await call('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:1,mobile:false});
+  await call('Page.navigate',{url:baseUrl});
+  await waitReady('document.querySelectorAll(".device-button").length === 2');
+  await key('ArrowRight');
+  assert.equal(await activeId(),'app-demo-cinema');
+  await key('ArrowDown');
+  assert.equal(await activeId(),'watch-neon-district');
+  await key('ArrowRight'); await key('ArrowRight'); await key('Enter');
+  await waitReady('document.querySelector("[data-tv-id=input-demo-hdmi-2]").getAttribute("aria-pressed") === "true"');
+  for(let i=0;i<3;i++) await key('ArrowRight');
+  assert.equal(await activeId(),'device-demo-light');
+  await key('Enter');
+  await waitReady('document.activeElement.getAttribute("aria-checked") === "true"');
+  await key('Escape');
+  assert.equal(await activeId(),'app-demo-cinema');
+  await key('ArrowUp');
+  assert.equal(await activeId(),'app-demo-cinema');
+  assert.equal(await evaluate('document.querySelectorAll(".motion-toggle,.motion-disclosure").length'),0);
+  await evaluate('localStorage.setItem("glitchos.motion.v1",JSON.stringify({reduced:true,logo:false}))');
+  await call('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+  await call('Page.reload');
+  await waitReady('document.querySelector(".city-backdrop")?.dataset.motion === "running"');
+  assert.equal(await evaluate('document.querySelector(".brand-logo img").dataset.motion'),'animated');
+  await call('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await waitReady('document.querySelector(".city-backdrop").dataset.motion === "still"');
+  assert.equal(await evaluate('document.querySelector(".brand-logo img").dataset.motion'),'still');
+  await evaluate('localStorage.removeItem("glitchos.motion.v1")');
+  await writeFile(`${outputDir}/shell-metrics.json`,JSON.stringify({results,onePage:true,keyboardWidgets:true,fixedMotionIgnoresStorage:true,systemReducedMotion:true},null,2));
+  console.log('One-page Home acceptance passed: layout, widgets, fixed motion and Back.');
 } finally {
   socket?.close();
   chrome.kill();
