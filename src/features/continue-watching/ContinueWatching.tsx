@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { demoWatch, getWatchProgress, simulateResume } from './demoWatch';
+import type { ActionDialogRequest } from '../../components/ActionDialog';
 import './watch.css';
 
-export function ContinueWatching() {
+export function ContinueWatching({ onDialogRequest }: { readonly onDialogRequest?: (request: ActionDialogRequest) => void } = {}) {
   const [message, setMessage] = useState('');
   const progress = getWatchProgress(demoWatch);
   return (
@@ -20,7 +21,11 @@ export function ContinueWatching() {
       </h2>
       <button className="watch-resume" type="button" data-tv-id="watch-neon-district" data-tv-zone="widgets"
         aria-label={`Riprendi ${demoWatch.title} · Demo${progress ? ` · ${progress.remainingMinutes} minuti rimanenti` : ''}`}
-        onClick={() => setMessage(simulateResume(demoWatch))}>
+        onClick={() => {
+          const feedback = simulateResume(demoWatch);
+          setMessage(feedback);
+          onDialogRequest?.({ title: demoWatch.title, message: feedback, returnFocusId: 'watch-neon-district' });
+        }}>
         <span className="watch-artwork" aria-hidden="true" />
         <span className="watch-details">
           <span className="watch-name">{demoWatch.title}</span>

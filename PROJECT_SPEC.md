@@ -2,7 +2,9 @@
 
 ## Contratto corrente e continuità — 2026-11-09
 
-Fasi0/1/2 completate in browser, fino alla2.10; versione locale0.2.0. Prossima3.1 — Overlay e Back, ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+Fasi0/1/2 e3.1 completate in browser; fase3 aperta, versione locale0.3.0. Prossima3.2 — Pointer e simulatore telecomando, ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+
+Ultima verifica3.1:141 test/check ed Edge produzione/dev superati, dialoghi app/Riprendi, focus/tasti/fallback e regressioni Home/background verificati. Screenshot1080p/4K/mobile, esiti e limiti nel [rapporto3.1](docs/verification/phase-3.1/report.md). Alias telecomando DOM sintetici distinti da input CDP e dispositivo reale non verificato. Dialoghi nativi webOS, screen reader e altri browser non certificati. La verifica2.10 sotto riguarda lo storico del motore.
 
 Le decisioni correnti sostituiscono le descrizioni storiche numerate più sotto: Home unica senza menu superiore; logo/orologio locale, app e tre widget Demo; niente controlli movimento finali. Motore React/TS/Canvas con immagine originale ferma e overlay, nessun video principale o navetta aggiuntiva montata. Reduced motion e visibilità sempre rispettati, idle dimming ancora in3.3.
 
@@ -73,6 +75,12 @@ Constructor options `unsupported` and `failures` configure individual scenarios.
 The adapter is wired to app catalog/launch in microphase 1.3; input listing/activation is wired to the Home widget in microphase 1.6; smart-home listing and binary switch commands are wired to the Home widget in microphase 1.7. Create one shared instance when platform data is integrated into the UI; recreating it on each render would reset simulated state. Implement actual webOS calls only after verifying public APIs, manifest privileges and device behavior; unsupported functions must show a useful disabled state, not fake success.
 
 ## Remote navigation acceptance
+
+### Contratto overlay 3.1
+
+Home unica, con dialoghi informativi per esiti avvio app e ripresa Demo; HDMI/domotica restano inline. Un solo ActionDialog nativo modale posseduto da TvShell, etichettato e descritto, con focus iniziale su Chiudi e Home inerte. Tab/Shift+Tab/frecce restano nel dialogo, OK/Enter/Chiudi o Back/Escape lo chiudono; autorepeat ignorato. Il primo Back chiude solo il modale e ripristina l'origine, il successivo torna alla prima app come prima. Origine assente/non disponibile: prima app utilizzabile, poi altro controllo disponibile. Nessuno stack di sezioni o nuova navigazione superiore.
+
+Feedback inline conservati per errori e browser senza showModal; nessun successo ottimistico. Richieste arrivate mentre un modale è aperto non lo sostituiscono, nessuna coda. Motore e policy movimento continuano indipendenti; pannello background dev non modale separato. API piattaforma e dati Demo invariati. Test e limiti nel [rapporto3.1](docs/verification/phase-3.1/report.md).
 - D-pad cycles predictably among top nav, app rail and lower widgets; no traps.
 - Focus always visible and stays consistent when UI rerenders.
 - OK activates focused tile; Back closes overlays/returns to prior section.

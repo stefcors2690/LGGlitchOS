@@ -2,7 +2,17 @@
 
 Ultimo aggiornamento: 2026-11-09.
 
-## Microfase 2.10 completata — 2026-11-09
+## Microfase 3.1 completata — 2026-11-09
+
+**Versione locale0.3.0, fase3 aperta; prossima3.2 — Pointer e simulatore telecomando, non avviata.** Base locale `4d1ca97` (fase2 completata), working tree inizialmente pulito. Nessun nuovo blocco identificato. Questo riepilogo prevale sullo storico; nessun commit, tag, release, push o deploy.
+
+Ambito confermato dall'utente: dialoghi informativi Demo per avvio app e Riprendi; HDMI/domotica invariati. `ActionDialog` nativo e condiviso, label/descrizione accessibili, Home inerte, focus su Chiudi, Tab/Shift+Tab/frecce nel modale. Back/Escape/OK/Enter o Chiudi chiudono un solo livello e ritornano all'origine tramite ID; origine non disponibile → prima app utilizzabile, poi altro controllo disponibile. Il secondo Back torna alla prima app Home. Autorepeat ignorato. Feedback inline conservato, nessuna sostituzione del modale da risultati tardivi e nessuna coda. Senza showModal resta il feedback inline; motore, tarature, API e dati Demo invariati. Package/lockfile/README allineati a0.3.0, nessuna dipendenza aggiunta.
+
+**141 test in21 file, lint/typecheck/build OK** sulla0.3.0. Edge Windows produzione/dev: flussi app/widget, focus confinato/ritorno/fallback, tasti, backdrop, richieste concorrenti, resize1080p/4K/mobile, showModal assente, convivenza col pannello non modale e regressioni Home/background OK; `runtimeErrors=[]`. Nuovo helper browser `scripts/verify-dialogs.mjs` richiamato dal collaudo Home;6 test unitari policy ritorno focus. Primo typecheck corretto per nativeEvent.isComposing; primi browser run fermati perché CDP Windows trasmette Back come tasto vuoto, poi corretta l'erogazione del test. Escape/Enter/Backspace sono CDP, gli alias telecomando sono KeyboardEvent DOM sintetici; nessun Magic Remote reale verificato.
+
+Screenshot Home/dialoghi1080p/4K/mobile ispezionati, riferimenti00/01 confrontati; composizione Home preservata e modale coerente con tema, differenze pregresse ancora esplicite. PNG verificato immutato. [Rapporto3.1](docs/verification/phase-3.1/report.md), evidenze finali in docs/verification/phase-3.1/complete/. Nessuna nuova prova prolungata o profiling allocazioni: storico2.9/2.10 separato. Limiti: nessun screen reader/dispositivo TV, altri browser o compatibilità dialog webOS certificati. Non avviare3.2 o hardware senza istruzione.
+
+## Microfase 2.10 completata — 2026-11-09 (storico)
 
 **Fase 2 e cinque milestone del motore browser completate. Versione locale 0.2.0. Prossima 3.1 — Overlay e Back, non avviata.** Questo riepilogo prevale sullo storico seguente. Nessun nuovo blocco identificato; firmware/webOS e accesso G5 restano gate futuri. Nessun commit, tag, release, push o deploy.
 
@@ -42,13 +52,13 @@ Decisione esplicitamente confermata dall'utente dopo2.8: i profili vengono usati
 
 ## Stato verificato
 
-Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/CSS rimossi in2.10 e nessuna navetta montata. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (135 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
+Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/CSS rimossi in2.10 e nessuna navetta montata. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (141 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
 
 - Microfase attiva: nessuna.
-- Prossima microfase: `3.1 — Overlay e Back` in `ROADMAP.md`.
-- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`, `2.9`, `2.10`.
+- Prossima microfase: `3.2 — Pointer e simulatore telecomando` in `ROADMAP.md`.
+- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`, `2.9`, `2.10`, `3.1`.
 - Fase 1: chiusa su approvazione esplicita dell’utente dopo debug browser e modifiche richieste.
-- Bloccanti per 3.1: nessuno identificato.
+- Bloccanti per 3.2: nessuno identificato.
 - Gate futuri: firmware/webOS esatti e accesso al G5 non disponibili; integrazioni e sostituzione Home non verificate.
 
 ## Decisioni da preservare
@@ -75,7 +85,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 
 1. Leggere `START_HERE.md`, `docs/HANDOFF.md` e i documenti nell'ordine indicato; eseguire la baseline nel nuovo ambiente prima di confrontare prestazioni.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
-3. Riprendere3.1 — Overlay e Back secondo ROADMAP: definire dialoghi accessibili e ripristino focus mantenendo Home unica, mock, Balanced, PNG e policy sistema/visibilità. Il motore2.1–2.10 è completato in browser; misure e limiti nei rapporti2.9/2.10. Non trasformare le misure headless in certificazioni TV e non anticipare hardware o privilegi.
+3. Riprendere3.2 — Pointer e simulatore telecomando secondo ROADMAP, preservando dialoghi, ritorno focus e Home unica. Motore2.1–2.10 e overlay3.1 completati in browser, risultati e limiti nei rispettivi rapporti. Mantenere mock, Balanced, PNG e policy; distinguere input CDP, alias sintetici e telecomando reale non verificato. Non anticipare hardware o privilegi.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
 5. Aggiornare stato, prossimo passo e storico in questo file, più roadmap e documentazione interessata.
 

@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import type { AppInfo, PlatformAdapter } from '../../platform/contracts';
 import { launchApp, loadAppCatalog } from './appActions';
 import type { CatalogState } from './appActions';
+import type { ActionDialogRequest } from '../../components/ActionDialog';
 import './apps.css';
 
-interface AppRailProps { readonly platform: PlatformAdapter; readonly visible: boolean }
+interface AppRailProps { readonly platform: PlatformAdapter; readonly visible: boolean; readonly onDialogRequest?: (request: ActionDialogRequest) => void }
 
-export function AppRail({ platform, visible }: AppRailProps) {
+export function AppRail({ platform, visible, onDialogRequest }: AppRailProps) {
   const [catalog, setCatalog] = useState<CatalogState | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [message, setMessage] = useState('Seleziona un’app · Catalogo demo');
@@ -27,7 +28,10 @@ export function AppRail({ platform, visible }: AppRailProps) {
     setSelectedId(app.id);
     setMessage(`Avvio demo in corso: ${app.name}…`);
     const feedback = await launchApp(platform, app);
-    if (mounted.current) { setMessage(feedback); setBusy(false); }
+    if (mounted.current) {
+      setMessage(feedback); setBusy(false);
+      onDialogRequest?.({ title: app.name, message: feedback, returnFocusId: `app-${app.id}` });
+    }
     lock.current = false;
   }
 

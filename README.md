@@ -1,6 +1,12 @@
 # StefCors GL1tCh 0S — Codex Development Kit v3
 
-Versione applicativa locale: **0.2.0**, chiusura della fase 2 (motore background). `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+Versione applicativa locale: **0.3.0**, avvio della fase 3 (qualità di interazione). `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+
+## Dialoghi Demo — 3.1
+
+Avvio simulato di un'app e pulsante Riprendi aprono un dialogo informativo. Chiudi/OK/Enter o Back/Escape lo chiudono riportando il focus al controllo d'origine; un secondo Back agisce sulla Home. Durante il modale Tab/frecce restano al suo interno e la Home non riceve input. Se l'origine non è disponibile si torna alla prima app utilizzabile. HDMI e domotica mantengono il feedback attuale. Nessuna app reale o riproduzione video.
+
+Un solo dialogo alla volta; gli esiti arrivati mentre è aperto restano nel feedback inline. Browser senza dialogo nativo: feedback inline e Home utilizzabile. `npm run check` e collaudo Home verificano policy focus, chiusure, fallback e regressioni; il modulo browser dedicato è `scripts/verify-dialogs.mjs`, richiamato da `verify-shell.mjs`. Dettagli in [rapporto3.1](docs/verification/phase-3.1/report.md).
 
 ## Collaudo stabilità e allocazioni — 2.9
 
@@ -24,13 +30,13 @@ Dalla2.10 il collaudo con PROFILE_TEST_URL include anche perdita contesto simula
 
 ## Stato corrente e ripresa su un altro PC — 2026-11-09
 
-**Fase 2 completata in browser, fino alla 2.10; prossimo lavoro 3.1 — Overlay e Back.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
+**Fase2 e3.1 completate in browser; fase3 aperta, prossimo lavoro3.2 — Pointer e simulatore telecomando.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
 
 Home unica con dati Demo, PNG originale e motore animato locale. Il profilo **Balanced viene usato anche nella build di produzione**; solo il pannello tecnico è escluso. Profili e tarature finali saranno scelti dopo prove sulla TV. Nessun menu superiore, preferenza movimento o pausa manuale nella Home definitiva.
 
 Sul nuovo PC, dalla radice del repository: `npm ci`, `npm run check`, `npm run dev`. Node>=22.12; non copiare node_modules dal vecchio PC. Aprire l'URL Vite con `?backgroundDebug=1` per attivare il pulsante degli strumenti soltanto in sviluppo. Asset e lockfile sono tracciati; trasferire anche queste modifiche documentali. Nessun `.env` o SDK TV necessario per il mock.
 
-Ultima verifica 2.10 su Windows: **135 test, lint, TypeScript e build superati**, Edge headless Home/profili/pannello/stress/fallback/recupero OK. Home produzione per 5 minuti: 29,99–30,02 draw/s locali e risorse stabili; dettagli nel rapporto2.10, profiling allocazioni storico nel2.9. Vecchia scena rimossa dal sorgente; tarature e layout preservati, differenze visive residue documentate. Nessuna certificazione GPU/G5; Linux resta non verificato. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
+Ultima verifica3.1 su Windows: **141 test, lint, TypeScript e build superati**, Edge produzione/dev dialoghi/focus/fallback e regressioni Home/background OK, errori runtime raccolti vuoti. Screenshot1080p/4K/mobile ispezionati; alias telecomando sintetici distinti da tasti CDP. Prove prolungate e profiling precedenti restano nei rapporti2.9/2.10, non ripetuti qui. Nessuna certificazione screen reader/GPU/G5 o piena fedeltà visiva; altri sistemi/browser restano da verificare. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
 
 Le sezioni numerate sotto descrivono anche la progressione storica: vecchi menu, controlli movimento e frasi “non ancora implementato” si riferiscono alla fase indicata, non allo stato attuale. Per riprendere prevalgono questo riepilogo, PROJECT_STATUS e HANDOFF.
 

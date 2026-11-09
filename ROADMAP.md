@@ -8,8 +8,8 @@ Numerazione aggiornata: nuova fase 2 per il motore animato; le precedenti fasi 2
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** macrofasi 0, 1 e 2 completate; fase 1 chiusa e approvata dall’utente, fase 2 validata in browser con i limiti hardware dichiarati. **2.1–2.10 completate; versione locale 0.2.0. Prossima:** `3.1 — Overlay e Back`.
-Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto 2.10](docs/verification/phase-2.10/report.md).
+**Stato corrente:** macrofasi 0, 1 e 2 completate; fase 2 validata in browser con i limiti hardware dichiarati. **3.1 completata; fase3 aperta, versione locale0.3.0. Prossima:** `3.2 — Pointer e simulatore telecomando`.
+Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto3.1](docs/verification/phase-3.1/report.md).
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
 
@@ -178,8 +178,9 @@ Completata su Windows con correzione scheduler, profiling Canvas/CSS/allocazioni
 
 ### 3.1 — Overlay e Back
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Implementare dialoghi accessibili, Escape/Back e ripristino focus.
+- Esito: dialoghi Demo app/Riprendi confermati dall'utente; un modale nativo, Home inerte, tasti/focus/ritorno origine e fallback verificati. 141 test/check ed Edge produzione/dev superati, albero accessibilità e screenshot1080p/4K/mobile ispezionati. Alias telecomando sintetici distinti dai tasti CDP, nessuna prova reale G5. Rapporto3.1; versione locale0.3.0, nessuna pubblicazione.
 - Accettazione: Nessuna trappola fuori dai dialoghi; chiusura e ritorno alla sezione testati.
 
 ### 3.2 — Pointer e simulatore telecomando

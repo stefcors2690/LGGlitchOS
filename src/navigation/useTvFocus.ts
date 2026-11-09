@@ -28,6 +28,7 @@ export function useTvFocus(onBack: () => void) {
     };
     const handleKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return;
+      if (root.querySelector('dialog[open][aria-modal="true"]')) return;
       const target = event.target;
       if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable="true"], dialog, [role="dialog"], [data-background-tools]')) return;
       const active = document.activeElement;

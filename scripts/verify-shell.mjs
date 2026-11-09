@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import { verifyActionDialogs } from './verify-dialogs.mjs';
 
 const baseUrl = process.env.SHELL_URL ?? 'http://127.0.0.1:5187';
 const outputDir = process.env.VERIFY_OUTPUT ?? `docs/verification/browser-${new Date().toISOString().replace(/[:.]/g, '-')}`;
@@ -137,6 +138,7 @@ try {
   await key('ArrowUp');
   assert.equal(await activeId(),'app-demo-cinema');
   assert.equal(await evaluate('document.querySelectorAll(".motion-toggle,.motion-disclosure").length'),0);
+  await verifyActionDialogs({call,evaluate,key,activeId,waitReady,reloadPage,outputDir,baseUrl,developmentUrl:process.env.BACKGROUND_TEST_URL});
   await evaluate('localStorage.setItem("glitchos.motion.v1",JSON.stringify({reduced:true,logo:false}))');
   // Test-only instrumentation: identify cached 32x32 particle sprites without app hooks.
   const particleProbe = await call('Page.addScriptToEvaluateOnNewDocument',{source:`
@@ -306,6 +308,8 @@ try {
   await key('ArrowRight');assert.equal(await activeId(),'app-demo-cinema');
   await key('ArrowDown');assert.equal(await activeId(),'watch-neon-district');
   await key('Enter');await waitReady('document.querySelector(".watch-feedback").textContent.includes("Ripresa simulata")');
+  await waitReady('!!document.querySelector(".action-dialog[open]")');
+  await key('Escape');await waitReady('!document.querySelector(".action-dialog")');assert.equal(await activeId(),'watch-neon-district');
   await key('Escape');assert.equal(await activeId(),'app-demo-cinema');
   await call('Page.removeScriptToEvaluateOnNewDocument',{identifier:noCanvas.identifier});
   await evaluate('document.querySelector(".background-image").src = "/deliberately-missing-background.png"');

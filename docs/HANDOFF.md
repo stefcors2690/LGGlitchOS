@@ -1,12 +1,18 @@
 # Ripresa su un altro PC — StefCors GL1tCh 0S
 
-Aggiornato: 2026-11-09. Punto di ripresa: **3.1 — Overlay e Back**, ancora `DA FARE`.
+Aggiornato: 2026-11-09. Punto di ripresa: **3.2 — Pointer e simulatore telecomando**, ancora `DA FARE`.
 
-## Stato corrente dopo la 2.10
+## Stato corrente dopo la 3.1
+
+Versione locale0.3.0: dialoghi Demo per app/Riprendi, ambito confermato dall'utente; HDMI/domotica invariati. Modale nativo condiviso, Home inerte, Back/Escape/OK/Chiudi ritorna all'origine o prima app disponibile; secondo Back agisce sulla Home. Feedback inline conservati, una sola richiesta visibile, browser senza showModal usa il feedback inline. Nessuna modifica al motore o nuova dipendenza. 141 test/check ed Edge produzione/dev superati; screenshot1080p/4K/mobile e albero accessibilità verificati. Esiti e limiti nel [rapporto3.1](verification/phase-3.1/report.md), evidenze finali nella sua cartella complete/. Input CDP standard distinti da alias DOM sintetici; nessun telecomando o screen reader reale verificato.
+
+File nuovi: `src/components/ActionDialog.tsx`, `dialog.css`, `dialogFocus.ts` e test; shell possiede lo stato, AppRail/ContinueWatching inviano richieste tramite callback opzionale. `scripts/verify-dialogs.mjs` è richiamato dal collaudo Home. Riprendere solo3.2, senza anticipare3.3/altro hardware; fase3 ancora aperta. Conservare sorgenti, asset, lockfile e nuove evidenze; nessun commit/push/deploy eseguito in3.1. Lo stato2.10 sotto e i rapporti precedenti restano storici.
+
+## Stato dopo la 2.10 (storico)
 
 **Fase 2 del motore completata in browser, versione locale0.2.0.** 135 test/check ed Edge Windows superati; Home produzione per300.035ms con29,99–30,02draw/s, risorse/focus stabili ed errori runtime raccolti vuoti. Rimossi CityBackdrop.tsx/city.css, asset/generatore storici conservati fuori bundle. Cleanup Canvas immediato e idempotente su errore/contextlost; verificati recupero via profilo, effetti/motore off, sorgente assente/ritorno, fallback navigabile, resize e policy. Screenshot1080p/4K confrontati con PNG/riferimenti e differenze residue esplicite nel [rapporto2.10](verification/phase-2.10/report.md). Tarature, layout e profili preservati; nessuna certificazione visiva completa, GPU o G5. Package/lockfile/README allineati a0.2.0, nessuna pubblicazione.
 
-Riprendere solo **3.1** secondo ROADMAP: dialoghi accessibili, Back/Escape e ripristino focus, mantenendo Home unica e mock. Conservare modifiche locali e rapporti2.9/2.10; nessun commit/push eseguito. Setup e mappa dei file sottostanti restano validi, le sezioni2.9/trasferimento2.8 sono storico. Profiling allocazioni2.9 non ripetuto nella2.10. Prove TV, SDK, packaging/deploy e privilegi restano futuri.
+Il piano registrato dopo2.10 era3.1, ora completata: usare il punto3.2 sopra. Setup e mappa dei file sottostanti restano validi, le sezioni2.9/trasferimento2.8 sono storico. Profiling allocazioni2.9 non ripetuto nella2.10. Prove TV, SDK, packaging/deploy e privilegi restano futuri.
 
 ## Aggiornamento dopo la 2.9 — Windows (storico)
 

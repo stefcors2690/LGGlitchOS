@@ -2,6 +2,8 @@
 
 ## Composizione corrente approvata — 2026-11-09
 
+Checkpoint3.1: dialoghi Demo app/Riprendi aggiunti come componenti nativi reali, con token cyan/magenta, superficie scura e focus visibile; Home invariata a dialogo chiuso. Screenshot1080p/4K/mobile ispezionati, limiti e confronto in [rapporto3.1](docs/verification/phase-3.1/report.md). Il modale non è rappresentato nei mockup; nessuna piena fedeltà visiva dichiarata e differenze pregresse ancora esplicite. Nessuna animazione o nuovo asset aggiunto.
+
 Checkpoint2.10: integrazione del motore browser completata senza variazioni di layout o tarature; screenshot1080p/4K e fallback ispezionati con PNG e riferimenti00/01. Le differenze residue di header, simboli Demo e pannelli sono esplicite nel [rapporto2.10](docs/verification/phase-2.10/report.md); nessuna piena fedeltà visiva dichiarata. Prossima3.1, conservare questa direzione. Il vecchio CityBackdrop/CSS è stato rimosso dal sorgente.
 
 La direzione estetica00/01 resta prioritaria, con eccezioni esplicite richieste dall'utente: Home unica, menu superiore rimosso, testi introduttivi sullo sfondo rimossi, controlli Movimento e logo/Pausa sfondo rimossi. Brand/orologio, rail e tre widget Demo restano. Il pannello tecnico2.8 compare soltanto con opt-in Vite dev e non fa parte della composizione finale.
