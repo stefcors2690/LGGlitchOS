@@ -1,5 +1,7 @@
 # StefCors GL1tCh 0S — Brand identity v1
 
+Stato operativo alla2.8: logo canonico v3 e variante statica derivata già integrati; non generare un nuovo marchio per il trasferimento. Conservare assets/branding e references insieme ai sorgenti. La direzione estetica è invariata; le differenze approvate della Home e la ripresa2.9 sono descritte in [HANDOFF](docs/HANDOFF.md) e [VISUAL_REFERENCE_GUIDE](VISUAL_REFERENCE_GUIDE.md). Le liste “Deliverables” indicano obiettivi, non un elenco corrente di lavori mancanti.
+
 ## Official naming
 Exact display name: **StefCors GL1tCh 0S**. Never replace the digit `1` or `0` with letters.
 Internal slug: `stefcors-gl1tch-0s` (suggested). Brand is a custom launcher interface, not a claim to replace the LG operating system.

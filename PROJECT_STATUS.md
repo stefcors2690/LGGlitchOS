@@ -2,6 +2,16 @@
 
 Ultimo aggiornamento: 2026-11-09.
 
+## Passaggio su un altro PC — 2026-11-09
+
+Guida operativa: [docs/HANDOFF.md](docs/HANDOFF.md); avvio e prompt IDE: [START_HERE.md](START_HERE.md). Sessione solo documentale richiesta prima di cambiare PC: la2.9 resta `DA FARE`, nessuna attività implementativa avviata.
+
+All'inizio del passaggio: ramo main, commit6fb0e09 (fase2.8 completa), working tree pulito; asset, sorgenti, lockfile e rapporti tracciati. Gli aggiornamenti documentali correnti devono essere inclusi nel trasferimento. Stato remoto/push non verificato, nessun commit/push eseguito. Reinstallare con npm ci sul PC di destinazione; non servono .env o SDK webOS per il mock.
+
+Verifica ripetuta sulla macchina attuale: npm run check OK,132 test in20 file, lint/typecheck/build. Non ripetuti Chrome, installazione da zero o test su un altro sistema operativo in questo passaggio. I browser check documentati restano quelli della2.8. Registro dettagliato in [rapporto handoff](docs/verification/handoff-2026-11-09.md).
+
+Decisione esplicitamente confermata dall'utente dopo2.8: i profili vengono usati in produzione; sceglieremo un profilo/tarature fissi dopo test TV. Per ora Balanced, nessun menu nella versione finale e nessun auto-degrado. Il pannello tecnico resta solo sviluppo con opt-in.
+
 ## Stato verificato
 
 Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/navette non montati. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (132 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
@@ -35,7 +45,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 
 ## Ripresa operativa
 
-1. Leggere `START_HERE.md` e i documenti nell'ordine indicato.
+1. Leggere `START_HERE.md`, `docs/HANDOFF.md` e i documenti nell'ordine indicato; eseguire la baseline nel nuovo ambiente prima di confrontare prestazioni.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
 3. Riprendere2.9 — Ottimizzazione e stabilità. Profilare cadenza/costo draw/allocazioni, resize ripetuti e una sessione browser prolungata con durata registrata, distinguendo CPU Canvas e compositing CSS. Usare monitor2.7 e pannello2.8 (npm run dev, ?backgroundDebug=1), misurare prima di cambiare tarature. Preservare default Balanced, controlli canonici, PNG e policy sistema/visibilità. Campioni headless21–22draw/s non sono benchmark TV né certificazione30fps. Non anticipare integrazione definitiva2.10 o hardware assente.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
@@ -334,3 +344,11 @@ Al termine di ogni microfase o sessione che modifica il progetto, aggiornare dat
 - Opt-in ?backgroundDebug=1 solo npm run dev, pulsante Sfondo · debug e pannello inizialmente chiuso. Lazy load escluso dalla produzione ordinaria; nessun ripristino dei vecchi controlli utente rimossi. Modifiche in memoria fino al reload; chiusura conserva valori, reset riporta default e Balanced.
 - Slider validati, select profilo e glitch, riga valori effettivi; controlli canonici mai sostituiti dal config risolto. BackgroundWorkbench separato dalle card; useTvFocus lascia native le interazioni degli strumenti. ESC/Back chiude e torna alla prima app.
 - 132 test e lint/typecheck/build OK; Chrome produzione con query, dev senza query e dev opt-in verificati. Profili e cleanup nuovamente collaudati con fixture StrictMode, UI desktop/mobile ispezionata. Campione monitor della fixture22.38draw/s, CPU medio.744ms/max1.9ms, solo headless. Prossima2.9; limiti e riscontri nel rapporto2.8.
+
+
+### 2026-11-09 — Continuità documentale per trasferimento PC
+
+- Nuovo docs/HANDOFF.md con requisiti, trasferimento Git/cartella, npm ci/check/dev/preview, comandi bash e PowerShell, CHROME_PATH/URL/output del collaudo e mappa dei moduli.
+- START_HERE consolidato; riepiloghi correnti in README, specifiche, guide visive/animazione e README background; corretto il README asset city che indicava ancora la navetta legacy come attiva. Rapporti implementativi storici preservati.
+- Chiarita la distinzione tra profili nel motore di produzione e pannello dev-only; preservati default Balanced e criteri2.9. Aggiornamento roadmap con collegamento al passaggio, senza completare fasi aggiuntive.
+- npm run check ripetuto con successo (132 test); nessun codice o asset modificato. Documenti nuovi/modificati da trasferire insieme al repository; nessuna pubblicazione remota eseguita.

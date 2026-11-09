@@ -1,5 +1,7 @@
 # Motore background — stato corrente 2.8
 
+Per riprendere su un altro PC leggere [docs/HANDOFF.md](../../../docs/HANDOFF.md). Stato:2.1–2.8 completate; prossima2.9. Balanced è attivo anche in produzione; solo il pannello è escluso. I percorsi e le variabili Chrome nei comandi precedenti sono da adattare al nuovo sistema operativo; impostare VERIFY_OUTPUT su una cartella nuova per preservare i rapporti storici. Nessun cambio motore in questo passaggio documentale.
+
 `CyberpunkBackgroundEngine` è l'entry point della Home. Proprietà: `animated` (permesso dalla policy esterna sistema/visibilità), `config?: BackgroundConfig` (default locale). Il componente non legge DOM focus, adapter, storage o video e non aggiorna le card. `enabled=false` lascia l'immagine statica. Il renderer attuale usa un unico Canvas per pioggia e particelle, più layer CSS localizzati per nebbia, neon e ologramma. Le sezioni numerate sotto documentano anche la progressione storica.
 
 ## File e responsabilità

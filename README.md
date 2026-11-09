@@ -1,5 +1,17 @@
 # StefCors GL1tCh 0S — Codex Development Kit v3
 
+## Stato corrente e ripresa su un altro PC — 2026-11-09
+
+**Completato fino alla 2.8; prossimo lavoro 2.9 — Ottimizzazione e stabilità.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
+
+Home unica con dati Demo, PNG originale e motore animato locale. Il profilo **Balanced viene usato anche nella build di produzione**; solo il pannello tecnico è escluso. Profili e tarature finali saranno scelti dopo prove sulla TV. Nessun menu superiore, preferenza movimento o pausa manuale nella Home definitiva.
+
+Sul nuovo PC, dalla radice del repository: `npm ci`, `npm run check`, `npm run dev`. Node>=22.12; non copiare node_modules dal vecchio PC. Aprire l'URL Vite con `?backgroundDebug=1` per attivare il pulsante degli strumenti soltanto in sviluppo. Asset e lockfile sono tracciati; trasferire anche queste modifiche documentali. Nessun `.env` o SDK TV necessario per il mock.
+
+Verifica di questo passaggio documentale: **132 test, lint, TypeScript e build superati** sulla macchina attuale. Chrome è stato verificato nella 2.8 e non rieseguito in questo passaggio; Windows/Linux e il nuovo PC restano da verificare. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
+
+Le sezioni numerate sotto descrivono anche la progressione storica: vecchi menu, controlli movimento e frasi “non ancora implementato” si riferiscono alla fase indicata, non allo stato attuale. Per riprendere prevalgono questo riepilogo, PROJECT_STATUS e HANDOFF.
+
 Cyberpunk LG OLED G5 custom launcher design and implementation reference.
 
 - `START_HERE.md` — entry point and resume prompt for any IDE

@@ -9,7 +9,7 @@ Numerazione aggiornata: nuova fase 2 per il motore animato; le precedenti fasi 2
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
 **Stato corrente:** macrofasi 0 e 1 completate; fase 1 chiusa e approvata dall’utente. **2.1–2.8 completate. Prossima:** `2.9 — Ottimizzazione e stabilità`.
-Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`.
+Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md): passaggio documentale del2026-11-09,2.9 ancora da iniziare.
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
 
@@ -158,6 +158,8 @@ Specifica: [docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md](docs/specs/CYBERPUNK_BACK
 - Accettazione: Solo sviluppo o diagnostica esplicitamente abilitata; assente dalla Home definitiva e dalla produzione ordinaria. Valori validati e Home accessibile, nessun ripristino dei vecchi controlli utente rimossi.
 
 ### 2.9 — Ottimizzazione e stabilità
+
+Piano di ripresa e baseline su un nuovo PC in [HANDOFF](docs/HANDOFF.md#ripresa-della29). Registrare ambiente, durata reale della prova e misure, distinguendole dalle verifiche storiche.
 
 - Stato: `DA FARE`
 - Milestone: 5, parte A.

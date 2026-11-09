@@ -1,5 +1,15 @@
 # StefCors GL1tCh 0S — Product & Technical Specification
 
+## Contratto corrente e continuità — 2026-11-09
+
+Fasi0/1 e2.1–2.8 completate; prossima2.9 ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+
+Le decisioni correnti sostituiscono le descrizioni storiche numerate più sotto: Home unica senza menu superiore; logo/orologio locale, app e tre widget Demo; niente controlli movimento finali. Motore React/TS/Canvas con immagine originale ferma e overlay, nessun video principale o navetta aggiuntiva montata. Reduced motion e visibilità sempre rispettati, idle dimming ancora in3.3.
+
+I profili fanno parte della produzione: Balanced predefinito, Cinematic ed Eco configurabili nel codice; sceglieremo profilo e tarature fissi dopo prove hardware. Solo il pannello è dev-only con opt-in esplicito; nessuna selezione utente o auto-degrado implementati. Buffer effetti massimoFull HD, target30fps da verificare sul G5. Contratti dettagliati nel README tecnico del background.
+
+132 test/lint/typecheck/build superati nel passaggio documentale corrente. Le evidenze browser rimangono quelle della2.8; nessuna prova reale TV, API privilegiate, packaging o deploy dichiarata.
+
 ## Vision
 A cinematic, responsive, cyberpunk custom Home experience for an LG OLED G5. Approved visual direction: **Neon City + Netrunner**, 16:9, holographic glass panels, rain-soaked futuristic skyline, cyan/magenta highlights, smooth transitions, accessible TV focus states. The approved concept image is a visual reference, **not** a source of functional behavior or assets.
 
@@ -11,13 +21,13 @@ Ultimately replace the stock webOS Home experience, including Home button behavi
 - Primary canvas 3840x2160 16:9; design in logical units and scale cleanly to 1920x1080.
 - Use React + TypeScript + Vite for the UI, with a webOS packaging layer when supported.
 - Primary interaction: LG Magic Remote D-pad, OK, Back, and pointer where supported. Never require touch or mouse.
-- Maintain 60fps where practical; gracefully degrade motion and resolution based on measured hardware performance.
+- Background target:30fps, with explicit quality profiles and static fallback. Measure navigation and background on the actual TV before making performance claims; no automatic profile changes currently implemented.
 - OLED-friendly idle dimming and motion reduction; avoid persistent bright static elements.
 - No remote tracking, telemetry, or external dependencies without explicit approval.
 
 ## Visual design
-- Background: layered animated night city, rainfall and parallax; optional optimized local looped video, with static fallback.
-- Header: exact-case StefCors GL1tCh 0S wordmark, Home / App / Ingressi / Domotica / Impostazioni, clock and weather (weather optional; don't fabricate data).
+- Background: stationary user-supplied references/background.png with Canvas rain/particles and localized CSS fog/neon/hologram overlays. Video is reference-only; no camera movement or video wallpaper.
+- Header: exact-case StefCors GL1tCh 0S wordmark and local clock. The user removed top navigation; all app/widget interactions live on one Home. No fabricated weather.
 - Main app rail: large tiles, active tile luminous magenta/cyan focus border, depth, scale and glow with tasteful motion.
 - Lower widgets: Continua a guardare (mock data until real integration is possible), HDMI inputs (mock until capability tested), Home Assistant controls (mock until configured).
 - Motion: cinematic but fluid, 180–350ms focus transitions, 400–700ms section transitions; respect reduced motion; no unskippable startup animation.

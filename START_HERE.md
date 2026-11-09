@@ -1,37 +1,40 @@
 # START HERE — StefCors GL1tCh 0S
 
-Punto di ingresso per qualsiasi IDE o agente. La continuità del lavoro è nei file del repository, non nella chat.
+Aggiornato:2026-11-09. Punto di ingresso per qualsiasi IDE o PC: la continuità è nel repository, non nella chat.
+
+## Stato corrente
+
+- Fasi0 e1 chiuse;2.1–2.8 completate, milestone1–4 del motore concluse.
+- Prossima microfase: **2.9 — Ottimizzazione e stabilità**, ancora da iniziare.2.10 resta separata.
+- Home unica con brand/orologio, rail e tre widget Demo. Nessun menu superiore o controllo movimento per l'utente.
+- Motore React/TypeScript/Canvas con PNG originale, pioggia, nebbia, neon/ologramma localizzati e particelle; veicoli opzionali non montati.
+- Profili presenti anche in produzione: **Balanced attivo**; profilo/tarature finali saranno scelti dopo prove TV. Solo il pannello è escluso dalla produzione.
+- Pannello tecnico: `npm run dev`, URL Vite con `?backgroundDebug=1`, poi **Sfondo · debug**. Modifiche solo di sessione; riduzione movimento di sistema e pagina nascosta prevalgono.
+- Ultima verifica implementativa:132 test, lint/typecheck/build e Chrome superati. Nessuna compatibilità o prestazione G5 certificata.
 
 ## Ordine di lettura
 
-1. `AGENTS.md`: regole di lavoro e confini delle autorizzazioni.
-2. `PROJECT_STATUS.md`: stato reale, ultimo lavoro, verifiche e prossimo passo.
-3. `PROJECT_SPEC.md` e `ROADMAP.md`: obiettivi, architettura e microfasi.
-4. `BRAND_IDENTITY.md`, `VISUAL_REFERENCE_GUIDE.md`, `ANIMATION_SPEC.md`: vincoli visivi e movimento.
-5. `README.md` e sorgenti/configurazioni effettivamente presenti; controllare anche `git status` e modifiche locali.
+1. `AGENTS.md`: regole, autorizzazioni e limiti.
+2. `PROJECT_STATUS.md`: stato verificato, decisioni e prossima attività.
+3. [Trasferimento e ripresa su un altro PC](docs/HANDOFF.md): installazione, asset, comandi portabili, mappa dei file e piano2.9.
+4. `PROJECT_SPEC.md` e `ROADMAP.md`: contratti e criteri della microfase.
+5. `BRAND_IDENTITY.md`, `VISUAL_REFERENCE_GUIDE.md`, `ANIMATION_SPEC.md`: riferimenti e vincoli correnti.
+6. `README.md`, `src/features/background/README.md`, `docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md` e codice reale.
 
-Prima di lavorare sulla UI, ispezionare `references/00_brand_home.png` e `references/01_home_approved.png`, poi gli altri riferimenti se pertinenti. Preservare `references/` e `assets/branding/`.
+Controllare `git status` e preservare modifiche locali. Le sezioni numerate delle specifiche e i rapporti di verifica raccontano anche la storia: per la UI corrente prevalgono lo stato sopra e PROJECT_STATUS, non i vecchi menu/impostazioni eliminati. Prima di cambiare la UI ispezionare references00/01 e conservare `references/background.png` e il logo canonico.
 
-## Prompt per riprendere lo sviluppo
+## Avvio sul nuovo PC
 
-> Leggi START_HERE.md e i documenti nel suo ordine di lettura. Verifica lo stato contro i file reali e le modifiche Git locali. Riprendi la microfase attiva o la prossima indicata in PROJECT_STATUS.md e ROADMAP.md, una sola alla volta. Prima delle modifiche indica file previsti e criteri di accettazione. Mantieni browser/mock, dati demo espliciti, navigazione TV e vincoli del brand. Esegui i controlli disponibili e riporta cosa non è verificato. Prima di concludere aggiorna ROADMAP.md, PROJECT_STATUS.md e ogni altro documento interessato, lasciando un punto di ripresa concreto. Non eseguire modifiche privilegiate al TV senza autorizzazione separata e recupero verificato.
+Dalla radice del repository, con Node>=22.12 e npm:
 
-## Prossimo lavoro: nuova fase 2
+```bash
+npm ci
+npm run check
+npm run dev
+```
 
-Leggere [specifica motore background](docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md). La fase 1 resta chiusa; le vecchie fasi 2–6 diventano 3–7. 2.1 implementata: base CyberpunkBackgroundEngine, immagine/fallback/config/controller e coordinate. Leggere anche src/features/background/README.md. 2.2 implementata: pioggia Canvas, RAF, budget e fallback. 2.3 implementata: nebbia a due veli CSS, config e pausa automatica. 2.4 implementata: neon su insegne/riflessi con coordinate cover. 2.5 implementata: volto mascherato, scanline/RGB/interferenze locali. 2.6 implementata: 40 particelle nel Canvas condiviso, modulo veicoli separato non montato e default off. Milestone 3 completata. 2.7 implementata: resolver Cinematic/Balanced/Eco, budget e monitor Canvas; Balanced invariato, Eco statico. 2.8 implementata: pannello live con opt-in ?backgroundDebug=1 solo Vite dev, codice/CSS esclusi dalla produzione. Milestone4 completata. Prossima2.9: ottimizzazione e stabilità. Non implementare tutto il task in una sessione.
+Aprire l'indirizzo stampato da Vite. La cartella del vecchio PC non deve coincidere con quella nuova. Copiare/sincronizzare sorgenti, documenti, asset e lockfile; reinstallare le dipendenze. Non occorrono `.env`, SDK webOS o servizi esterni per la preview. Procedura Git/trasferimento, Chrome e PowerShell in [HANDOFF](docs/HANDOFF.md).
 
-## Stato e comandi
+## Prompt da dare all'altro IDE
 
-La microfase 0.1 ha introdotto lo scaffold React + TypeScript strict + Vite. Usare `npm install` (oppure `npm ci` dal lockfile), `npm run dev`, `npm run build` e `npm run preview`, con prerequisiti e dettagli in `README.md`. La microfase 0.2 aggiunge `npm run lint`, `npm run typecheck`, `npm test`, `npm run test:watch` e `npm run check` (tutti i controlli). La microfase 0.3 introduce contratti e adapter mock in `src/platform/`, con uso e limiti descritti in `PROJECT_SPEC.md` e `README.md`; non è ancora collegato alla pagina. La microfase 0.4 aggiunge tema neon, shell TV e logo con reduced motion; evidenze browser in `docs/verification/phase-0.4.md`. La microfase 1.1 aggiunge sfondo locale `references/background.png` scelto dall’utente, pioggia/foschia e navette aggiuntive occasionali; pausa, reduced motion e pagina nascosta sono gestiti dalla policy in `src/motion/`. Evidenze in `docs/verification/phase-1.1-background/report.md`. La 1.2 aggiunge header con cinque sezioni selezionabili e orologio locale reale; evidenze in `docs/verification/phase-1.2/report.md`. La 1.3 collega il rail demo a un adapter condiviso; card, feedback e selezione persistente tra sezioni sono in `src/features/apps/`, evidenze in `docs/verification/phase-1.3/report.md`. La 1.4 introduce focus manager e tasti browser in `src/navigation/`; regole e comandi nel README, evidenze in `docs/verification/phase-1.4/report.md`. La 1.5 aggiunge Continua a guardare demo e zona focus widgets; dopo 1.8 è pianificato il debug interattivo browser, già disponibile secondo README. Evidenze in `docs/verification/phase-1.5/report.md`. La 1.6 aggiunge il widget ingressi Home con quattro sorgenti mock, cambio simulato e memoria nello stesso adapter; evidenze in `docs/verification/phase-1.6/report.md`. La 1.7 collega luce e presa demo al widget Home in `src/features/smart-home/`, con switch accessibili, gestione errori e stato conservato tra sezioni; evidenze in `docs/verification/phase-1.7/report.md`. La 1.8 aggiunge preferenze movimento/logo persistenti, precedenza del sistema e pagina nascosta; evidenze in `docs/verification/phase-1.8/report.md`. Fase 1 chiusa per approvazione esplicita utente dopo debug e correzioni; 2.1 e 2.2 completate (milestone 1); 2.3 completata; 2.4 completata; 2.5 e 2.6 completate (milestone 3); 2.7 e2.8 completate (milestone4); prossima microfase2.9 — Ottimizzazione e stabilità. Consultare sempre `PROJECT_STATUS.md` e `ROADMAP.md` per lo stato aggiornato.
-
-Per il logo, `assets/branding/preview.html` è l'anteprima standalone. Il collaudo richiesto prevede almeno due cicli da 9 secondi in Chrome/Edge, poi embedding e verifica su webOS quando disponibile. La presenza del file non certifica questi test.
-
-La sostituzione completa della Home e la compatibilità root restano non verificate.
-
-## Home unica — modifica layout approvata dall’utente
-
-La navigazione superiore per sezioni è stata eliminata su richiesta utente. Header con solo brand e orologio; app, Continua a guardare, ingressi e domotica sono sempre nella Home. Il controllo espandibile “Movimento e logo” contiene le preferenze esistenti. Frecce percorrono controls → rail → widgets → settings (solo se aperte); primo input direzionale e Back/Escape portano alla prima app, Back richiude anche le preferenze. Mantiene badge Demo, sfondo e componenti reali. Questa decisione sostituisce le precedenti indicazioni sulle cinque sezioni; i riferimenti 00/01 restano guida estetica, con eccezione esplicita del menu rimosso. Verifiche correnti: scripts/verify-shell.mjs; vecchio collaudo sezioni conservato in scripts/verify-shell-sections-legacy.mjs, non compatibile con UI attuale.
-
-## Policy corrente — animazioni fisse, senza controlli
-
-Su richiesta utente rimossi “Movimento e logo” e “Pausa sfondo”: nessun pannello o preferenza modificabile nella Home. Sfondo e logo animati automaticamente quando la pagina è visibile e il sistema non richiede movimento ridotto. Reduced motion e pagina nascosta continuano a fermarli automaticamente. La vecchia chiave localStorage glitchos.motion.v1 è ignorata; le precedenti descrizioni di impostazioni e pausa sono storico, sostituite da questa decisione. Primo input direzionale e Back tornano al rail; frecce tra rail e widget. Evidenze correnti in docs/verification/fixed-motion/.
+> Leggi START_HERE.md, AGENTS.md, PROJECT_STATUS.md, docs/HANDOFF.md, PROJECT_SPEC.md e ROADMAP.md. Verifica codice e Git locali. Il lavoro è completato fino alla2.8; riprendi solo2.9 — Ottimizzazione e stabilità. Prima delle modifiche dichiara file previsti e criteri. Preserva Home unica, dati Demo, brand canonico, PNG originale, tarature approvate, Balanced di produzione e policy sistema/visibilità. Usa i controlli canonici e non applicare due volte resolveBackgroundConfig. Esegui baseline sul PC attuale, profiling e prova prolungata con durata registrata; distingui misure Canvas/CSS e target30fps da prestazioni reali. Aggiorna roadmap, stato, istruzioni ed evidenze prima di concludere. Non dichiarare prove TV, deploy o funzioni privilegiate non eseguite e non anticipare2.10.

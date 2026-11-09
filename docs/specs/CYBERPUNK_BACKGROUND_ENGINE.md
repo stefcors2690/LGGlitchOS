@@ -1,5 +1,7 @@
 # Cyberpunk Animated Background Engine — specifica fase 2
 
+Continuità PC: [HANDOFF](../HANDOFF.md) e [START_HERE](../../START_HERE.md). Profili e controlli canonici restano nel motore di produzione, con Balanced attivo; il profilo finale sarà scelto dopo test G5. Il pannello è invece solo Vite dev con opt-in. Le analisi dell'inventario iniziale e le sezioni di pianificazione sono storiche: per file montati e punto di ripresa usare lo stato corrente e il README tecnico.
+
 Stato: milestone 1 completata (2.1 base e 2.2 pioggia Canvas). Milestone 2 completata con 2.3 nebbia e 2.4 neon localizzati. Milestone 3 completata: 2.5 ologramma e 2.6 particelle/predisposizione veicoli off. Milestone4 completata:2.7 profili/monitor e2.8 pannello sviluppo. 2.9–2.10 da fare: ottimizzazione/stabilità e integrazione finale. Specifica ricavata dal task utente; roadmap operativa in [ROADMAP.md](../../ROADMAP.md). La fase 1 resta chiusa. Eseguire una microfase alla volta, con controlli e aggiornamento del contesto a ogni passaggio; verificare anche l'insieme al termine di ogni milestone.
 
 ## Obiettivo e vincoli

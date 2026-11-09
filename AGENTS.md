@@ -46,3 +46,8 @@ L’utente richiede **massima fedeltà visiva ai riferimenti**, non una reinterp
 Riprodurre gerarchia, proporzioni, posizioni, densità, margini, tipografia leggibile, cornici olografiche, glow cyan/magenta e trattamento del focus. Usare componenti reali e loghi terzi autentici o fallback neutri; non incorporare il mockup completo come UI e non presentare i dati dei mockup come reali.
 
 Prima di completare una fase visiva, confrontare gli screenshot 1080p/4K con i riferimenti prioritari e documentare differenze residue e verifiche. Le funzionalità di fasi future possono restare incomplete, ma lo stile e la geometria degli elementi già implementati devono convergere al riferimento. Non dichiarare fedeltà completa finché restano differenze evidenti; evitare semplificazioni o cambi di direzione non richiesti. L’attuale shell/header è una base funzionante e richiede ancora allineamento visivo al riferimento.
+
+
+## Passaggio su un altro PC
+
+La procedura operativa e la mappa dei file sono in `docs/HANDOFF.md`, richiamata da START_HERE. Trasferire sorgenti/asset/lockfile e reinstallare le dipendenze sul nuovo PC. I rapporti storici non sono lo stato corrente; mantenere gli ID di ROADMAP e registrare separatamente le nuove evidenze senza sovrascrivere quelle precedenti. Il punto di ripresa resta PROJECT_STATUS, non questo file di istruzioni.

@@ -1,11 +1,17 @@
 # StefCors GL1tCh 0S — Visual Reference Guide
 
+## Composizione corrente approvata — 2026-11-09
+
+La direzione estetica00/01 resta prioritaria, con eccezioni esplicite richieste dall'utente: Home unica, menu superiore rimosso, testi introduttivi sullo sfondo rimossi, controlli Movimento e logo/Pausa sfondo rimossi. Brand/orologio, rail e tre widget Demo restano. Il pannello tecnico2.8 compare soltanto con opt-in Vite dev e non fa parte della composizione finale.
+
+Usare references/background.png come scenografia effettiva, senza modificarla; gli altri mockup non devono essere usati come UI piatta. Nessuna navetta aggiuntiva attualmente montata. Policy sistema/visibilità per le animazioni; idle dimming futuro. [Handoff e asset necessari sul nuovo PC](docs/HANDOFF.md). Le sezioni storiche seguenti vanno interpretate secondo queste decisioni.
+
 All images in `references/` are concept art generated for this project, not production-ready application screens or editable component layouts. Recreate UI as accessible React components, not a flattened screenshot. Images are reference assets; do not hardcode sample weather, time, app availability, watch progress, or smart-home state as real data.
 
 ## Priority and screens
 
 1. `references/00_brand_home.png` — **CURRENT BRAND REFERENCE**. This shows the approved naming and brand treatment, original recognizable app marks and the overall composition. Use it as the primary naming and logo reference.
-2. `references/01_home_approved.png` — **APPROVED PRIMARY DESIGN**. This is the canonical layout and aesthetic. Preserve its overall hierarchy: top navigation, immersive city background, app carousel, and three lower widget zones. Use the visual as the main reference for implementation. The mockup contains fictional/sample values.
+2. `references/01_home_approved.png` — **APPROVED PRIMARY DESIGN**. This is the canonical layout and aesthetic. Preserve its hierarchy of immersive city, app carousel and three lower widget zones; the user explicitly removed top navigation. Use the visual as the main reference for implementation. The mockup contains fictional/sample values.
 3. `references/02_boot_sequence.png` — Concept for an optional, **skippable** startup animation. This does not imply control of the physical TV boot process or automatic launch on webOS. Use only when app launches.
 4. `references/03_app_focus.png` — Focus and carousel interaction inspiration: selected tile lifts, grows slightly, holographic platform/rings appear, and neighboring tiles remain readable. Avoid excessive movement and focus loss.
 5. `references/04_home_alternative.png` — Alternative composition and HUD/widget treatments. Secondary inspiration; never override the approved primary layout without asking.
@@ -18,7 +24,7 @@ All images in `references/` are concept art generated for this project, not prod
 - App rail must have deterministic keyboard/D-pad focus and accessible names. Support Back/Escape and Enter/OK.
 - Preserve clear hierarchy over the busy backdrop with contrast overlays; don't put critical labels directly on bright signage.
 - Animation target: fluid on real TV hardware, progressive enhancement, reduced-motion and idle dimming.
-- Reuse original concept images as development placeholders if helpful, but for a convincing animated city, create separated background layers or original licensed loops. Never animate the whole screenshot as if it were an interactive UI.
+- Use only the approved scenery PNG as the actual background; keep controls as real components and animate independent overlays. Never animate or display a flattened reference screenshot as the interactive UI.
 - The sample logo/wordmark and app logos are visual references, not guaranteed exact vector assets. Rebuild with components or legally usable assets.
 
 ## Acceptance checkpoints
@@ -57,12 +63,8 @@ Prima di completare una fase visiva, confrontare gli screenshot 1080p/4K con i r
 
 ## Pulizia sezioni — feedback browser
 
-Su richiesta utente, tutte le sezioni mantengono lo sfondo libero come Home: eyebrow, titoli promozionali, descrizioni introduttive e nota decorativa della scena non sono visibili. Titoli e descrizioni rimangono accessibili; menu, controllo movimento, pannelli funzionali e badge Demo restano visibili.
+Su richiesta utente, tutte le sezioni mantengono lo sfondo libero come Home: eyebrow, titoli promozionali, descrizioni introduttive e nota decorativa della scena non sono visibili. Titoli e descrizioni rimangono accessibili; pannelli funzionali e badge Demo restano visibili; menu e controllo movimento sono stati poi rimossi.
 
 ## Home unica — modifica layout approvata dall’utente
 
-La navigazione superiore per sezioni è stata eliminata su richiesta utente. Header con solo brand e orologio; app, Continua a guardare, ingressi e domotica sono sempre nella Home. Il controllo espandibile “Movimento e logo” contiene le preferenze esistenti. Frecce percorrono controls → rail → widgets → settings (solo se aperte); primo input direzionale e Back/Escape portano alla prima app, Back richiude anche le preferenze. Mantiene badge Demo, sfondo e componenti reali. Questa decisione sostituisce le precedenti indicazioni sulle cinque sezioni; i riferimenti 00/01 restano guida estetica, con eccezione esplicita del menu rimosso. Verifiche correnti: scripts/verify-shell.mjs; vecchio collaudo sezioni conservato in scripts/verify-shell-sections-legacy.mjs, non compatibile con UI attuale.
-
-## Policy corrente — animazioni fisse, senza controlli
-
-Su richiesta utente rimossi “Movimento e logo” e “Pausa sfondo”: nessun pannello o preferenza modificabile nella Home. Sfondo e logo animati automaticamente quando la pagina è visibile e il sistema non richiede movimento ridotto. Reduced motion e pagina nascosta continuano a fermarli automaticamente. La vecchia chiave localStorage glitchos.motion.v1 è ignorata; le precedenti descrizioni di impostazioni e pausa sono storico, sostituite da questa decisione. Primo input direzionale e Back tornano al rail; frecce tra rail e widget. Evidenze correnti in docs/verification/fixed-motion/.
+La navigazione superiore è stata eliminata su richiesta utente. Header con brand e orologio; app, Continua a guardare, ingressi e domotica sono sempre nella Home. Frecce tra rail e widget, primo input direzionale e Back/Escape tornano alla prima app. Nessun controllo Movimento e logo/Pausa sfondo. Il pannello tecnico dev usa controlli nativi e chiudendosi torna alla prima app. I riferimenti00/01 restano guida estetica, con l'eccezione del menu rimosso. Collaudo corrente scripts/verify-shell.mjs; lo script sezioni legacy non descrive la UI corrente.
