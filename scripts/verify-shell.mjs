@@ -1,12 +1,12 @@
 // Manual browser acceptance check. No npm dependency: uses local Chrome + Node WebSocket.
 import { spawn } from 'node:child_process';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 
 const baseUrl = process.env.SHELL_URL ?? 'http://127.0.0.1:5187';
-const outputDir = process.env.VERIFY_OUTPUT ?? 'docs/verification/phase-2.8';
+const outputDir = process.env.VERIFY_OUTPUT ?? `docs/verification/browser-${new Date().toISOString().replace(/[:.]/g, '-')}`;
 const executable = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const profile = await mkdtemp(path.join(tmpdir(), 'glitch-chrome-'));
 const chrome = spawn(executable, ['--headless=new', '--disable-gpu', '--no-first-run',
@@ -303,12 +303,16 @@ try {
   await waitReady('document.querySelector(".background-rain")?.dataset.state === "unavailable"');
   await evaluate('document.querySelector(".background-image").decode()');
   assert(await evaluate('document.querySelector(".background-image").naturalWidth > 0'));
+  await key('ArrowRight');assert.equal(await activeId(),'app-demo-cinema');
+  await key('ArrowDown');assert.equal(await activeId(),'watch-neon-district');
+  await key('Enter');await waitReady('document.querySelector(".watch-feedback").textContent.includes("Ripresa simulata")');
+  await key('Escape');assert.equal(await activeId(),'app-demo-cinema');
   await call('Page.removeScriptToEvaluateOnNewDocument',{identifier:noCanvas.identifier});
   await evaluate('document.querySelector(".background-image").src = "/deliberately-missing-background.png"');
   await waitReady('!!document.querySelector(".background-notice")');
   await waitReady('!document.querySelector(".background-neon") && !document.querySelector(".background-hologram")');
   assert(await evaluate('!!document.querySelector(".background-gradient") && !document.querySelector(".background-image")'));
-  await key('ArrowRight');
+  await key('Escape');
   assert.equal(await activeId(),'app-demo-cinema');
   const fallbackShot = await call('Page.captureScreenshot',{format:'png'});
   await writeFile(`${outputDir}/missing-image-fallback.png`,Buffer.from(fallbackShot.data,'base64'));
@@ -363,7 +367,47 @@ try {
     await evaluate('document.querySelector("#toggle-engine").click()');
     await waitReady('document.querySelector(".background-effects")?.dataset.state === "running"');
     const remounted=await resources();assert.equal(remounted.raf,1);assert.equal(remounted.resize,baseline.resize);assert.equal(remounted.observers,baseline.observers);
-    profiles={baseline,monitor,transitions,reduced,unmounted,remounted};
+    // Unmount deliberately replaced the img: subsequent checks compare against the new mount.
+    await evaluate('window.__originalImage=document.querySelector(".background-image");void 0');
+    const fallbackChecks=[];
+    for (const mode of ['contextlost','draw-error']) {
+      await evaluate(`(() => {
+        const canvas=document.querySelector('.background-effects');window.__failedCanvas=canvas;
+        if('${mode}'==='contextlost') canvas.dispatchEvent(new Event('contextlost',{cancelable:true}));
+        else {const context=canvas.getContext('2d'),clear=context.clearRect;window.__restoreClear=()=>{context.clearRect=clear;};context.clearRect=()=>{throw new Error('Injected draw/cleanup failure');};}
+      })()`);
+      await waitReady('document.querySelector(".background-effects")?.dataset.state==="unavailable"');
+      const failed=await resources();fallbackChecks.push({mode,...failed});
+      assert.equal(failed.raf,0);assert.equal(failed.sprites,0);assert.equal(failed.resize,2);assert.equal(failed.observers,2);
+      await evaluate('window.dispatchEvent(new Event("resize"))');
+      await new Promise(resolve=>setTimeout(resolve,100));
+      assert(await evaluate('window.__failedCanvas.width===1 && window.__failedCanvas.height===1'),'Failed buffer must stay released after resize');
+      assert(await evaluate('document.querySelector(".background-image").naturalWidth>0'),'PNG must survive Canvas failure');
+      await evaluate('window.__restoreClear?.();delete window.__restoreClear');
+      await evaluate("document.querySelector('#profile-cinematic').click()");
+      await waitReady('document.querySelector(".background-effects")?.dataset.state==="running"');
+      await evaluate("document.querySelector('#profile-balanced').click()");
+      await waitReady('document.querySelector(".background-effects")?.dataset.rainCount==="208" && document.querySelector(".background-effects")?.dataset.state==="running"');
+      const recovered=await resources();assert.equal(recovered.raf,1);assert.equal(recovered.sprites,5);
+    }
+    const disabledChecks=[];
+    for(const id of ['toggle-effects','toggle-scene']) {
+      await evaluate(`document.querySelector('#${id}').click()`);
+      await waitReady('!document.querySelector(".background-effects")');
+      const disabled=await resources();disabledChecks.push({id,...disabled});
+      assert.equal(disabled.raf,0);assert.equal(disabled.sprites,0);assert.equal(disabled.resize,0);assert.equal(disabled.observers,0);
+      assert.equal(await evaluate('document.querySelectorAll(".background-fog,.background-neon,.background-hologram").length'),0);
+      assert(disabled.sameImage,'Disabling effects must preserve the original image');
+      await evaluate(`document.querySelector('#${id}').click()`);
+      await waitReady('document.querySelector(".background-effects")?.dataset.state==="running" && !!document.querySelector(".hologram-panel")');
+    }
+    await evaluate("document.querySelector('#toggle-image').click()");
+    await waitReady('!!document.querySelector(".background-notice") && !document.querySelector(".background-image")');
+    assert.equal(await evaluate('document.querySelectorAll(".background-neon,.background-hologram").length'),0);
+    await evaluate("document.querySelector('#toggle-image').click()");
+    await waitReady('!!document.querySelector(".hologram-panel") && !document.querySelector(".background-notice")');
+    assert(await evaluate('document.querySelector(".background-image").naturalWidth>0'));
+    profiles={baseline,monitor,transitions,reduced,unmounted,remounted,fallbackChecks,disabledChecks,imageSourceRecovery:true};
   }
   let settings = null;
   if (process.env.BACKGROUND_TEST_URL) {
@@ -435,6 +479,124 @@ try {
     assert.equal(await evaluate('document.querySelectorAll(".background-settings").length'),0);
     await waitReady('document.querySelector(".background-effects").dataset.particleCount==="40"');
     settings={productionExcluded:true,developmentOptIn:true,startsClosed:true,liveControls:true,canonicalProfiles:true,reset,keyboard:true,escapeReturnsHome:true,reducedMotion:true,reloadResets:true,mobile:true};
+  }
+  if (process.env.ALLOCATION_MS) {
+    const duration=Number(process.env.ALLOCATION_MS);
+    assert(Number.isFinite(duration) && duration>=10000,'ALLOCATION_MS must be at least 10000');
+    await call('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:1,mobile:false});
+    await call('Page.navigate',{url:baseUrl});
+    await waitReady('document.querySelector(".background-effects")?.dataset.state==="running"');
+    await new Promise(resolve=>setTimeout(resolve,3000));
+    await call('HeapProfiler.collectGarbage');
+    await call('HeapProfiler.startSampling',{samplingInterval:4096,includeObjectsCollectedByMajorGC:true,includeObjectsCollectedByMinorGC:true});
+    const started=Date.now();await new Promise(resolve=>setTimeout(resolve,duration));
+    const {profile:allocation}=await call('HeapProfiler.stopSampling');
+    const nodes=[];
+    const visit=node=>{
+      if(node.selfSize) nodes.push({bytes:node.selfSize,function:node.callFrame.functionName,url:node.callFrame.url,line:node.callFrame.lineNumber});
+      node.children.forEach(visit);
+    };
+    visit(allocation.head);nodes.sort((a,b)=>b.bytes-a.bytes);
+    await writeFile(`${outputDir}/allocations.json`,JSON.stringify({environment:await call('Browser.getVersion'),durationMs:Date.now()-started,
+      intervalBytes:4096,totalSampledBytes:nodes.reduce((sum,node)=>sum+node.bytes,0),nodes,profile:allocation,
+      limitations:'Statistical JS allocation samples including collected objects; not all allocations, native Canvas buffers or GPU memory. Production Home, headless --disable-gpu, 1080p DPR1 Balanced.'},null,2));
+  }
+  if (process.env.STABILITY_MS) {
+    const duration = Number(process.env.STABILITY_MS);
+    assert(Number.isFinite(duration) && duration >= 60000, 'STABILITY_MS must be at least 60000');
+    assert(process.env.PROFILE_TEST_URL, 'Stability check requires PROFILE_TEST_URL');
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const census = () => evaluate(`(() => {
+      const r=window.__backgroundResources;
+      // The test probe must not itself retain disposed Canvas buffers during heap sampling.
+      for(const s of r.sprites) if(s.width===0) r.sprites.delete(s);
+      const c=document.querySelector('.background-effects');
+      return {raf:r.frames.size,resize:r.resize.size,observers:r.observers.size,sprites:r.sprites.size,
+        canvases:document.querySelectorAll('.background-effects').length,width:c?.width,height:c?.height,
+        fps:Number(c?.dataset.fps||0),averageDrawMs:Number(c?.dataset.averageDrawMs||0),maxDrawMs:Number(c?.dataset.maxDrawMs||0)};
+    })()`);
+    const metrics = async () => {
+      await call('HeapProfiler.collectGarbage');
+      return Object.fromEntries((await call('Performance.getMetrics')).metrics.map(({name,value})=>[name,value]));
+    };
+    await call('Performance.enable');
+    await call('Page.navigate',{url:process.env.PROFILE_TEST_URL});
+    await waitReady('window.__backgroundResources && document.querySelector(".background-effects")?.dataset.state==="running"');
+    const transitions=[];
+    for(let i=0;i<30;i++) {
+      const profile=['cinematic','eco','balanced'][i%3];
+      await evaluate(`document.querySelector('#profile-${profile}').click()`);
+      await waitReady(`document.querySelector('.cyberpunk-background')?.dataset.profile==='${profile}'`);
+      const width=i%2?1920:3840,height=width*9/16;
+      await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:i%2?1:2,mobile:false});
+      await sleep(100);
+      const r=await census();transitions.push({profile,...r});
+      assert.equal(r.raf,profile==='eco'?0:1);assert.equal(r.canvases,profile==='eco'?0:1);
+      assert.equal(r.sprites,profile==='eco'?0:5);assert.equal(r.resize,profile==='eco'?0:3);assert.equal(r.observers,profile==='eco'?0:3);
+      if(profile!=='eco') assert(r.width<=1920 && r.height<=1080);
+    }
+    await evaluate('document.querySelector("#toggle-engine").click()');
+    await waitReady('!document.querySelector(".cyberpunk-background")');
+    const unmounted=await census();
+    assert.equal(unmounted.raf,0);assert.equal(unmounted.resize,0);assert.equal(unmounted.observers,0);assert.equal(unmounted.sprites,0);
+
+    // Reuse the pre-React test census on the production Home, never in shipped code.
+    const fixture=await readFile(new URL('./fixtures/background-profiles.html',import.meta.url),'utf8');
+    const probe=fixture.match(/<script>([\s\S]*?)<\/script>/)[1];
+    const {identifier}=await call('Page.addScriptToEvaluateOnNewDocument',{source:probe});
+    await call('Page.navigate',{url:`${process.env.BACKGROUND_TEST_URL ?? 'http://127.0.0.1:5188/'}?backgroundDebug=1`});
+    await waitReady('!!document.querySelector(".background-tools-toggle")');
+    await evaluate('document.querySelector(".background-tools-toggle").click()');
+    await waitReady('!!document.querySelector("#background-fogDensity")');
+    const dragInitial=await metrics();
+    const dragStarted=Date.now();
+    // Distinct browser tasks ensure React commits each change, rather than batching the whole drag.
+    for(let i=0;i<120;i++) {
+      const id=['fogDensity','neonIntensity','rainIntensity','particleCount'][i%4];
+      const value=20+i%60;
+      await evaluate(`(() => {const el=document.querySelector('#background-${id}');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,${value});el.dispatchEvent(new Event('input',{bubbles:true}));})()`);
+      await sleep(25);
+      const r=await census();assert.equal(r.raf,1);assert.equal(r.sprites,5);assert.equal(r.canvases,1);
+    }
+    const drag={changes:120,elapsedMs:Date.now()-dragStarted,initial:dragInitial,final:await metrics(),resources:await census()};
+    await call('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:1,mobile:false});
+    await call('Page.navigate',{url:baseUrl});
+    await waitReady('document.querySelector(".background-effects")?.dataset.state==="running" && !!document.querySelector(".hologram-panel")');
+    await sleep(3000);
+    await call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight'});
+    await call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight'});
+    const initialFocus=await evaluate('document.activeElement.dataset.tvId');
+    const initial=await metrics(),samples=[];
+    const started=Date.now();
+    while(Date.now()-started<duration) {
+      await sleep(Math.min(10000,duration-(Date.now()-started)));
+      const r=await census();samples.push({elapsedMs:Date.now()-started,...r,metrics:await metrics()});
+      assert.equal(r.raf,1);assert.equal(r.canvases,1);assert.equal(r.sprites,5);assert.equal(r.resize,3);assert.equal(r.observers,3);
+      assert.equal(await evaluate('document.activeElement.dataset.tvId'),initialFocus,'Animation must preserve focus');
+      console.log(`Stability ${Math.round((Date.now()-started)/1000)}s: ${r.fps} draw/s, ${r.averageDrawMs}ms CPU/draw`);
+    }
+    const actualDurationMs=Date.now()-started, final=await metrics();
+    // CDP main-thread counters compare full scene with CSS layers hidden. They do not measure GPU compositing.
+    const cpuWindows=[];
+    for(const css of [true,false]) {
+      await evaluate(`document.querySelectorAll('.background-neon,.background-hologram,.background-fog').forEach(el=>el.style.display=${css?"''":"'none'"})`);
+      await sleep(1000);const before=await metrics();await sleep(10000);const after=await metrics();
+      cpuWindows.push({css,seconds:after.Timestamp-before.Timestamp,taskSeconds:after.TaskDuration-before.TaskDuration,
+        scriptSeconds:after.ScriptDuration-before.ScriptDuration,layoutSeconds:after.LayoutDuration-before.LayoutDuration,
+        styleSeconds:after.RecalcStyleDuration-before.RecalcStyleDuration,canvas:await census()});
+    }
+    await evaluate("document.querySelectorAll('.background-neon,.background-hologram,.background-fog').forEach(el=>el.style.display='')");
+    await call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowDown',code:'ArrowDown'});
+    await call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowDown',code:'ArrowDown'});
+    assert.equal(await evaluate('document.activeElement.dataset.tvZone'),'widgets');
+    await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
+    await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape'});
+    assert.equal(await evaluate('document.activeElement.dataset.tvZone'),'rail');
+    await call('Page.removeScriptToEvaluateOnNewDocument',{identifier});
+    await writeFile(`${outputDir}/stability.json`,JSON.stringify({environment:await call('Browser.getVersion'),node:process.version,
+      platform:process.platform,mode:'production, headless --disable-gpu',viewport:{width:1920,height:1080,dpr:1},profile:'balanced',
+      requestedDurationMs:duration,actualDurationMs,transitions,unmounted,drag,initial,final,samples,cpuWindows,runtimeErrors,
+      limitations:'Forced-GC JS heap and resource counts, not total process/GPU memory or proof of no leaks. CSS windows are main-thread counters only. No TV test.'},null,2));
   }
   assert.deepEqual(runtimeErrors,[]);
   await writeFile(`${outputDir}/shell-metrics.json`,JSON.stringify({settings,profiles,particlePool,particleCoverage,particleMotion:true,particleReducedMotion:true,results,onePage:true,keyboardWidgets:true,fixedMotionIgnoresStorage:true,systemReducedMotion:true,neonPulseRange,hologramMapping:true,hologramScan:true,holoSample,hologramPause:true,neonMapping:true,neonPulse:true,neonSample,neonVisibilityPause:true,runtimeErrors,rainCoverage,fogTimelineAndContinuity:true,fogVisibilityPause:true,fogNoFilters:true,imageFailureFallback:true,rainAnimation:true,rainResizeBudget:true,visibilityStopResume:true,canvasUnavailableFallback:true,originalObjectFit:"cover"},null,2));

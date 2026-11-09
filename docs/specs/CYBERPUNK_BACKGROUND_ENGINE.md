@@ -2,7 +2,11 @@
 
 Continuità PC: [HANDOFF](../HANDOFF.md) e [START_HERE](../../START_HERE.md). Profili e controlli canonici restano nel motore di produzione, con Balanced attivo; il profilo finale sarà scelto dopo test G5. Il pannello è invece solo Vite dev con opt-in. Le analisi dell'inventario iniziale e le sezioni di pianificazione sono storiche: per file montati e punto di ripresa usare lo stato corrente e il README tecnico.
 
-Stato: milestone 1 completata (2.1 base e 2.2 pioggia Canvas). Milestone 2 completata con 2.3 nebbia e 2.4 neon localizzati. Milestone 3 completata: 2.5 ologramma e 2.6 particelle/predisposizione veicoli off. Milestone4 completata:2.7 profili/monitor e2.8 pannello sviluppo. 2.9–2.10 da fare: ottimizzazione/stabilità e integrazione finale. Specifica ricavata dal task utente; roadmap operativa in [ROADMAP.md](../../ROADMAP.md). La fase 1 resta chiusa. Eseguire una microfase alla volta, con controlli e aggiornamento del contesto a ogni passaggio; verificare anche l'insieme al termine di ogni milestone.
+Stato: **fase2 completata in browser**, tutte le cinque milestone e microfasi2.1–2.10 chiuse; versione locale0.2.0, nessuna pubblicazione. Prossima3.1 — Overlay e Back. Milestone1 base/pioggia,2 nebbia/neon,3 ologramma/particelle/veicoli opzionali off,4 profili/pannello,5 ottimizzazione/integrazione verificate. Roadmap in [ROADMAP.md](../../ROADMAP.md); misure G5 restano rinviate fino a hardware disponibile. Le sezioni progettuali sottostanti documentano anche la progressione storica.
+
+Verifica2.10:135 test/check ed Edge Windows OK; cleanup Canvas immediato e idempotente su errore/contextlost, fallback e recupero, effetti/motore off, sorgente assente/ritorno e navigazione verificati. CityBackdrop/CSS duplicati rimossi; PNG, tarature, profili e UI preservati. Home produzione per5min con risorse/focus stabili, screenshot1080p/4K confrontati e differenze residue nel [rapporto2.10](../verification/phase-2.10/report.md), nessuna piena fedeltà visiva o certificazione webOS dichiarata.
+
+Verifica2.9: scheduler con residuo conservato e delta simulazione separato;134 test/check ed Edge Windows OK, stress profili/resize/slider e Home produzione per5min con risorse stabili. Allocazioni JS transitorie rilevate dal profiler: pooling non implica zero allocazioni della VM/API. Limiti, confronto CSS main thread/Canvas e nuove evidenze nel [rapporto2.9](../verification/phase-2.9/report.md). Nessun cambio al contratto dei profili, tarature o GPU/G5 certificati.
 
 ## Obiettivo e vincoli
 

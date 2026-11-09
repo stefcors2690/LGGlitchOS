@@ -2,13 +2,13 @@
 
 ## Contratto corrente e continuità — 2026-11-09
 
-Fasi0/1 e2.1–2.8 completate; prossima2.9 ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+Fasi0/1/2 completate in browser, fino alla2.10; versione locale0.2.0. Prossima3.1 — Overlay e Back, ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
 
 Le decisioni correnti sostituiscono le descrizioni storiche numerate più sotto: Home unica senza menu superiore; logo/orologio locale, app e tre widget Demo; niente controlli movimento finali. Motore React/TS/Canvas con immagine originale ferma e overlay, nessun video principale o navetta aggiuntiva montata. Reduced motion e visibilità sempre rispettati, idle dimming ancora in3.3.
 
 I profili fanno parte della produzione: Balanced predefinito, Cinematic ed Eco configurabili nel codice; sceglieremo profilo e tarature fissi dopo prove hardware. Solo il pannello è dev-only con opt-in esplicito; nessuna selezione utente o auto-degrado implementati. Buffer effetti massimoFull HD, target30fps da verificare sul G5. Contratti dettagliati nel README tecnico del background.
 
-132 test/lint/typecheck/build superati nel passaggio documentale corrente. Le evidenze browser rimangono quelle della2.8; nessuna prova reale TV, API privilegiate, packaging o deploy dichiarata.
+Ultima verifica2.10:135 test/lint/typecheck/build e Edge Windows superati. Rimosso il vecchio CityBackdrop/CSS; errore Canvas o contextlost libera subito le risorse con cleanup idempotente, PNG e CSS indipendenti preservati; nessun retry automatico, recupero con config/remount. Motore/effetti off, sorgente assente/ritorno e navigazione nel fallback verificati. Home produzione per5min con risorse e focus stabili, screenshot1080p/4K e differenze residue nel [rapporto2.10](docs/verification/phase-2.10/report.md). Contratto config, tarature e UI invariati; nessuna prova reale TV, API privilegiate, packaging o deploy dichiarata. Profiling allocazioni2.9 resta evidenza separata.
 
 ## Vision
 A cinematic, responsive, cyberpunk custom Home experience for an LG OLED G5. Approved visual direction: **Neon City + Netrunner**, 16:9, holographic glass panels, rain-soaked futuristic skyline, cyan/magenta highlights, smooth transitions, accessible TV focus states. The approved concept image is a visual reference, **not** a source of functional behavior or assets.

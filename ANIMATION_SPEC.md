@@ -1,12 +1,12 @@
 # Animation specification — StefCors GL1tCh 0S
 
-## Policy corrente alla2.8 — passaggio PC
+## Policy corrente alla 2.10
 
-Ripresa dalla2.9: [HANDOFF](docs/HANDOFF.md), [stato](PROJECT_STATUS.md). Le sezioni numerate successive conservano anche comportamenti storici sostituiti.
+Fase2 completata in browser; ripresa dalla3.1: [HANDOFF](docs/HANDOFF.md), [stato](PROJECT_STATUS.md). La2.9 ha corretto lo scheduler; la2.10 ha rimosso la scena legacy e consolidato cleanup/fallback Canvas, senza cambiare tarature, policy o logo. Verifiche integrate e prova locale5min nel [rapporto2.10](docs/verification/phase-2.10/report.md); profiling storico nel2.9, nessuna misura GPU/G5. Le sezioni successive conservano anche comportamenti storici sostituiti.
 
 Home e logo si animano automaticamente salvo prefers-reduced-motion o pagina nascosta. Nessun controllo manuale movimento/logo/pausa nella versione finale; idle dimming ancora previsto in3.3. Background originale fermo, nessuna camera animata, video soltanto riferimento, navette legacy non montate. Layer attivi: pioggia/particelle in un unico Canvas/RAF, nebbia, neon e ologramma localizzati. Preservare tarature approvate e maschere nel config.
 
-Balanced è il default anche in produzione; Cinematic/Eco sono profili del motore, non funzionalità limitate al debug. Solo il pannello di taratura è dev-only, richiede ?backgroundDebug=1 ed è inizialmente chiuso. Target30fps e capFull HD non certificano il G5. Ultimi browser check nel rapporto2.8; prova prolungata e profiling ancora2.9. Tutti gli asset richiesti sono nel repository, senza percorsi runtime legati al vecchio PC.
+Balanced è il default anche in produzione; Cinematic/Eco sono profili del motore, non funzionalità limitate al debug. Solo il pannello di taratura è dev-only, richiede ?backgroundDebug=1 ed è inizialmente chiuso. Target30fps e capFull HD non certificano il G5. Ultimi browser check nel rapporto2.10; profiling allocazioni separato nel2.9. Tutti gli asset richiesti sono nel repository, senza percorsi runtime legati al vecchio PC.
 
 ## Logo v3 — slow cinematic glitch
 - Canonical asset: `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.svg`.

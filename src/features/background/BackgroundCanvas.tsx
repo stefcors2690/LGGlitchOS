@@ -24,7 +24,7 @@ export function BackgroundCanvas({ config, animated, onPerformanceSample }: { re
     let context: CanvasRenderingContext2D | null = null;
     let sprites: readonly HTMLCanvasElement[] = [];
     let particleSprites: readonly HTMLCanvasElement[] = [];
-    const fail = () => { controller?.stop(); canvas.dataset.state = 'unavailable'; canvas.width = 1; canvas.height = 1; };
+    const fail = () => { cleanup(); canvas.dataset.state = 'unavailable'; };
     const resize = () => {
       if (disposed) return;
       const box = canvas.getBoundingClientRect();
@@ -35,9 +35,12 @@ export function BackgroundCanvas({ config, animated, onPerformanceSample }: { re
     };
     const onContextLost = (event: Event) => { event.preventDefault(); fail(); };
     const cleanup = () => {
+      if (disposed) return;
       disposed = true; controller?.dispose(); observer?.disconnect();
       window.removeEventListener('resize', resize); canvas.removeEventListener('contextlost', onContextLost);
-      context?.clearRect(0, 0, canvas.width, canvas.height); canvas.dataset.frames = String(frames); canvas.dataset.state = 'static';
+      // A failed/lost context can throw even while clearing. Release every other resource regardless.
+      try { context?.clearRect(0, 0, canvas.width, canvas.height); } catch { /* Static PNG remains available. */ }
+      canvas.dataset.frames = String(frames); canvas.dataset.state = 'static';
       canvas.width = 1; canvas.height = 1;
       for (const sprite of [...sprites, ...particleSprites]) { sprite.width = 0; sprite.height = 0; }
     };

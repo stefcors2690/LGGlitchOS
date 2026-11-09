@@ -1,6 +1,6 @@
 # StefCors GL1tCh 0S — Brand identity v1
 
-Stato operativo alla2.8: logo canonico v3 e variante statica derivata già integrati; non generare un nuovo marchio per il trasferimento. Conservare assets/branding e references insieme ai sorgenti. La direzione estetica è invariata; le differenze approvate della Home e la ripresa2.9 sono descritte in [HANDOFF](docs/HANDOFF.md) e [VISUAL_REFERENCE_GUIDE](VISUAL_REFERENCE_GUIDE.md). Le liste “Deliverables” indicano obiettivi, non un elenco corrente di lavori mancanti.
+Stato operativo alla2.10: fase2 del motore completata in browser; logo canonico v3 e variante statica derivata preservati. Non generare un nuovo marchio per il trasferimento. Conservare assets/branding e references insieme ai sorgenti. Direzione estetica invariata; differenze residue della Home nel [rapporto2.10](docs/verification/phase-2.10/report.md), ripresa3.1 in [HANDOFF](docs/HANDOFF.md) e regole in [VISUAL_REFERENCE_GUIDE](VISUAL_REFERENCE_GUIDE.md). Le liste “Deliverables” indicano obiettivi, non un elenco corrente di lavori mancanti.
 
 ## Official naming
 Exact display name: **StefCors GL1tCh 0S**. Never replace the digit `1` or `0` with letters.

@@ -1,6 +1,14 @@
-# Motore background — stato corrente 2.8
+# Motore background — stato corrente 2.10
 
-Per riprendere su un altro PC leggere [docs/HANDOFF.md](../../../docs/HANDOFF.md). Stato:2.1–2.8 completate; prossima2.9. Balanced è attivo anche in produzione; solo il pannello è escluso. I percorsi e le variabili Chrome nei comandi precedenti sono da adattare al nuovo sistema operativo; impostare VERIFY_OUTPUT su una cartella nuova per preservare i rapporti storici. Nessun cambio motore in questo passaggio documentale.
+## Verifiche di stabilità 2.9
+
+`AnimationController` conserva il residuo delle scadenze per evitare la caduta a20–24draw/s con RAF irregolare; il delta simulazione è separato dall'ultimo draw reale, limitato e senza recuperi a raffica. Nessun nuovo RAF, stato React/frame o cambio tarature. Risoluzione config canonica sempre una sola volta.
+
+Il collaudo browser aggiunge `STABILITY_MS` (minimo60000) per stress profili/resize/slider e sessione Home produzione, e `ALLOCATION_MS` (minimo10000) per campioni statistici delle allocazioni JS. Variabili indipendenti, disattivate quando assenti. Per stabilità fornire PROFILE_TEST_URL e server dev; BACKGROUND_TEST_URL punta alla Home dev. Non confondere heap dopo GC/allocazioni JS con memoria nativa Canvas/GPU. Finestre CSS on/off misurano solo contatori main thread, non compositing. Comandi e risultati nel [rapporto2.9](../../../docs/verification/phase-2.9/report.md).
+
+Per riprendere su un altro PC leggere [docs/HANDOFF.md](../../../docs/HANDOFF.md). Fase2 completata fino alla2.10, versione locale0.2.0; prossima3.1. Balanced è attivo anche in produzione; solo il pannello è escluso. I percorsi Chromium vanno adattati al sistema operativo; usare output nuovi per preservare i rapporti storici. Verificati135 test/check ed Edge Windows, fallback/recupero e prova produzione5min nel rapporto2.10; profiling allocazioni2.9 separato, nessuna misura G5.
+
+I riferimenti storici a “nessuna allocazione/frame” indicano assenza di creazione esplicita di pool/sprite/oggetti applicativi nei draw: il campionamento2.9 rileva allocazioni JS transitorie attribuite soprattutto a draw (circa5,4MB/15s). Non promettere zero allocazioni effettive della VM o delle API Canvas; heap dopo GC e risorse restano limitati nella sessione provata.
 
 `CyberpunkBackgroundEngine` è l'entry point della Home. Proprietà: `animated` (permesso dalla policy esterna sistema/visibilità), `config?: BackgroundConfig` (default locale). Il componente non legge DOM focus, adapter, storage o video e non aggiorna le card. `enabled=false` lascia l'immagine statica. Il renderer attuale usa un unico Canvas per pioggia e particelle, più layer CSS localizzati per nebbia, neon e ologramma. Le sezioni numerate sotto documentano anche la progressione storica.
 
@@ -12,7 +20,13 @@ Per riprendere su un altro PC leggere [docs/HANDOFF.md](../../../docs/HANDOFF.md
 - `engine/coordinates.ts`: trasformazione cover uniforme e mappatura regione immagine normalizzata → pixel viewport, compresi offset negativi del crop. Non clampare la regione mappata prima del clipping del renderer.
 - `engine/AnimationController.ts`: scheduler RAF iniettato, limite cadenza/delta, stop/resume e dispose terminale; nessuna dipendenza React. In 2.2 collegare il scheduler browser e stop/dispose al ciclo di vita dell'effetto. Non avviarlo senza effetti. Le eccezioni draw arrestano il loop e risalgono al caller, che dovrà gestire il fallback dell'effetto.
 
-`CityBackdrop.tsx`/`city.css` restano come storico, non importati dalla Home: nessuna pioggia/nebbia/navetta CSS viene sovrapposta alla base nuova. Il logo canonico continua a usare la policy separata e le animazioni precedenti.
+`CityBackdrop.tsx`/`city.css` sono stati rimossi in2.10: non esiste una seconda implementazione della scena nel sorgente. Gli asset vettoriali/generatore restano per provenienza e storico, senza import runtime. Il logo canonico continua a usare la policy separata e le animazioni precedenti.
+
+## Fallback e validazione integrata 2.10
+
+Errore setup/draw o evento contextlost richiama subito lo stesso cleanup idempotente dell'unmount: stop/dispose RAF, disconnect observer, remove listener, buffer1×1 e sprite azzerati. Anche se clearRect fallisce si liberano le altre risorse. Lo stato resta `unavailable`; resize successivi non riallocano il buffer e non ritentano il rendering. Cambiare configurazione o rimontare crea un nuovo effetto. I layer CSS indipendenti e il PNG restano disponibili; immagine assente conserva gradiente/avviso e rimuove neon/ologramma mappati, senza spegnere arbitrariamente gli altri effetti.
+
+La fixture profili include toggle effetti/motore/immagine, esclusi dalla produzione. Con PROFILE_TEST_URL lo script verifica anche contextlost sintetico, errore draw e cleanup iniettati, zero risorse Canvas residue, recupero con profilo, effetti off e recupero sorgente. Con Canvas indisponibile la Home conserva D-pad/Enter/Back. Senza VERIFY_OUTPUT il collaudo genera una cartella `docs/verification/browser-<timestamp>`; con output esplicito usare una cartella nuova. Dettagli e limiti nel [rapporto2.10](../../../docs/verification/phase-2.10/report.md).
 
 ## Unità e limiti
 

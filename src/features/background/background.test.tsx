@@ -5,7 +5,7 @@ import { backgroundConfig, isRegion, validateBackgroundConfig } from './backgrou
 import { getCoverTransform, mapRegion } from './engine/coordinates';
 
 describe('background configuration and coordinates', () => {
-  it('uses local original and balanced with unimplemented effects off', () => {
+  it('uses local original and balanced with optional vehicles off', () => {
     expect(backgroundConfig.imageSrc).toContain('background.png');
     expect(backgroundConfig.profile).toBe('balanced');
     expect(backgroundConfig.flyingVehicles.enabled).toBe(false);
@@ -41,5 +41,15 @@ describe('background configuration and coordinates', () => {
     const html = renderToStaticMarkup(<CyberpunkBackgroundEngine animated={false} config={{ ...backgroundConfig, imageSrc: '' }} />);
     expect(html).toContain('Sfondo non disponibile'); expect(html).toContain('background-gradient');
     expect(html).not.toContain('<img');
+  });
+  it('keeps a single original image and scrim with every effect independently disabled', () => {
+    const html = renderToStaticMarkup(<CyberpunkBackgroundEngine animated config={{ ...backgroundConfig,
+      rain: { ...backgroundConfig.rain, enabled: false }, particles: { ...backgroundConfig.particles, enabled: false },
+      fog: { ...backgroundConfig.fog, enabled: false }, neon: { ...backgroundConfig.neon, enabled: false },
+      hologram: { ...backgroundConfig.hologram, enabled: false },
+    }} />);
+    expect(html.match(/<img /g)).toHaveLength(1);
+    expect(html.match(/class="background-scrim"/g)).toHaveLength(1);
+    for (const layer of ['<canvas', 'background-fog', 'background-neon', 'background-hologram', 'city-backdrop']) expect(html).not.toContain(layer);
   });
 });

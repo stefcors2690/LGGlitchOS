@@ -1,14 +1,36 @@
 # StefCors GL1tCh 0S — Codex Development Kit v3
 
+Versione applicativa locale: **0.2.0**, chiusura della fase 2 (motore background). `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+
+## Collaudo stabilità e allocazioni — 2.9
+
+Con i server preview5187 e dev5188 avviati come descritto in [HANDOFF](docs/HANDOFF.md), il collaudo opzionale supporta:
+
+```powershell
+$env:CHROME_PATH = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+$env:SHELL_URL = 'http://127.0.0.1:5187'
+$env:PROFILE_TEST_URL = 'http://127.0.0.1:5188/scripts/fixtures/background-profiles.html'
+$env:BACKGROUND_TEST_URL = 'http://127.0.0.1:5188/'
+$env:VERIFY_OUTPUT = 'docs/verification/my-stability-run'
+$env:STABILITY_MS = '300000'
+$env:ALLOCATION_MS = '15000'
+node scripts/verify-shell.mjs
+Remove-Item Env:STABILITY_MS, Env:ALLOCATION_MS
+```
+
+Adattare il percorso al browser Chromium installato e scegliere una cartella output nuova. In bash usare `export NOME=valore` per le stesse variabili e `unset STABILITY_MS ALLOCATION_MS` alla fine. Le due prove sono indipendenti e opt-in; minimo60s per stabilità,10s per allocazioni. Il collaudo ordinario resta disponibile senza queste variabili. Include heap JS dopo GC, risorse, stress controlli/profili/resize e finestre main thread CSS on/off; non misura la GPU o il G5. Evidenze e limiti nel [rapporto2.9](docs/verification/phase-2.9/report.md).
+
+Dalla2.10 il collaudo con PROFILE_TEST_URL include anche perdita contesto simulata, errore draw/cleanup, recupero, effetti/motore off e assenza/ritorno immagine. Senza VERIFY_OUTPUT crea una cartella con timestamp; l'output esplicito non deve puntare a rapporti storici. Il fallback Canvas conserva PNG e navigazione; dopo un errore le risorse Canvas sono liberate subito, senza retry automatico. Contratto e limiti nel [rapporto2.10](docs/verification/phase-2.10/report.md).
+
 ## Stato corrente e ripresa su un altro PC — 2026-11-09
 
-**Completato fino alla 2.8; prossimo lavoro 2.9 — Ottimizzazione e stabilità.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
+**Fase 2 completata in browser, fino alla 2.10; prossimo lavoro 3.1 — Overlay e Back.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
 
 Home unica con dati Demo, PNG originale e motore animato locale. Il profilo **Balanced viene usato anche nella build di produzione**; solo il pannello tecnico è escluso. Profili e tarature finali saranno scelti dopo prove sulla TV. Nessun menu superiore, preferenza movimento o pausa manuale nella Home definitiva.
 
 Sul nuovo PC, dalla radice del repository: `npm ci`, `npm run check`, `npm run dev`. Node>=22.12; non copiare node_modules dal vecchio PC. Aprire l'URL Vite con `?backgroundDebug=1` per attivare il pulsante degli strumenti soltanto in sviluppo. Asset e lockfile sono tracciati; trasferire anche queste modifiche documentali. Nessun `.env` o SDK TV necessario per il mock.
 
-Verifica di questo passaggio documentale: **132 test, lint, TypeScript e build superati** sulla macchina attuale. Chrome è stato verificato nella 2.8 e non rieseguito in questo passaggio; Windows/Linux e il nuovo PC restano da verificare. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
+Ultima verifica 2.10 su Windows: **135 test, lint, TypeScript e build superati**, Edge headless Home/profili/pannello/stress/fallback/recupero OK. Home produzione per 5 minuti: 29,99–30,02 draw/s locali e risorse stabili; dettagli nel rapporto2.10, profiling allocazioni storico nel2.9. Vecchia scena rimossa dal sorgente; tarature e layout preservati, differenze visive residue documentate. Nessuna certificazione GPU/G5; Linux resta non verificato. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
 
 Le sezioni numerate sotto descrivono anche la progressione storica: vecchi menu, controlli movimento e frasi “non ancora implementato” si riferiscono alla fase indicata, non allo stato attuale. Per riprendere prevalgono questo riepilogo, PROJECT_STATUS e HANDOFF.
 

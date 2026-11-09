@@ -2,6 +2,8 @@
 
 ## Composizione corrente approvata — 2026-11-09
 
+Checkpoint2.10: integrazione del motore browser completata senza variazioni di layout o tarature; screenshot1080p/4K e fallback ispezionati con PNG e riferimenti00/01. Le differenze residue di header, simboli Demo e pannelli sono esplicite nel [rapporto2.10](docs/verification/phase-2.10/report.md); nessuna piena fedeltà visiva dichiarata. Prossima3.1, conservare questa direzione. Il vecchio CityBackdrop/CSS è stato rimosso dal sorgente.
+
 La direzione estetica00/01 resta prioritaria, con eccezioni esplicite richieste dall'utente: Home unica, menu superiore rimosso, testi introduttivi sullo sfondo rimossi, controlli Movimento e logo/Pausa sfondo rimossi. Brand/orologio, rail e tre widget Demo restano. Il pannello tecnico2.8 compare soltanto con opt-in Vite dev e non fa parte della composizione finale.
 
 Usare references/background.png come scenografia effettiva, senza modificarla; gli altri mockup non devono essere usati come UI piatta. Nessuna navetta aggiuntiva attualmente montata. Policy sistema/visibilità per le animazioni; idle dimming futuro. [Handoff e asset necessari sul nuovo PC](docs/HANDOFF.md). Le sezioni storiche seguenti vanno interpretate secondo queste decisioni.

@@ -8,8 +8,8 @@ Numerazione aggiornata: nuova fase 2 per il motore animato; le precedenti fasi 2
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** macrofasi 0 e 1 completate; fase 1 chiusa e approvata dall’utente. **2.1–2.8 completate. Prossima:** `2.9 — Ottimizzazione e stabilità`.
-Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md): passaggio documentale del2026-11-09,2.9 ancora da iniziare.
+**Stato corrente:** macrofasi 0, 1 e 2 completate; fase 1 chiusa e approvata dall’utente, fase 2 validata in browser con i limiti hardware dichiarati. **2.1–2.10 completate; versione locale 0.2.0. Prossima:** `3.1 — Overlay e Back`.
+Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto 2.10](docs/verification/phase-2.10/report.md).
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
 
@@ -159,17 +159,18 @@ Specifica: [docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md](docs/specs/CYBERPUNK_BACK
 
 ### 2.9 — Ottimizzazione e stabilità
 
-Piano di ripresa e baseline su un nuovo PC in [HANDOFF](docs/HANDOFF.md#ripresa-della29). Registrare ambiente, durata reale della prova e misure, distinguendole dalle verifiche storiche.
+Completata su Windows con correzione scheduler, profiling Canvas/CSS/allocazioni e Home produzione per 300.032 ms. 134 test/check e Edge superati; 30 cambi profilo/resize, 120 variazioni slider, risorse stabili e cleanup verificato. Misure e limiti nel [rapporto 2.9](docs/verification/phase-2.9/report.md). Nessuna prestazione G5 certificata.
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Milestone: 5, parte A.
 - Ambito: Profilare frame time/allocazioni/risorse, limitare buffer/DPR, pooling, resize ripetuti e sessione prolungata con durata registrata.
 - Accettazione: Niente stato React per frame o crescita incontrollata; RAF/listener/risorse liberati allo smontaggio, pagina nascosta/riduzione ferme e ripresa senza salti. Obiettivo 30 fps TV, misurazione G5 rinviata finché non disponibile.
 
 ### 2.10 — Integrazione definitiva e validazione
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Milestone: 5, parte B; verifica finale di tutto il motore.
+- Esito: vecchia scena rimossa, cleanup Canvas immediato e idempotente su errore/contextlost, fallback/recupero verificati. 135 test/check ed Edge superati; Home produzione per300.035ms, risorse e focus stabili; confronto1080p/4K e differenze residue nel rapporto2.10. Fase2 chiusa in browser, nessuna certificazione G5 o piena fedeltà visiva. Versione locale0.2.0, nessuna pubblicazione.
 - Ambito: Consolidare integrazione Home e fallback, eliminare doppioni della scena precedente, completare documentazione e rapporto con evidenze.
 - Accettazione: Lint/typecheck/test/build, console senza errori osservati, effetti off/Canvas assente/resize/reduced motion/prova prolungata verificati; D-pad/OK/Back e focus invariati. Screenshot 1080p/4K confrontati con originale e riferimenti, differenze e misure esplicite; nessuna compatibilità webOS dichiarata senza TV.
 

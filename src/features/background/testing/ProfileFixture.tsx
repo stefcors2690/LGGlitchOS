@@ -12,7 +12,14 @@ function publish(sample: BackgroundPerformanceSample) {
 export function ProfileFixture() {
   const [profile, setProfile] = useState<BackgroundProfile>('balanced');
   const [mounted, setMounted] = useState(true);
-  const config = useMemo(() => ({ ...backgroundConfig, profile }), [profile]);
+  const [effects, setEffects] = useState(true);
+  const [scene, setScene] = useState(true);
+  const [image, setImage] = useState(true);
+  const config = useMemo(() => ({ ...backgroundConfig, profile, enabled: scene, imageSrc: image ? backgroundConfig.imageSrc : '',
+    rain: { ...backgroundConfig.rain, enabled: effects }, particles: { ...backgroundConfig.particles, enabled: effects },
+    fog: { ...backgroundConfig.fog, enabled: effects }, neon: { ...backgroundConfig.neon, enabled: effects },
+    hologram: { ...backgroundConfig.hologram, enabled: effects },
+  }), [profile, effects, scene, image]);
   const motion = useBackgroundMotion();
   return <main style={{ position: 'relative', isolation: 'isolate', height: '100vh', overflow: 'hidden' }}>
     {mounted && <CyberpunkBackgroundEngine animated={motion.animated} config={config} onPerformanceSample={publish} />}
@@ -20,6 +27,9 @@ export function ProfileFixture() {
       <p>Fixture tecnica — esclusa dalla Home e dalla build ordinaria</p>
       {(['balanced', 'cinematic', 'eco'] as const).map(value => <button id={`profile-${value}`} key={value} onClick={() => setProfile(value)}>{value}</button>)}
       <button id="toggle-engine" onClick={() => setMounted(value => !value)}>Mount/unmount</button>
+      <button id="toggle-effects" onClick={() => setEffects(value => !value)}>Effetti on/off</button>
+      <button id="toggle-scene" onClick={() => setScene(value => !value)}>Motore on/off</button>
+      <button id="toggle-image" onClick={() => setImage(value => !value)}>Immagine disponibile/assente</button>
       <output id="performance-sample" />
     </div>
   </main>;

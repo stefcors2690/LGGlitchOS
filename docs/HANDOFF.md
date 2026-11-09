@@ -1,8 +1,20 @@
 # Ripresa su un altro PC — StefCors GL1tCh 0S
 
-Aggiornato: 2026-11-09. Punto di ripresa: **2.9 — Ottimizzazione e stabilità**, ancora `DA FARE`.
+Aggiornato: 2026-11-09. Punto di ripresa: **3.1 — Overlay e Back**, ancora `DA FARE`.
 
-## Stato da trasferire
+## Stato corrente dopo la 2.10
+
+**Fase 2 del motore completata in browser, versione locale0.2.0.** 135 test/check ed Edge Windows superati; Home produzione per300.035ms con29,99–30,02draw/s, risorse/focus stabili ed errori runtime raccolti vuoti. Rimossi CityBackdrop.tsx/city.css, asset/generatore storici conservati fuori bundle. Cleanup Canvas immediato e idempotente su errore/contextlost; verificati recupero via profilo, effetti/motore off, sorgente assente/ritorno, fallback navigabile, resize e policy. Screenshot1080p/4K confrontati con PNG/riferimenti e differenze residue esplicite nel [rapporto2.10](verification/phase-2.10/report.md). Tarature, layout e profili preservati; nessuna certificazione visiva completa, GPU o G5. Package/lockfile/README allineati a0.2.0, nessuna pubblicazione.
+
+Riprendere solo **3.1** secondo ROADMAP: dialoghi accessibili, Back/Escape e ripristino focus, mantenendo Home unica e mock. Conservare modifiche locali e rapporti2.9/2.10; nessun commit/push eseguito. Setup e mappa dei file sottostanti restano validi, le sezioni2.9/trasferimento2.8 sono storico. Profiling allocazioni2.9 non ripetuto nella2.10. Prove TV, SDK, packaging/deploy e privilegi restano futuri.
+
+## Aggiornamento dopo la 2.9 — Windows (storico)
+
+La 2.9 è completata: scheduler corretto, 134 test/check e Edge156 superati, 30 cambi profilo/resize e 120 variazioni slider senza risorse duplicate. Home produzione Balanced/1080p/DPR1 per 300.032 ms: 29,98–30,02 draw/s, heap dopo GC +40.900 byte e conteggi risorse stabili. Profiling allocazioni JS per 15.018 ms: circa 5,4 MB campionati, soprattutto nei draw; pool fissi non significano zero allocazioni transitorie. Contatori CSS misurati separatamente dal draw Canvas, nessuna misura GPU/TV. Comandi e limiti nel [rapporto 2.9](verification/phase-2.9/report.md). Windows verificato con Node24.22.2/npm11.19.1 ed Edge headless; adattare CHROME_PATH al percorso Edge o Chrome reale. Installazione ha richiesto trust npm tramite NVM con approvazione utente; nessuna modifica del lockfile.
+
+Il punto di ripresa registrato a fine2.9 era2.10; questa attività è ora completata, usare lo stato corrente sopra. Le sezioni successive conservano il trasferimento precedente e il piano storico2.9; i comandi di setup e la mappa dei file restano validi. Prove reali G5, deploy e privilegi restano fuori da quanto verificato.
+
+## Stato da trasferire alla 2.8 (storico)
 
 Le fasi 0 e 1 sono chiuse; le microfasi 2.1–2.8 sono completate. La macrofase 2 resta aperta: mancano 2.9 e 2.10. Le milestone 1–4 del motore sono completate. Questa sessione aggiorna soltanto la documentazione, senza avviare la 2.9.
 
@@ -51,8 +63,8 @@ La produzione usa **Balanced** dalla configurazione TypeScript e ignora `?backgr
 | CSS localizzati | `FogLayer.tsx`, `NeonLayer.tsx`, `HologramLayer.tsx`; mapping cover, regioni/maschera calibrate sul PNG. |
 | Monitor | `engine/PerformanceMonitor.ts`; campioni wall-clock almeno ogni2s, costo CPU/cadenza draw Canvas, non misura GPU/CSS/Home intera. |
 | Pannello | `development/BackgroundWorkbench.tsx`, `BackgroundSettings.tsx`, `settingsPolicy.ts`; solo Vite dev + opt-in, stato separato dalle card. |
-| Veicoli | `engine/FlyingVehicleEngine.ts` predisposto ma non montato; default off, nessun asset trasparente reale fornito. `CityBackdrop` e navette CSS sono legacy non montati. |
-| Verifiche | `scripts/verify-shell.mjs`, fixture `scripts/fixtures/background-profiles.html`, rapporti `docs/verification/phase-2.1/`…`phase-2.8/`. |
+| Veicoli | `engine/FlyingVehicleEngine.ts` predisposto ma non montato; default off, nessun asset trasparente reale fornito. `CityBackdrop.tsx` e `city.css` rimossi in2.10; asset SVG/generatore storici conservati fuori bundle. |
+| Verifiche | `scripts/verify-shell.mjs`, fixture `scripts/fixtures/background-profiles.html`, rapporti `docs/verification/phase-2.1/`…`phase-2.10/`. |
 
 ## Decisioni da preservare
 
@@ -96,7 +108,7 @@ $env:VERIFY_OUTPUT = 'docs/verification/new-pc-baseline'
 node scripts/verify-shell.mjs
 ```
 
-Impostare sempre una cartella output nuova: lo script ha ancora default `phase-2.8`, che altrimenti sovrascriverebbe evidenze storiche. Le variabili del collaudo sono lette da Node, non da file `.env`. Non è necessario inserirle per usare `npm run dev`. Senza le due URL opzionali il collaudo non copre profili/pannello. Se una porta è occupata, arrestare il proprio server precedente o scegliere un'altra porta aggiornando tutte le URL corrispondenti.
+Impostare una cartella output nuova per identificare la propria verifica. Dalla2.10, senza VERIFY_OUTPUT lo script genera `docs/verification/browser-<timestamp>` invece di sovrascrivere la vecchia phase-2.8. Le variabili del collaudo sono lette da Node, non da file `.env`. Non è necessario inserirle per usare `npm run dev`. Senza le due URL opzionali il collaudo non copre profili/pannello. Se una porta è occupata, arrestare il proprio server precedente o scegliere un'altra porta aggiornando tutte le URL corrispondenti.
 
 ## Ripresa della2.9
 

@@ -14,6 +14,6 @@ All three SVGs are original vector artwork created for StefCors GL1tCh 0S in thi
 
 Reproducible source: `python3 scripts/generate-city.py` (Python standard library, deterministic seed). SVGs are committed and require no Python at app runtime or during npm build. Keep generated SVGs and generator synchronized when editing.
 
-CSS handles motion independently of the static artwork. These SVGs themselves contain no animations or scripts. The former CSS backdrop is historical. The current engine respects system reduced motion/document visibility and provides a gradient fallback; no manual pause is exposed in the final Home. Background state is fictional decorative scenery, never live weather or TV data.
+These SVGs themselves contain no animations or scripts. The former CityBackdrop.tsx/city.css implementation was removed in2.10; its assets and generator remain as historical artwork/provenance, with no runtime import. The current engine respects system reduced motion/document visibility and provides a gradient fallback; no manual pause is exposed in the final Home. Background state is fictional decorative scenery, never live weather or TV data.
 
 For the current renderer, optional vehicle module and transfer instructions see [background README](../../features/background/README.md) and [HANDOFF](../../../docs/HANDOFF.md). No generated city or shuttle asset should replace the approved PNG during transfer.

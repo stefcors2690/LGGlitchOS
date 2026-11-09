@@ -6,6 +6,7 @@ export interface FrameScheduler {
 export class AnimationController {
   private frame: number | null = null;
   private previous: number | null = null;
+  private lastDraw: number | null = null;
   private elapsedMs = 0;
   private running = false;
   private disposed = false;
@@ -20,11 +21,15 @@ export class AnimationController {
   private readonly tick = (timeMs: number) => {
     this.frame = null;
     if (!this.running) return;
-    if (this.previous === null) this.previous = timeMs;
+    if (this.previous === null) { this.previous = timeMs; this.lastDraw = timeMs; }
     const rawDelta = Math.max(0, timeMs - this.previous);
-    if (rawDelta >= 1000 / this.targetFps - 0.01) {
-      const delta = Math.min(rawDelta, this.maxDeltaMs);
-      this.previous = timeMs;
+    const interval = 1000 / this.targetFps;
+    if (rawDelta >= interval - 0.01) {
+      // Preserve scheduling remainder; measure simulation from the actual last draw.
+      // Skip missed deadlines without bursts or counting the remainder twice.
+      const delta = Math.min(Math.max(0, timeMs - this.lastDraw!), this.maxDeltaMs);
+      this.previous += Math.max(1, Math.floor((rawDelta + 0.01) / interval)) * interval;
+      this.lastDraw = timeMs;
       this.elapsedMs += delta;
       try { this.draw(delta, this.elapsedMs); }
       catch (error) { this.stop(); throw error; }
@@ -35,6 +40,7 @@ export class AnimationController {
     if (this.running || this.disposed) return;
     this.running = true;
     this.previous = null;
+    this.lastDraw = null;
     this.frame = this.scheduler.request(this.tick);
   }
   stop(): void {
@@ -42,6 +48,7 @@ export class AnimationController {
     if (this.frame !== null) this.scheduler.cancel(this.frame);
     this.frame = null;
     this.previous = null;
+    this.lastDraw = null;
   }
   dispose(): void { this.stop(); this.disposed = true; }
 }

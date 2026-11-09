@@ -9,6 +9,23 @@ function fixture(draw = vi.fn()) {
   return { controller: new AnimationController(draw, scheduler), queue, draw, step };
 }
 describe('animation lifecycle', () => {
+  it('keeps the requested cadence on irregular display frames without speeding up simulation', () => {
+    const f = fixture(); f.controller.start();
+    // A 60 Hz display with small timing variation must not lose the remainder
+    // after each draw and fall into a permanent 20–24 draw/s cadence.
+    for (let frame = 0; frame <= 600; frame++) f.step(frame * (1000 / 60) + (frame % 3 === 0 ? 0 : 0.4));
+    expect(f.draw.mock.calls.length).toBeGreaterThanOrEqual(299);
+    expect(f.draw.mock.calls.length).toBeLessThanOrEqual(300);
+    const simulated = f.draw.mock.calls.reduce((sum, call) => sum + (call[0] as number), 0);
+    expect(simulated).toBeCloseTo(10000, 0);
+    expect(f.queue.size).toBe(1);
+  });
+  it('skips missed deadlines after a long stall instead of issuing catch-up draws', () => {
+    const f = fixture(); f.controller.start(); f.step(0); f.step(5000); f.step(5016);
+    expect(f.draw).toHaveBeenCalledTimes(1);
+    f.step(5034); expect(f.draw).toHaveBeenLastCalledWith(34, 134);
+    expect(f.queue.size).toBe(1);
+  });
   it('does no work before start and prevents duplicate RAF loops', () => {
     const f = fixture(); expect(f.queue.size).toBe(0);
     f.controller.start(); f.controller.start(); expect(f.queue.size).toBe(1);

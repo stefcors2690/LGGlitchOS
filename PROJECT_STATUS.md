@@ -2,6 +2,34 @@
 
 Ultimo aggiornamento: 2026-11-09.
 
+## Microfase 2.10 completata — 2026-11-09
+
+**Fase 2 e cinque milestone del motore browser completate. Versione locale 0.2.0. Prossima 3.1 — Overlay e Back, non avviata.** Questo riepilogo prevale sullo storico seguente. Nessun nuovo blocco identificato; firmware/webOS e accesso G5 restano gate futuri. Nessun commit, tag, release, push o deploy.
+
+Base `7d39aea` con modifiche locali della2.9 presenti e preservate. Rimossi CityBackdrop.tsx/city.css duplicati e non importati; conservati asset/generatore per provenienza e FlyingVehicleEngine opzionale non montato. BackgroundCanvas libera immediatamente RAF, listener/observer, buffer e sprite su errore/contextlost, con cleanup idempotente anche se clearRect fallisce. PNG/layer CSS indipendenti disponibili, nessun retry automatico; recupero con nuova config/remount. Nessuna variazione di layout, tarature, maschere, logo, policy o adapter.
+
+Versione0.2.0 in package.json/lockfile/README; nessuna dipendenza aggiornata. Collaudo con fixture effetti/motore/immagine, errori iniettati e navigazione nel fallback. Output predefinito sicuro con timestamp, invece della vecchia cartella phase-2.8. Primo run interrotto per riferimento del probe all'img precedente all'unmount intenzionale, poi corretto e ripetuto con successo; dettagli nel rapporto.
+
+**135 test in20 file, lint/typecheck/build OK**, ripetuti sulla0.2.0. Edge156 Windows: Home/profili/pannello, effetti off, Canvas assente, errori draw/cleanup/contextlost sintetico, sorgente assente/recupero, resize, reduced motion/visibilità, D-pad/OK/Back e focus OK; errori runtime raccolti vuoti. Dopo errore Canvas:0 RAF/sprite e buffer1×1, restano solo i2 resize listener/observer dei layer CSS. Effetti/motore off ed Eco/unmount: zero risorse del motore. Produzione senza pannello/fixture/vecchia scena.
+
+Prova produzione **300.035ms** con30 campioni:29,99–30,02draw/s, CPU medio Canvas0,331–0,392ms/max0,8ms; un RAF/Canvas,5 sprite e3 resize listener/observer stabili. Heap dopo GC14.022.416→14.062.660byte (+40.244, circa0,29%); nodi/listener CDP invariati, nessuna crescita incontrollata osservata. Stress30 profili/resize e120 slider riuscito. Finestre CSS solo contatori main thread, non GPU. Profiling allocazioni2.9 resta storico separato, non ripetuto.
+
+Screenshot1080p/4K e fallback ispezionati con PNG/riferimenti00/01; composizione preservata, differenze di header/loghi Demo/pannelli documentate, nessuna piena fedeltà visiva dichiarata. PNG verificato immutato. [Rapporto2.10](docs/verification/phase-2.10/report.md), evidenze finali in docs/verification/phase-2.10/final/. Limiti: cinque minuti locali, GPU disattivata, guasti simulati e heap dopo GC non certificano G5 o assenza assoluta di leak. La prossima3.1 riguarda overlay/Back, senza anticipare hardware o privilegi.
+
+## Microfase 2.9 completata — 2026-11-09, Windows (storico)
+
+Punto di ripresa registrato a fine2.9: **2.10 — Integrazione definitiva e validazione**; attività ora completata, usare il riepilogo2.10 sopra. A quel checkpoint erano complete fasi0/1 e2.1–2.9, senza nuovi blocchi. Le verifiche seguenti restano lo storico della2.9.
+
+Base locale `7d39aea`, working tree inizialmente pulito. Windows 11 Pro N 10.0.26300 x64, i9-9900KF, Node24.22.2/npm11.19.1, Edge156.0.4314.58. Installazione da lockfile riuscita; modulo npm autorizzato dall'utente dopo NVM4306. Nessun aggiornamento dipendenze: npm segnala 10 vulnerabilità moderate, non corrette automaticamente.
+
+Corretto `AnimationController`: residuo scadenze conservato e delta simulazione separato, senza recuperi a raffica. Il test riproduce 200 draw/10s prima della correzione, circa 300 dopo. Canvas, pool, profili, policy sistema/visibilità e tarature approvate invariati. Collaudo esteso con STABILITY_MS/ALLOCATION_MS opt-in; nessuna dipendenza aggiunta.
+
+Baseline sul nuovo PC:132 test/check e browser OK, fixture22,19 draw/s. Finale: **134 test in20 file, lint/typecheck/build OK**, lint finale e diff check OK; Edge Home/profili/pannello/fallback/resize/reduced motion/visibilità/D-pad/Back OK, errori raccolti vuoti. Stress:30 transizioni profilo/resize,120 variazioni slider e cleanup senza duplicazioni. **Home produzione per300.032ms**,30 campioni29,98–30,02draw/s, CPU medio Canvas0,272–0,342ms/max osservato0,9ms. Un RAF/Canvas,5 sprite,3 listener resize/observer stabili; zero risorse del motore in Eco/unmount. Heap dopo GC13.884.680→13.925.580byte (+40.900); nodi/listener CDP invariati. Finestre CSS on/off misurano solo main thread, non GPU.
+
+Allocazioni campionate per15.018ms:5.394.248byte, soprattutto nei draw; pool fissi non significano zero allocazioni JS transitorie. Nessuna crescita incontrollata osservata nella durata provata. Screenshot finali1080p/4K ispezionati con riferimenti00/01: composizione preservata, differenze preesistenti documentate, nessuna fedeltà completa dichiarata. PNG verificato immutato.
+
+Rapporto e comandi: [2.9](docs/verification/phase-2.9/report.md), evidenze baseline/final/allocation separate. Nessun commit/push/deploy o test TV. Limiti: headless con GPU disattivata, campionamento JS e GC forzata non misurano tutta la memoria/GPU; cinque minuti locali non certificano G5,30fps reali o assenza assoluta di leak. Prossimo lavoro solo2.10 secondo ROADMAP, senza anticipare hardware o privilegi.
+
 ## Passaggio su un altro PC — 2026-11-09
 
 Guida operativa: [docs/HANDOFF.md](docs/HANDOFF.md); avvio e prompt IDE: [START_HERE.md](START_HERE.md). Sessione solo documentale richiesta prima di cambiare PC: la2.9 resta `DA FARE`, nessuna attività implementativa avviata.
@@ -14,13 +42,13 @@ Decisione esplicitamente confermata dall'utente dopo2.8: i profili vengono usati
 
 ## Stato verificato
 
-Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/navette non montati. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (132 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
+Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/CSS rimossi in2.10 e nessuna navetta montata. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (135 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
 
 - Microfase attiva: nessuna.
-- Prossima microfase: `2.9 — Ottimizzazione e stabilità` in `ROADMAP.md`.
-- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`.
+- Prossima microfase: `3.1 — Overlay e Back` in `ROADMAP.md`.
+- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`, `2.9`, `2.10`.
 - Fase 1: chiusa su approvazione esplicita dell’utente dopo debug browser e modifiche richieste.
-- Bloccanti per 2.9: nessuno identificato.
+- Bloccanti per 3.1: nessuno identificato.
 - Gate futuri: firmware/webOS esatti e accesso al G5 non disponibili; integrazioni e sostituzione Home non verificate.
 
 ## Decisioni da preservare
@@ -47,7 +75,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 
 1. Leggere `START_HERE.md`, `docs/HANDOFF.md` e i documenti nell'ordine indicato; eseguire la baseline nel nuovo ambiente prima di confrontare prestazioni.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
-3. Riprendere2.9 — Ottimizzazione e stabilità. Profilare cadenza/costo draw/allocazioni, resize ripetuti e una sessione browser prolungata con durata registrata, distinguendo CPU Canvas e compositing CSS. Usare monitor2.7 e pannello2.8 (npm run dev, ?backgroundDebug=1), misurare prima di cambiare tarature. Preservare default Balanced, controlli canonici, PNG e policy sistema/visibilità. Campioni headless21–22draw/s non sono benchmark TV né certificazione30fps. Non anticipare integrazione definitiva2.10 o hardware assente.
+3. Riprendere3.1 — Overlay e Back secondo ROADMAP: definire dialoghi accessibili e ripristino focus mantenendo Home unica, mock, Balanced, PNG e policy sistema/visibilità. Il motore2.1–2.10 è completato in browser; misure e limiti nei rapporti2.9/2.10. Non trasformare le misure headless in certificazioni TV e non anticipare hardware o privilegi.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
 5. Aggiornare stato, prossimo passo e storico in questo file, più roadmap e documentazione interessata.
 
