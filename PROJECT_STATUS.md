@@ -4,16 +4,18 @@ Ultimo aggiornamento: 2026-11-09.
 
 ## Stato verificato
 
-Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include immagine `references/background.png` scelta dall’utente, foschia/pioggia e due navette aggiuntive occasionali. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (79 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
+Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/navette non montati. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (132 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
 
 - Microfase attiva: nessuna.
-- Prossima microfase: `2.1 — Overlay e Back` in `ROADMAP.md`.
-- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`.
+- Prossima microfase: `2.9 — Ottimizzazione e stabilità` in `ROADMAP.md`.
+- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`.
 - Fase 1: chiusa su approvazione esplicita dell’utente dopo debug browser e modifiche richieste.
-- Bloccanti per 2.1: nessuno identificato.
+- Bloccanti per 2.9: nessuno identificato.
 - Gate futuri: firmware/webOS esatti e accesso al G5 non disponibili; integrazioni e sostituzione Home non verificate.
 
 ## Decisioni da preservare
+
+- Nuova fase 2: Cyberpunk Animated Background Engine, specifica docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md. Dieci microfasi in cinque milestone; avanzamento reale nelle verifiche e nel punto di ripresa sopra. Vecchie fasi 2→3, 3→4, 4→5, 5→6, 6→7. Storico e rapporti precedenti mantengono gli ID originali; interpretarli con questa mappa. Pannello solo sviluppo, Balanced default, PNG intatto e video solo riferimento; niente controlli nella Home finale.
 
 - Ultima decisione utente: rimossi controllo Movimento e logo e Pausa sfondo. Nessuna impostazione manuale; vecchio storage ignorato. Animazioni automatiche salvo reduced motion di sistema/pagina nascosta. Questa regola sostituisce le precedenti preferenze persistenti.
 
@@ -29,17 +31,35 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 - Direzione Neon City + Netrunner; riferimento branding 00, layout 01. Mockup come riferimenti, non schermate interattive.
 - Tutti i dati esterni iniziali sono demo; loghi applicazioni autentici con provenienza o fallback neutri.
 - Nessuna autorizzazione a root, patch, intercettazione Home o override di avvio.
-- Richiesta utente: mantenere nel README tutte le operazioni per il deploy sulla TV. Sezione già predisposta come non verificata; completarla con comandi ed esiti reali durante 3.1–3.4.
+- Richiesta utente: mantenere nel README tutte le operazioni per il deploy sulla TV. Sezione già predisposta come non verificata; completarla con comandi ed esiti reali durante 4.1–4.4.
 
 ## Ripresa operativa
 
 1. Leggere `START_HERE.md` e i documenti nell'ordine indicato.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
-3. Riprendere da 2.1 — Overlay e Back sulla Home unica approvata: dialoghi accessibili, Escape/Back e ripristino focus. Preservare assenza menu/controlli movimento, animazioni automatiche e riduzione di sistema. La fase 1 è chiusa; non riproporre il checkpoint browser come bloccante.
+3. Riprendere2.9 — Ottimizzazione e stabilità. Profilare cadenza/costo draw/allocazioni, resize ripetuti e una sessione browser prolungata con durata registrata, distinguendo CPU Canvas e compositing CSS. Usare monitor2.7 e pannello2.8 (npm run dev, ?backgroundDebug=1), misurare prima di cambiare tarature. Preservare default Balanced, controlli canonici, PNG e policy sistema/visibilità. Campioni headless21–22draw/s non sono benchmark TV né certificazione30fps. Non anticipare integrazione definitiva2.10 o hardware assente.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
 5. Aggiornare stato, prossimo passo e storico in questo file, più roadmap e documentazione interessata.
 
 ## Verifiche attuali e limiti
+
+- 2.8: HomeBackground con import lazy dev/opt-in ?backgroundDebug=1 e pannello inizialmente chiuso; stato/config isolati in BackgroundWorkbench. Cinque slider, profilo, glitch e reset; valori canonici validati e conteggi effettivi espliciti. Niente storage, produzione ignora query e rimuove pannello/CSS. npm run check OK:132 test, lint/typecheck/build; Chrome completo Home+profili+pannello OK, tastiera/ESC/reset/reload/reduced motion/mobile verificati; runtimeErrors=[] e screenshot ispezionati. Rapporto docs/verification/phase-2.8/report.md. Milestone4 chiusa, nessuna prova G5.
+
+- 2.7: resolver puro con cap Canvas/DPR/fps e pool, Balanced invariato, Cinematic291/80 di default, Eco statico. Monitor Canvas senza RAF extra, cleanup libera anche buffer1×1. npm run check OK:127 test, lint/typecheck/build; Chrome produzione + fixture Vite StrictMode OK. Cinque cambi profilo: un Canvas/RAF e3 listener/observer in animazione, zero in Eco/unmount, stesso nodo img durante i cambi. Campione headless21.84draw/s su2014ms, CPU medio.761ms/max1.7ms: misura locale, non garanzia30fps né dato G5. Runtime errors vuoti; screenshot Home4K e profili ispezionati. Rapporto docs/verification/phase-2.7/report.md.
+
+- 2.6: 40 particelle in pool fisso con sprite cyan/magenta e deriva lenta; condividono Canvas, RAF, budget e cleanup con pioggia. Modulo veicoli standalone non montato, off di default, richiede asset separato. npm run check OK: 117 test, lint/typecheck/build; Chrome OK con particelle isolate diagnostiche, movimento, pausa, resize, fallback e regressioni ologramma/Home. Screenshot 1080p/4K ispezionati, runtimeErrors=[]; rapporto docs/verification/phase-2.6/report.md. Milestone 3 completata; nessuna prova G5.
+
+- 2.5: HologramLayer localizzato sul pannello destro con mask poligonale, scanline/sweep/luminosità e brevi copie colore/bande PNG traslate. Cover mapping condiviso e hook resize riutilizzato da neon; off/asset assente/glitch false/frequenza zero gestiti. Neon ora semicicli 3.6–7.92s, intensità invariata. npm run check OK: 110 test, lint/typecheck/build. Chrome finale OK: mapping/maschera/scanline/RGB/pausa e regressioni Home, screenshot 1080p/4K ispezionati; rapporto docs/verification/phase-2.5/report.md. Nessun test G5.
+
+- 2.4: NeonLayer localizzato con 5 insegne e 2 riflessi normalizzati, mapRegion sul PNG realmente caricato, pulizia observer/listener e off/zero/asset assente. Cicli CSS lievi e cali occasionali 18% senza flash; PNG immutato. npm run check OK: 104 test, lint/typecheck/build. Pioggia/nebbia mantengono la taratura su feedback utente. Chrome completo e confronto screenshot 1080p/4K riusciti, runtime errors raccolti vuoti, mapping/pulsazione/pausa verificati. Report docs/verification/phase-2.4/report.md.
+
+- Feedback preview: utente non percepiva gli effetti. Corrette scie troppo sottili, layering sotto scrim e nebbia prevalentemente dietro widget. Ordine effetti ora sopra scrim e sotto UI; alpha/tratti rafforzati, nebbia più alta e drift più percepibile. Policy sistema/visibilità invariata. Utente conferma di non aver attivato riduzione movimento: la segnalazione riguarda la visibilità della taratura, non un blocco di sistema confermato.
+
+- 2.3: collaudo Chrome completo riuscito (timeline/ciclo, visibilità/reduced motion, pioggia/fallback e Home). Screenshot 1080p/4K ispezionati; report docs/verification/phase-2.3/report.md. FogLayer a due gradienti trasparenti, CSS transform/opacity, regione inferiore, cap opacità e cicli alternate. Config enabled/density/speed, off/zero-density non montati e speed zero statico. Nessun Canvas/RAF/listener aggiuntivo. npm run check OK: 99 test e lint/typecheck/build. Nessuna prestazione G5 dichiarata; evidenze in docs/verification/phase-2.3/.
+
+- 2.2: Chrome verifica pixel animati, budget resize 4K/DPR2, visibilità emulata, reduced motion live e Canvas nullo; screenshot ispezionati. Rapporto docs/verification/phase-2.2/report.md. Primo effetto Canvas RainEngine + BackgroundCanvas integrato. Pool fisso, sprite precalcolati, cap buffer Full HD/DPR, target 30fps, resize/cleanup e fallback senza context. Pioggia off con reduced motion/pagina nascosta; logo policy invariata. npm run check OK: 95 test, lint/typecheck/build. Nessuna misura G5. Evidenze browser e screenshot in docs/verification/phase-2.2/.
+
+- 2.1: Chrome e screenshot 1080p/4K/mobile verificati, inclusi fallback immagine e navigazione; rapporto docs/verification/phase-2.1/report.md. CyberpunkBackgroundEngine integrato, base immagine statica/config tipizzata/fallback/coordinate cover/controller RAF testato. Nessun RAF istanziato finché non esistono effetti: renderer statico anche con animazione consentita. Vecchie pioggia/nebbia/navette CSS non montate. Logo mantiene policy sistema/visibilità. `npm run check`: 91 test, lint/typecheck/build OK. Specifiche/config in src/features/background/README.md; effetti e profili effettivi ancora da implementare.
 
 - 1.8: Impostazioni con movimento ridotto globale e consenso animazione logo, salvati in localStorage (glitchos.motion.v1). Preferenza sistema prioritaria, aggiornamento live, pagina nascosta ferma sfondo e seleziona logo statico. Riduzione utente disabilita anche transizioni CSS. Pausa sfondo resta separata e volatile. Errori storage gestiti con avviso sessione. `npm run check`: 78 test, lint/typecheck/build OK. Evidenze in docs/verification/phase-1.8/report.md; debug interattivo con utente ancora da svolgere.
 
@@ -52,7 +72,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 - Evidenze aggiornate in docs/verification/phase-1.5/report.md. Debug browser interattivo a fine fase 1 pianificato ma non ancora svolto con l’utente.
 
 - 1.4: `npm run check` OK: lint, typecheck, 58 test e build. 21 nuovi casi per grafo e tasti. Browser: percorso a sole frecce/Enter, OK, repeat ignorato per attivazioni, focus stabile durante clock/lancio, memoria, regioni nascoste e controllo disabilitato saltati, ritorno Home, recupero focus, controllo pausa raggiungibile.
-- Nuovo src/navigation/: focusGraph.ts e useTvFocus.ts. Grafo header → controls (se disponibile) → rail, bordi senza wrap, memoria per zona; nessun autofocus al caricamento, primo tasto direzionale aggancia la sezione header corrente. Back torna Home; dialoghi e cronologia delle sezioni saranno estesi in 2.1.
+- Nuovo src/navigation/: focusGraph.ts e useTvFocus.ts. Grafo header → controls (se disponibile) → rail, bordi senza wrap, memoria per zona; nessun autofocus al caricamento, primo tasto direzionale aggancia la sezione header corrente. Back torna Home; dialoghi e cronologia delle sezioni saranno estesi in 3.1.
 - Grafica 1.3 preservata: confronto screenshot 1080p/4K, evidenze in docs/verification/phase-1.4/report.md. Nessuna API telecomando webOS o intercettazione di Home; tasti effettivamente consegnati dal G5 ancora da verificare.
 
 - 1.3: `npm run check` OK (37 test e build). Nuovi test per catalogo, capability assenti, catalogo vuoto, errori/rejection e avvio simulato senza falso successo. Browser: avvio con Enter, focus conservato, selezione conservata tra sezioni, 7 card e layout 1080p/4K/mobile.
@@ -67,7 +87,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 - Animazioni CSS deterministiche 43/67s per le navette, 56s foschia; nessun frame React. Il PNG resta fermo, inclusi i veicoli già dipinti; solo le navette aggiunte e gli effetti separati si animano. Pausa sfondo non ferma il logo, che conserva la sua policy separata.
 
 - 0.4: `npm run check` OK (21 test, lint/typecheck/build). Verifica browser riproducibile con `node scripts/verify-shell.mjs`; rapporto docs/verification/phase-0.4.md.
-- La shell include focus manager D-pad e controlli nativi Tab/Enter/Spazio. Impostazioni persistenti del movimento restano in 1.8 e pausa idle/dimming in 2.3. Leggibilità da divano e prestazioni G5 non verificate.
+- La shell include focus manager D-pad e controlli nativi Tab/Enter/Spazio. Impostazioni persistenti del movimento restano in 1.8 e pausa idle/dimming in 3.3. Leggibilità da divano e prestazioni G5 non verificate.
 
 - 0.3: `npm run check` riuscito (lint, typecheck, 21 test e build). Nessuna integrazione UI dell’adapter ancora effettuata. Lo stato mock è volatile; non contiene meteo, progresso streaming, firmware o dati TV reali. Domotica limitata a switch booleani.
 
@@ -84,6 +104,63 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 - Nessun test sul dispositivo LG eseguito.
 
 ## Storico sintetico
+
+### 2026-11-09 — Neon più rapidi e 2.5 ologramma
+
+- Richiesta utente: effetto neon ora approvato, aumentare un poco la velocità e procedere 2.5. Semicicli ridotti del 20% senza cambiare intensità, regioni o pioggia/nebbia.
+- Aggiunti HologramLayer/hologram.css, policy/layout e sei test; mask configurabile con coordinate calibrate, RGB locale, bande distorsione e scanline. Estratto useBackgroundViewport condiviso per resize/cleanup.
+- PNG originale immutato; cap glitch a periodo6s, effetti nascosti/fermi con policy ridotta o pagina nascosta, nessuna UI impostazioni aggiunta. Prossima 2.6.
+
+
+### 2026-11-09 — Neon più marcati su richiesta
+
+- Default intensity 70→100; gain insegne .4→.6 e riflessi .16→.28. Minimo pulsazione .3→.12 e semicicli 4.5–9.9s, per escursione ben visibile senza flash rapidi. Regionamento, interferenze rare, pioggia/nebbia invariati.
+- npm run check OK: 104 test, lint/typecheck/build. Chrome finale OK, range pulsazione e screenshot picco/4K ispezionati; evidenze docs/verification/neon-strength/report.md. Prossima 2.5 invariata.
+
+
+### 2026-11-09 — 2.4: neon e illuminazione localizzata
+
+- Aggiunti NeonLayer/neon.css e cinque test; NeonRegion tipizzato con id/color/kind e validazione regioni/ID univoci. Default neon attivo con 5 aree insegne e 2 riflessi acqua, escluso volto.
+- BackgroundImage comunica dimensioni ed errore, motore inoltra al neon; cover/resize allineati senza RAF o rerender UI. Cicli respiro CSS e interferenza solo come lieve calo; no filtri o blend. Prossima 2.5, milestone 2 nebbia+neon completata con collaudo Chrome e confronto screenshot.
+
+
+### 2026-11-09 — Densità nebbia aumentata su riscontro preview
+
+- Utente conferma pioggia visibile e nebbia ancora tenue. Solo fog.density default 35→65, test aggiornato a opacità .5525; posizione, velocità e pioggia invariati. npm run check OK (99 test, lint/typecheck/build); Chrome completo e confronto visivo 1080p/4K OK, rapporto docs/verification/fog-density/report.md. Prossima 2.4 invariata.
+
+
+### 2026-11-09 — Correzione visibilità effetti
+
+- Ricevuto riscontro utente: pioggia/nebbia non percepibili nel debug. Migliorati tratto/alpha pioggia e visibilità nebbia, spostati layer sopra lo scrim del PNG mantenendoli dietro UI. Nessuna fase successiva iniziata.
+- Chrome e confronto screenshot 1080p/4K riusciti; campione pioggia con 10244 pixel alpha>=20 e picco171/255. Rapporto docs/verification/effect-visibility/report.md. Riscontro browser utente dopo correzione ancora da raccogliere.
+- Test fog aggiornati ai valori calibrati; npm run check OK (99 test, lint/typecheck/build). Nuovo controllo browser misura anche pixel sufficientemente visibili, non solo movimento. Evidenze docs/verification/effect-visibility/.
+
+
+### 2026-11-09 — 2.3: nebbia atmosferica
+
+- Aggiunti FogLayer.tsx, fog.css, engine/fogPolicy.ts e quattro test per densità/timing, disattivazione e statico. Config fog.enabled ora true, nessun altro effetto nuovo.
+- Veli inferiori cyan/magenta, semiperiodi iniziali 120/170s (poi calibrati a 60/85s), continuità alternate e pausa con policy sistema/visibilità. Pioggia/PNG/focus preservati. Prossima 2.4; milestone 2 ancora parziale.
+
+
+### 2026-11-09 — 2.2: pioggia Canvas
+
+- Aggiunti RainEngine, BackgroundCanvas e quattro test: budget, pool/profondità/resize, off/speed zero/intensity zero e riciclo in simulazione prolungata. Default rain.enabled ora true; nessun altro effetto attivato.
+- Controller RAF con cleanup alla policy/config/smontaggio, sprite riutilizzate, fallback su context assente/perdita/errori. Buffer massimo Full HD indipendente dalla UI 4K. Milestone 1 architettura+originale+pioggia completata; prossima 2.3.
+
+
+### 2026-11-09 — 2.1: architettura e background originale
+
+- Aggiunti CyberpunkBackgroundEngine, BackgroundImage, config/tipi, CSS base, coordinate e AnimationController indipendente da React; shell collegata al modulo nuovo senza riscrivere widget.
+- Default Balanced e opzioni validate, effetti inizialmente off, no loop vuoto, fallback immagine con avviso. Controller testato con scheduler simulato per frame duplicati, delta, stop/resume e dispose. Dodici nuovi test, 91 totali.
+- Asset PNG immutato; copia assets/cyberpunk-background.png identica verificata tramite SHA-256, non sostituita. Video solo riferimento, non riprodotto. Prossima 2.2; milestone 1 completa solo dopo pioggia.
+
+
+### 2026-11-09 — Pianificata nuova fase 2: motore background
+
+- Inserita specifica utente e microfasi 2.1–2.10 con cinque milestone, acceptance e vincoli performance/Canvas/fallback. Fasi successive rinumerate 3–7; deploy README aggiornato alla fase 4.
+- Confermati PNG originale e video assets/cyberpunk-motion-reference.mp4 presente, non riprodotto né assunto come asset principale. Nessuna libreria nuova o modifica sorgenti/runtime.
+- Prossima nuova 2.1; fase 1 resta chiusa. Verifiche documentali: numerazione, collegamenti locali e git diff --check; test applicativi non rieseguiti perché nessuna modifica codice.
+
 
 ### 2026-11-09 — Chiusura fase 1 approvata
 
@@ -236,3 +313,24 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 ## Regola di aggiornamento
 
 Al termine di ogni microfase o sessione che modifica il progetto, aggiornare data, stato reale, microfase attiva/prossima, decisioni, verifiche e limiti; aggiungere una breve voce allo storico. Se il lavoro è incompleto, indicare file modificati, cosa manca e come riprendere. Registrare solo informazioni utili e mai credenziali o segreti. La roadmap tiene gli stati; questo file contiene le evidenze operative. Mantenere entrambi coerenti.
+
+
+### 2026-11-09 — 2.6 particelle e predisposizione veicoli
+
+- ParticleEngine attivo con 40 particelle, due sprite in cache e pool Float32Array; nessun loop o buffer a schermo intero aggiuntivo. Pioggia e particelle indipendenti nella config; count0/off non disegna, policy ridotta/visibilità condivisa.
+- FlyingVehicleEngine standalone pronto per un futuro asset trasparente, non montato e default off. Non estrae/muove oggetti del PNG e non carica risorse; nessun nuovo controllo Home.
+- 117 test e lint/typecheck/build OK. Chrome verifica particelle isolando le scie solo nel test, pausa/resize/fallback e regressioni neon/ologramma/navigation; screenshot e rapporto in docs/verification/phase-2.6/. Simulazione pool20min non equivale a sessione hardware prolungata. Prossima2.7, milestone3 completata.
+
+
+### 2026-11-09 — 2.7 profili e monitor
+
+- Balanced conserva la calibrazione approvata; Cinematic aumenta solo quantità pioggia/particelle senza intensificare glitch, Eco conserva PNG/scrim e smonta tutti gli effetti. Budget buffer espliciti maxWidth/maxHeight, validati e riducibili; nessun Canvas4K o auto-degrado.
+- Monitor sul loop esistente con wall-clock reale, costo CPU e finestre2s; data attribute/callback opzionale stabile, niente UI o telemetria remota. Il campione headless21.84draw/s non soddisfa una certificazione30fps: profilazione/stabilità approfondite restano2.9, prove G5 non disponibili.
+- Fixture Vite separata esclusa dal bundle produzione controlla StrictMode, risorse e stesso img su cinque transizioni. Primo giro interrotto dalla serializzazione DOM nello script CDP, corretto con risultato void; giro completo successivo superato.127 test e lint/typecheck/build OK, lint finale dopo script OK. Prossima2.8; milestone4 parte A completata.
+
+
+### 2026-11-09 — 2.8 pannello tecnico di sviluppo
+
+- Opt-in ?backgroundDebug=1 solo npm run dev, pulsante Sfondo · debug e pannello inizialmente chiuso. Lazy load escluso dalla produzione ordinaria; nessun ripristino dei vecchi controlli utente rimossi. Modifiche in memoria fino al reload; chiusura conserva valori, reset riporta default e Balanced.
+- Slider validati, select profilo e glitch, riga valori effettivi; controlli canonici mai sostituiti dal config risolto. BackgroundWorkbench separato dalle card; useTvFocus lascia native le interazioni degli strumenti. ESC/Back chiude e torna alla prima app.
+- 132 test e lint/typecheck/build OK; Chrome produzione con query, dev senza query e dev opt-in verificati. Profili e cleanup nuovamente collaudati con fixture StrictMode, UI desktop/mobile ispezionata. Campione monitor della fixture22.38draw/s, CPU medio.744ms/max1.9ms, solo headless. Prossima2.9; limiti e riscontri nel rapporto2.8.

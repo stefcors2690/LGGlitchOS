@@ -1,0 +1,47 @@
+{
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontal": false,
+      "vertical": true
+    }
+  ],
+  "onePage": true,
+  "keyboardWidgets": true,
+  "fixedMotionIgnoresStorage": true,
+  "systemReducedMotion": true,
+  "neonMapping": true,
+  "neonPulse": true,
+  "neonSample": {
+    "dim": 0.2296,
+    "normal": 0.28
+  },
+  "neonVisibilityPause": true,
+  "runtimeErrors": [],
+  "rainCoverage": {
+    "visible": 11212,
+    "peak": 201
+  },
+  "fogTimelineAndContinuity": true,
+  "fogVisibilityPause": true,
+  "fogNoFilters": true,
+  "imageFailureFallback": true,
+  "rainAnimation": true,
+  "rainResizeBudget": true,
+  "visibilityStopResume": true,
+  "canvasUnavailableFallback": true,
+  "originalObjectFit": "cover"
+}

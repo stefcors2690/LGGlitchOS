@@ -1,0 +1,11 @@
+/* Two original procedural veils. No blur, SVG filters, blend modes or JS frame loop. */
+.background-fog { position: absolute; inset: 38% 0 0; pointer-events: none; z-index: -1; overflow: hidden; opacity: var(--fog-opacity); }
+.fog-veil { position: absolute; inset: 5% -15% -10%; background-repeat: no-repeat; animation: atmospheric-fog-drift var(--fog-near-duration) ease-in-out infinite alternate; }
+.fog-veil-near { background-image: radial-gradient(ellipse at 20% 48%, #639ba9a0, transparent 52%), radial-gradient(ellipse at 72% 40%, #477e9280, transparent 55%), radial-gradient(ellipse at 90% 75%, #b85b9a60, transparent 46%); animation-delay: -37s; }
+.fog-veil-far { inset: 0 -15% 12%; background-image: radial-gradient(ellipse at 42% 30%, #6da6b890, transparent 48%), radial-gradient(ellipse at 78% 62%, #9a638c70, transparent 53%); animation-duration: var(--fog-far-duration); animation-direction: alternate-reverse; animation-delay: -63s; }
+.background-fog[data-motion="still"] .fog-veil { animation-play-state: paused; }
+@keyframes atmospheric-fog-drift {
+  from { transform: translateX(-8%); opacity: .55; }
+  to { transform: translateX(8%); opacity: .85; }
+}
+@media (prefers-reduced-motion: reduce) { .fog-veil { animation-play-state: paused !important; } }

@@ -135,7 +135,7 @@ Lo sfondo usa ora **`references/background.png`**, fornito e scelto dall’utent
 
 Le navette già dipinte nel PNG restano ferme. Due navette aggiuntive percorrono rotte con dimensioni e direzioni differenti, cicli sfalsati di 43 e 67 secondi e lunghi intervalli invisibili. Le scie sono discrete, senza lampeggi. Le animazioni usano transform/opacity, senza aggiornamenti React per frame. Le durate sono intenzionalmente deterministiche, non casuali, per rendere la scena riproducibile.
 
-Il pulsante **Pausa sfondo** ferma gli effetti; **Riprendi sfondo** li riattiva. È accessibile con Tab e Invio/Spazio (anche con D-pad dalla 1.4). Movimento ridotto di sistema mantiene la città statica e nasconde navette/pioggia; la pagina nascosta sospende la scena. La pausa manuale dura per la sessione del componente, non è ancora un'impostazione persistente. Idle dimming e pausa per inattività restano in 2.3.
+Il pulsante **Pausa sfondo** ferma gli effetti; **Riprendi sfondo** li riattiva. È accessibile con Tab e Invio/Spazio (anche con D-pad dalla 1.4). Movimento ridotto di sistema mantiene la città statica e nasconde navette/pioggia; la pagina nascosta sospende la scena. La pausa manuale dura per la sessione del componente, non è ancora un'impostazione persistente. Idle dimming e pausa per inattività restano in 3.3.
 
 I gradienti CSS forniscono uno sfondo leggibile anche se l’immagine non si carica. Asset statici e fallback non dipendono da JavaScript per essere disegnati; l'app React richiede comunque JavaScript. Provenienza in [`src/assets/city/README.md`](src/assets/city/README.md); generatore dei precedenti asset vettoriali in `scripts/generate-city.py`, ora mantenuto per la navetta e lo storico.
 
@@ -179,7 +179,7 @@ Ogni zona ricorda l’ultimo controllo focalizzato. La prima entrata in una zona
 
 Il focus resta sul controllo durante aggiornamenti del clock, caricamento e feedback di avvio. Se il controllo scompare o viene nascosto/disabilitato, ritorna alla sezione header corrente. Il rail scorre quanto basta per mostrare la card, senza animazione di scroll. Bordi senza wrapping; nessuna trappola di focus.
 
-La gestione è limitata alla shell: campi editabili, dialoghi, modificatori e controlli esterni non vengono gestiti dal focus manager. Non intercetta il pulsante Home di sistema e non usa API webOS privilegiate. Il Back di questa fase è un ritorno Home; stack di overlay/cronologia arriveranno in 2.1. La mappatura hardware G5 resta da verificare.
+La gestione è limitata alla shell: campi editabili, dialoghi, modificatori e controlli esterni non vengono gestiti dal focus manager. Non intercetta il pulsante Home di sistema e non usa API webOS privilegiate. Il Back di questa fase è un ritorno Home; stack di overlay/cronologia arriveranno in 3.1. La mappatura hardware G5 resta da verificare.
 
 File `src/navigation/`; `npm run check` passa con **58 test**. [Rapporto 1.4 e prove browser](docs/verification/phase-1.4/report.md). Nessuna modifica alla grafica approvata o nuova dipendenza.
 
@@ -201,17 +201,17 @@ Aprire http://127.0.0.1:5173 nel browser. Se la porta è occupata, fermare il se
 
 Con gli strumenti sviluppatore del browser (Ispeziona) si possono controllare Console, sorgenti e breakpoint, layout e richieste di rete. Per seguire il focus dalla Console usare `document.activeElement`; per le prove usare frecce, Invio e Escape nella pagina, riportandovi prima il focus dopo aver usato DevTools.
 
-Dopo la **1.8**, come richiesto, faremo una sessione interattiva di collaudo della Home completa prima della fase 2: confronto references a 1080p/4K, navigazione senza mouse, widget e feedback demo, console/rete, movimento ridotto e difetti visivi. Esiti e interventi andranno nel contesto e nel rapporto di verifica. I controlli automatici headless sono già disponibili, ma questa sessione con l’utente non è ancora stata svolta. Non serve installare l’app sulla TV per iniziare il debug browser.
+Dopo la **1.8**, come richiesto, faremo una sessione interattiva di collaudo della Home completa prima della fase 3: confronto references a 1080p/4K, navigazione senza mouse, widget e feedback demo, console/rete, movimento ridotto e difetti visivi. Esiti e interventi andranno nel contesto e nel rapporto di verifica. I controlli automatici headless sono già disponibili, ma questa sessione con l’utente non è ancora stata svolta. Non serve installare l’app sulla TV per iniziare il debug browser.
 
-## Deploy sulla TV LG OLED G5 — procedura da completare nella fase 3
+## Deploy sulla TV LG OLED G5 — procedura da completare nella fase 4
 
-**Stato: non ancora disponibile né verificato sul dispositivo.** La build browser in `dist/` non è ancora un pacchetto installabile sulla TV. Questa sezione sarà aggiornata con tutte le operazioni e i comandi effettivamente collaudati durante le microfasi 3.1–3.4.
+**Stato: non ancora disponibile né verificato sul dispositivo.** La build browser in `dist/` non è ancora un pacchetto installabile sulla TV. Questa sezione sarà aggiornata con tutte le operazioni e i comandi effettivamente collaudati durante le microfasi 4.1–4.4.
 
 La procedura completa dovrà coprire, nell'ordine:
 
 1. Rilevamento di modello completo, firmware e versione webOS; verifica dei requisiti e delle API pubbliche supportate.
 2. Preparazione del computer: strumenti webOS richiesti, versioni verificate e istruzioni di installazione per il sistema operativo utilizzato.
-3. Preparazione della TV in Developer Mode, connessione di rete e gestione della sessione secondo la documentazione ufficiale verificata in fase 3.1.
+3. Preparazione della TV in Developer Mode, connessione di rete e gestione della sessione secondo la documentazione ufficiale verificata in fase 4.1.
 4. Configurazione del dispositivo di sviluppo, associazione e verifica della connessione; credenziali e chiavi conservate fuori dal repository.
 5. Installazione delle dipendenze del progetto, controlli di qualità, build e preparazione di manifest, icone e asset per webOS.
 6. Generazione del pacchetto IPK, con comando esatto, identificativo applicazione, versione e percorso dell'artefatto.
@@ -243,3 +243,60 @@ La navigazione superiore per sezioni è stata eliminata su richiesta utente. Hea
 ## Policy corrente — animazioni fisse, senza controlli
 
 Su richiesta utente rimossi “Movimento e logo” e “Pausa sfondo”: nessun pannello o preferenza modificabile nella Home. Sfondo e logo animati automaticamente quando la pagina è visibile e il sistema non richiede movimento ridotto. Reduced motion e pagina nascosta continuano a fermarli automaticamente. La vecchia chiave localStorage glitchos.motion.v1 è ignorata; le precedenti descrizioni di impostazioni e pausa sono storico, sostituite da questa decisione. Primo input direzionale e Back tornano al rail; frecce tra rail e widget. Evidenze correnti in docs/verification/fixed-motion/.
+
+## Pianificazione aggiornata — nuova fase 2
+
+Fase 1 chiusa per approvazione utente. Prossimo lavoro: 2.1 — architettura/config e background originale del [Cyberpunk Animated Background Engine](docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md), seguito da pioggia, nebbia/neon, ologramma/particelle, profili/pannello tecnico e ottimizzazione. Il motore non è ancora implementato. Il pannello sarà solo sviluppo o diagnostica esplicitamente abilitata; la Home finale resta senza impostazioni movimento. Le vecchie fasi 2–6 sono ora 3–7; deploy TV in 4.1–4.4. Nessun nuovo comando o dipendenza introdotti.
+
+## Base motore 2.1 implementata
+
+La Home usa ora CyberpunkBackgroundEngine in src/features/background/. [Contratti, unità e ciclo di vita](src/features/background/README.md). Immagine originale invariata con object-fit cover e fallback gradiente/avviso; nessun video. Config tipizzata con Balanced predisposto, coordinate normalizzate e controller RAF testato ma non istanziato dalla base statica. Vecchi layer CSS CityBackdrop non più montati per evitare duplicazioni. Nessun effetto nuovo ancora attivo: pioggia in 2.2, nebbia/neon/ologrammi/particelle nelle microfasi successive. Il logo conserva riduzione sistema e sospensione pagina nascosta. `npm run check`: 91 test, lint/typecheck/build OK; nessuna dipendenza nuova o garanzia hardware. Evidenze in docs/verification/phase-2.1/.
+
+## Pioggia Canvas 2.2 implementata
+
+Primo effetto del CyberpunkBackgroundEngine attivo: RainEngine con pool fisso, profondità/vento/scie sfumate e BackgroundCanvas con controller RAF. Niente stato React per frame; buffer massimo 1920×1080 anche con UI 4K, DPR limitato, target 30fps da misurare su TV. Stop con reduced motion/pagina nascosta, cleanup RAF/listener/observer/sprite, fallback statico se context assente o errore. Originale PNG preservato. Config rain.enabled default true, altri effetti off. Dettagli in src/features/background/README.md, evidenze docs/verification/phase-2.2/. Milestone 1 completata; prossima 2.3 nebbia. Nessuna dipendenza nuova o test G5.
+
+## Nebbia 2.3 implementata
+
+FogLayer aggiunge due veli originali a gradienti radiali trasparenti cyan/magenta nella parte inferiore, dietro UI/scrim. Transform/opacity CSS e cicli alternate molto lenti senza filtri pesanti, nessun RAF o listener aggiuntivo. fog.enabled/density/speed indipendenti; default true/35/.2, semiperiodi 120/170s; density zero/off elimina layer, speed zero resta statico. Reduced motion e pagina nascosta pausano la timeline; visibilità riprende la fase. PNG e pioggia preservati. Contratto nel README tecnico background, evidenze docs/verification/phase-2.3/. npm run check: 99 test e lint/typecheck/build OK. Prossima 2.4 neon; nessuna prova G5.
+
+### Calibrazione dopo riscontro sulla visibilità
+
+Pioggia e nebbia sono state rese più percepibili: effetti sopra lo scrim dell’immagine ma sotto UI, scie più spesse e luminose, nebbia leggermente più alta e cicli 60/85s con drift ±8%. Il PNG e i widget restano invariati. Dettagli e valori aggiornati nel README tecnico background; evidenze docs/verification/effect-visibility/. Riduzione movimento di sistema continua a fermare gli effetti; in DevTools verificare che Rendering non emuli prefers-reduced-motion: reduce se si desidera osservarli.
+
+## Neon 2.4 implementati
+
+NeonLayer CSS con cinque insegne e due riflessi localizzati sul PNG originale, regioni normalizzate tipizzate e validate con id/color/kind. Dimensioni naturali caricate e mapRegion conservano l’allineamento cover dopo resize. Pulsazioni lente e lievi cali occasionali, nessun flash o filtro sull’intera immagine; riflessi attenuati. Off/zero/asset assente rimuove layer, sistema reduced motion/pagina nascosta fermano movimento. Pioggia e nebbia mantengono taratura corrente. Dettagli in src/features/background/README.md, evidenze docs/verification/phase-2.4/. 104 test e lint/typecheck/build OK; nessuna dipendenza o prova G5. Prossima 2.5 ologramma; volto non animato in questa fase.
+
+Neon rafforzati su richiesta utente: intensità default 100 e pulsazione più evidente, sempre solo sulle regioni configurate. Pioggia/nebbia invariate; dettagli nel README tecnico background, evidenze docs/verification/neon-strength/.
+
+## Ologramma 2.5 implementato
+
+Neon leggermente più rapidi su richiesta utente (semicicli -20%, 3.6–7.92s); intensità/pioggia/nebbia invariate. HologramLayer con mask poligonale calibrata sul pannello del volto, scanline, sweep e luce; brevi split rosso/cyan e bande ricavate dal PNG con traslazioni max3px. Nessun filtro/distorsione sull’intera scena, asset originale intatto. Glitch false/frequenza zero elimina distorsioni, periodo minimo6s; sistema reduced motion e pagina nascosta fermano/nascondono layer. Coordinate cover e resize condivisi con neon, cleanup senza RAF JS aggiuntivo. Contratti nel README tecnico background, evidenze docs/verification/phase-2.5/. npm run check: 110 test, lint/typecheck/build OK. Prossima 2.6, nessuna prova G5.
+
+
+## Particelle e predisposizione veicoli 2.6
+
+40 particelle cyan/magenta con profondità e deriva lenta nel Canvas della pioggia: pool fisso, due sprite riutilizzati, un solo RAF e buffer Full HD massimo. Pioggia e particelle disattivabili separatamente nella config TypeScript; nessun controllo aggiunto alla Home. Pausa automatica con reduced motion/pagina nascosta e fallback su PNG quando Canvas manca. Modulo FlyingVehicleEngine standalone predisposto per un futuro sprite trasparente: default off e non montato, nessun veicolo del PNG spostato o duplicato. Tarature pioggia/nebbia/neon/ologramma preservate. Contratto nel [README tecnico](src/features/background/README.md), rapporto [fase2.6](docs/verification/phase-2.6/report.md). npm run check:117 test, lint/typecheck/build OK. Milestone3 chiusa; prossima2.7 profili prestazionali. Nessuna nuova dipendenza o prova G5.
+
+
+## Profili prestazionali 2.7
+
+`background.config.ts` risolve controlli canonici → configurazione effettiva: Balanced predefinito conserva la resa approvata (208 gocce/40 particelle); Cinematic aumenta dettaglio atmosferico (291/80 con default), sempre entro buffer Full HD/DPR1 e target30fps; Eco usa il PNG statico e smonta gli effetti decorativi. Limiti inferiori personalizzati rispettati, flag off/zero preservati, nessun cambio automatico o controllo Home aggiunto. Per cambiare profilo passare al motore una nuova config canonica con il campo profile; il pannello arriverà in2.8.
+
+Monitor Canvas leggero su finestre di almeno2s: cadenza reale dei draw e costo CPU medio/massimo, senza RAF aggiuntivi o stato React/frame. Espone attributi diagnostici sul Canvas e callback opzionale onPerformanceSample; non misura GPU/CSS né certifica prestazioni G5. Contratti, budget, fixture di sviluppo e comando per testare i cambi profilo nel [README tecnico](src/features/background/README.md). Nessuna dipendenza nuova; dettagli nel [rapporto2.7](docs/verification/phase-2.7/report.md).
+
+Verifiche2.7:127 test, lint/typecheck/build e Chrome produzione/fixture superati; cambi profilo senza risorse duplicate, Eco/unmount senza RAF/observer/listener resize del motore. Campione locale headless ~21.84draw/s: target30fps non certificato, TV non provata. Roadmap e contesto aggiornati; prossima2.8 — Pannello tecnico di sviluppo.
+
+
+## Pannello tecnico background 2.8
+
+Avvia `npm run dev` e apri l’indirizzo stampato da Vite aggiungendo `?backgroundDebug=1`, per esempio `http://localhost:5173/?backgroundDebug=1`. Compare il pulsante **Sfondo · debug**; il pannello parte chiuso e si apre solo premendolo. Senza parametro la Home di sviluppo resta pulita. La build ordinaria di produzione ignora il parametro ed esclude codice e CSS del pannello.
+
+Controlli live: intensità pioggia0–100%, velocità0–5× (passo.1), densità nebbia0–100%, luminosità neon0–100%, particelle0–200, glitch ologramma, Cinematic/Balanced/Eco e reset completo ai default approvati. I valori sono canonici: la riga “Effettivi” mostra conteggi e limiti dopo il profilo, per rendere visibile il cap80 particelle Balanced e il moltiplicatore Cinematic. Eco conserva i valori per il ritorno agli altri profili. La policy sistema/visibilità continua a prevalere.
+
+Tab/Shift+Tab percorrono i controlli nativi; frecce regolano slider e select. Escape/Back o Chiudi chiudono il pannello e riportano il focus alla prima app Home. Il pannello non è modale: le app restano raggiungibili con puntatore o Tab. Modifiche solo in memoria, mantenute alla chiusura; reload o reset ripristina i default. Nessun nuovo salvataggio o controllo movimento nella Home finale.
+
+Implementazione: HomeBackground carica lazy BackgroundWorkbench solo in sviluppo con opt-in esplicito; stato isolato dal resto della Home, BackgroundSettings controllato e settingsPolicy con validazione intervalli/passaggi. Nessuna libreria aggiunta. Contratti e collaudo nel README tecnico background e in docs/verification/phase-2.8/report.md. Nessuna prova G5.
+
+Verifiche2.8:132 test, lint/typecheck/build e Chrome Home/profili/pannello superati. Report docs/verification/phase-2.8/report.md; contesto sincronizzato e milestone4 chiusa. Prossima2.9 — Ottimizzazione e stabilità; nessuna prestazione TV certificata.

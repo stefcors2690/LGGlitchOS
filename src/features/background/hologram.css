@@ -1,0 +1,29 @@
+.background-hologram { position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+.hologram-filter-defs { position: absolute; }
+.hologram-panel { position: absolute; overflow: hidden; contain: paint; }
+.hologram-light, .hologram-lines, .hologram-copy { position: absolute; inset: 0; }
+.hologram-light { background: radial-gradient(ellipse, #56e8ff38, #f448ba14 55%, transparent 75%); animation: hologram-luminance 6s ease-in-out infinite alternate; }
+.hologram-lines { opacity: .2; background: repeating-linear-gradient(transparent 0 3px, #a4edff80 3px 4px); animation: hologram-scanlines 4s linear infinite; }
+.hologram-sweep { position: absolute; top: -20%; width: 100%; height: 18%; background: linear-gradient(transparent, #9deeff38, transparent); animation: hologram-sweep 9s linear infinite; }
+.hologram-copy { background-image: var(--hologram-image); background-size: var(--hologram-size); background-position: var(--hologram-position); background-repeat: no-repeat; }
+.hologram-rgb { opacity: 0; mix-blend-mode: screen; animation: hologram-rgb var(--hologram-period) ease-in-out infinite; }
+.hologram-red { --hologram-direction: 1; }
+.hologram-cyan { --hologram-direction: -1; }
+.hologram-slice { opacity: 0; animation: hologram-distort var(--hologram-period) ease-in-out infinite; }
+.hologram-slice-one { clip-path: polygon(0 30%,100% 30%,100% 35%,0 35%); }
+.hologram-slice-two { clip-path: polygon(0 62%,100% 62%,100% 66%,0 66%); animation-delay: calc(var(--hologram-period) * -.5); }
+.background-hologram[data-motion="still"] .hologram-panel { visibility: hidden; }
+.background-hologram[data-motion="still"] .hologram-panel > * { animation-play-state: paused; }
+@keyframes hologram-luminance { from { opacity: .45; } to { opacity: 1; } }
+@keyframes hologram-scanlines { to { transform: translateY(4px); } }
+@keyframes hologram-sweep { to { transform: translateY(750%); } }
+@keyframes hologram-rgb {
+  0%, 92%, 98%, 100% { opacity: 0; transform: translateX(0); }
+  94%, 96% { opacity: .18; transform: translateX(calc(var(--hologram-shift) * var(--hologram-direction))); }
+}
+@keyframes hologram-distort {
+  0%, 92%, 98%, 100% { opacity: 0; transform: translateX(0); }
+  94% { opacity: .65; transform: translateX(calc(var(--hologram-shift) * -1)); }
+  96% { opacity: .45; transform: translateX(var(--hologram-shift)); }
+}
+@media (prefers-reduced-motion: reduce) { .hologram-panel { display: none; } }

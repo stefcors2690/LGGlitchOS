@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="it"><head><meta charset="UTF-8"><title>Verifica profili background — solo sviluppo</title></head>
+<body><div id="root"></div>
+<script>
+  // Test-only resource census, loaded before React. Never imported by the Home/build.
+  const probe = window.__backgroundResources = { frames: new Set(), resize: new Set(), observers: new Set(), sprites: new Set() };
+  const request = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
+  window.requestAnimationFrame = callback => {
+    const id = request(time => { probe.frames.delete(id); callback(time); });
+    probe.frames.add(id); return id;
+  };
+  window.cancelAnimationFrame = id => { probe.frames.delete(id); cancel(id); };
+  const add = window.addEventListener.bind(window), remove = window.removeEventListener.bind(window);
+  window.addEventListener = (type, fn, options) => { if(type === 'resize') probe.resize.add(fn); add(type,fn,options); };
+  window.removeEventListener = (type, fn, options) => { if(type === 'resize') probe.resize.delete(fn); remove(type,fn,options); };
+  const NativeObserver = window.ResizeObserver;
+  window.ResizeObserver = class extends NativeObserver {
+    observe(...args) { probe.observers.add(this); return super.observe(...args); }
+    disconnect() { probe.observers.delete(this); return super.disconnect(); }
+  };
+  const getContext = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function(...args) {
+    if(this.width === 32) probe.sprites.add(this);
+    return getContext.apply(this,args);
+  };
+</script>
+<script type="module" src="/src/features/background/testing/ProfileFixture.tsx"></script>
+</body></html>

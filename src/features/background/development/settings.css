@@ -1,0 +1,18 @@
+.background-tools { position: fixed; right: 18px; top: 18px; z-index: 50; font: 15px/1.45 system-ui, sans-serif; color: #e5f4ff; }
+.background-tools button, .background-tools select { font: inherit; color: inherit; background: #112137; border: 1px solid #438099; border-radius: 7px; padding: 7px 11px; cursor: pointer; }
+.background-tools button:focus-visible, .background-tools select:focus-visible, .background-tools input:focus-visible { outline: 3px solid #fa4fe4; outline-offset: 3px; }
+.background-tools-toggle { box-shadow: 0 0 12px #39def733; }
+.background-settings { width: min(420px, calc(100vw - 36px)); max-height: calc(100dvh - 36px); overflow-y: auto; padding: 20px; background: #071222fa; border: 1px solid #3bd9f5; border-radius: 12px; box-shadow: 0 8px 40px #0009; }
+.background-settings header { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.background-settings h2 { margin: 0; font-size: 23px; }
+.background-settings-kicker { margin: 0 0 3px; color: #65dfed; font-size: 12px; letter-spacing: .06em; }
+.background-settings-note { color: #b0c4d5; font-size: 13px; margin: 12px 0; }
+.background-settings select { display: block; width: 100%; margin: 6px 0 14px; }
+.background-setting { margin: 12px 0; }
+.background-setting label { display: flex; justify-content: space-between; gap: 12px; }
+.background-setting output { color: #65dfed; }
+.background-setting input { display: block; width: 100%; margin: 8px 0; accent-color: #38d9f5; cursor: pointer; }
+.background-settings-check { display: flex; align-items: center; gap: 10px; margin: 15px 0; }
+.background-settings-check input { accent-color: #ed55d6; width: 18px; height: 18px; }
+.background-settings-effective { padding: 10px; border-left: 2px solid #e14bcd; background: #142337; font-size: 13px; }
+.background-settings-reset { width: 100%; }

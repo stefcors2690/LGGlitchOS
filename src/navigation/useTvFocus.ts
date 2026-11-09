@@ -29,7 +29,7 @@ export function useTvFocus(onBack: () => void) {
     const handleKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return;
       const target = event.target;
-      if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable="true"], dialog, [role="dialog"]')) return;
+      if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable="true"], dialog, [role="dialog"], [data-background-tools]')) return;
       const active = document.activeElement;
       if (active && active !== document.body && !root.contains(active)) return;
       const action = mapRemoteKey(event.key);

@@ -6,7 +6,7 @@ import { InputsWidget } from '../features/inputs/InputsWidget';
 import { ContinueWatching } from '../features/continue-watching/ContinueWatching';
 import { AppRail } from '../features/apps/AppRail';
 import { ShellHeader } from './ShellHeader';
-import { CityBackdrop } from '../features/background/CityBackdrop';
+import { HomeBackground } from '../features/background/HomeBackground';
 import { useBackgroundMotion } from '../motion/useBackgroundMotion';
 
 export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
@@ -15,7 +15,7 @@ export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
   const focusRoot = useTvFocus(returnHome);
   return (
     <div ref={focusRoot} className="tv-shell" data-motion-reduced={motion.reducedMotion} data-theme="neon" data-section="home">
-      <CityBackdrop animated={motion.animated} />
+      <HomeBackground animated={motion.animated} />
       <ShellHeader logoAnimated={motion.logoAnimated} />
       <main className="shell-main" id="section-content" aria-labelledby="scene-title">
         <section className="shell-scene clean-scene" aria-labelledby="scene-title">

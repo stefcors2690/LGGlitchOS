@@ -1,0 +1,8 @@
+.cyberpunk-background, .background-image-layer, .background-scrim, .background-rain { position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+.background-gradient { position: absolute; inset: 0; background: linear-gradient(#080f21, #17324a 50%, #070c1b); }
+.background-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.background-scrim { background: linear-gradient(90deg, #070c1b80 0%, #070c1b59 26%, #070c1b0d 60%, #070c1b0d), linear-gradient(#070c1b99 0%, #070c1b26 24%, #070c1b0d 45%, #070c1b66 75%, #070c1bb3); }
+.background-notice { position: absolute; top: 18%; left: 4%; right: 4%; padding: var(--space-2); color: var(--color-muted); background: #081728ed; font-size: var(--text-small); }
+
+.background-rain { width: 100%; height: 100%; }
+.background-rain:not([data-state="running"]) { visibility: hidden; }
