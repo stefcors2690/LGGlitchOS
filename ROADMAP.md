@@ -1,6 +1,6 @@
 # StefCors GL1tCh 0S — Roadmap incrementale
 
-Ultimo aggiornamento: 2026-11-08.
+Ultimo aggiornamento: 2026-11-09.
 
 ## Come usarla
 
@@ -8,7 +8,7 @@ Le macrofasi conservano la numerazione delle specifiche originali. L'unità di l
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** microfase `0.1` completata. **Prossima:** `0.2`.
+**Stato corrente:** macrofase 0 completata (`0.1`–`0.4`). **Prossima:** `1.1`.
 Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`.
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
@@ -23,19 +23,19 @@ A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche 
 
 ### 0.2 — Controlli di qualità
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Configurare lint, typecheck e runner di test leggero.
 - Accettazione: Script eseguibili e almeno un test significativo; risultati registrati.
 
 ### 0.3 — Contratti e adapter mock
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Definire interfacce tipizzate per capability, app, ingressi e domotica; implementare mock con dati demo.
 - Accettazione: Test di successi, errori e capability non supportate; nessuna chiamata TV o rete.
 
 ### 0.4 — Tema e shell TV
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Introdurre token neon, layout 16:9, margini sicuri e logo canonico.
 - Accettazione: Shell leggibile a 1080p e 4K; asset locali risolti e nome esatto del brand.
 
@@ -133,7 +133,7 @@ A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche 
 
 - Stato: `DA FARE`
 - Ambito: Aggiungere manifest, icone e procedura IPK usando strumenti verificati.
-- Accettazione: Pacchetto generabile e procedura documentata; nessuna modifica al sistema TV.
+- Accettazione: Pacchetto generabile e sezione deploy del README aggiornata con prerequisiti e comandi verificati per preparazione, connessione, packaging, installazione e avvio; nessuna modifica al sistema TV.
 
 ### 3.3 — Adapter webOS di base
 
@@ -145,7 +145,7 @@ A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche 
 
 - Stato: `DA FARE`
 - Ambito: Installare e avviare app standalone in Developer Mode; provare remote, rendering e prestazioni.
-- Accettazione: Risultati misurati sul dispositivo, regressioni registrate e funzioni non verificate dichiarate.
+- Accettazione: Risultati misurati sul dispositivo, regressioni registrate e funzioni non verificate dichiarate; sezione deploy del README completata con collaudo, log, diagnosi, aggiornamento, disinstallazione e gestione sessione Developer Mode.
 
 ## 4 — Integrazioni reali verificate
 

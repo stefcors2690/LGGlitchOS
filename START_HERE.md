@@ -18,7 +18,7 @@ Prima di lavorare sulla UI, ispezionare `references/00_brand_home.png` e `refere
 
 ## Stato e comandi
 
-La microfase 0.1 ha introdotto lo scaffold React + TypeScript strict + Vite. Usare `npm install` (oppure `npm ci` dal lockfile), `npm run dev`, `npm run build` e `npm run preview`, con prerequisiti e dettagli in `README.md`. Lint e test arriveranno in 0.2. Consultare sempre `PROJECT_STATUS.md` e `ROADMAP.md` per lo stato aggiornato.
+La microfase 0.1 ha introdotto lo scaffold React + TypeScript strict + Vite. Usare `npm install` (oppure `npm ci` dal lockfile), `npm run dev`, `npm run build` e `npm run preview`, con prerequisiti e dettagli in `README.md`. La microfase 0.2 aggiunge `npm run lint`, `npm run typecheck`, `npm test`, `npm run test:watch` e `npm run check` (tutti i controlli). La microfase 0.3 introduce contratti e adapter mock in `src/platform/`, con uso e limiti descritti in `PROJECT_SPEC.md` e `README.md`; non è ancora collegato alla pagina. La microfase 0.4 aggiunge tema neon, shell TV e logo con reduced motion; evidenze browser in `docs/verification/phase-0.4.md`. Consultare sempre `PROJECT_STATUS.md` e `ROADMAP.md` per lo stato aggiornato.
 
 Per il logo, `assets/branding/preview.html` è l'anteprima standalone. Il collaudo richiesto prevede almeno due cicli da 9 secondi in Chrome/Edge, poi embedding e verifica su webOS quando disponibile. La presenza del file non certifica questi test.
 

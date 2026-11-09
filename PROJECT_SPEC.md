@@ -42,14 +42,25 @@ webos/             # manifests/packaging after verification
 scripts/
 ```
 
-## Platform interfaces (initial proposal)
-- `AppCatalog.list(): Promise<AppInfo[]>`
-- `AppLauncher.launch(appId: string): Promise<Result>`
-- `InputSource.list(): Promise<InputInfo[]>`
-- `InputSource.activate(id: string): Promise<Result>`
-- `DeviceInfo.getCapabilities(): Promise<Capabilities>`
-- `SmartHome.listDevices()/setState(...)` (optional integration, never embed credentials in frontend)
-Implement `MockPlatformAdapter` first. Implement actual webOS calls only after confirming public APIs, manifest privileges and device behavior; unsupported functions must show a useful disabled state, not fake success.
+## Platform interfaces — implemented in microphase 0.3
+
+Source of truth: `src/platform/contracts.ts`. Platform calls are asynchronous and return `Promise<Result<T>>`, including reads and capability discovery. Expected failures are values, not successful empty results or thrown exceptions.
+
+- `Result<T>` is discriminated by `ok`: success contains `data`, failure contains `error: { code, message }`. Both contain `mode: 'demo' | 'device'`.
+- Error codes: `UNSUPPORTED`, `NOT_FOUND`, `INVALID_STATE`, `UNAVAILABLE`.
+- `PlatformAdapter` exposes `mode`, `deviceInfo`, `appCatalog`, `appLauncher`, `inputSource`, `smartHome`.
+- `deviceInfo.getCapabilities()` returns `Result<Capabilities>` with separate capability entries for catalog, launch, input listing/activation and smart-home listing/control.
+- Each capability has `status: 'simulated' | 'supported' | 'unsupported'`; unsupported entries include a user-readable `reason`. Simulated capability support never certifies actual TV support.
+- `appCatalog.list()` returns `Result<readonly AppInfo[]>`; `appLauncher.launch(appId)` returns `Result<{ appId: string }>`.
+- `inputSource.list()` returns `Result<readonly InputInfo[]>`; `activate(id)` returns `Result<InputInfo>`. Input kind is `hdmi | tv`, with explicit active state.
+- `smartHome.listDevices()` returns `Result<readonly SmartHomeDevice[]>`; `setState(id, { on: boolean })` returns the updated device. Initial scope is binary switches only; thermostats and blinds need dedicated contracts in a later phase.
+- App, input and smart-home records carry their own `mode`. The UI must preserve provenance and display demo labels; mock apps are not evidence of installed TV applications.
+
+`src/platform/mock/MockPlatformAdapter.ts` implements a local-only simulation with per-instance state, generic demo app names (no third-party logos), demo inputs and switches. Successful commands return demo results; they do not launch apps or control hardware. State resets when the adapter is recreated. Reads and command results return copies to protect internal state; DTOs are readonly in TypeScript.
+
+Constructor options `unsupported` and `failures` configure individual scenarios. Keys correspond to the six capability names; `failures` additionally accepts `getCapabilities`. Unsupported capabilities take precedence over simulated runtime failures. Rejected commands do not mutate state. No network, SDK, credentials, persistence or additional dependencies are involved.
+
+The adapter is not wired to the static scaffold yet. Create one shared instance when platform data is integrated into the UI; recreating it on each render would reset simulated state. Implement actual webOS calls only after verifying public APIs, manifest privileges and device behavior; unsupported functions must show a useful disabled state, not fake success.
 
 ## Remote navigation acceptance
 - D-pad cycles predictably among top nav, app rail and lower widgets; no traps.
@@ -83,3 +94,12 @@ See `VISUAL_REFERENCE_GUIDE.md` and the four local PNG files in `references/`. `
 
 ## v3 addendum — animated logo
 Read `ANIMATION_SPEC.md`; use `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.svg` as the canonical brand asset. The previous NEON OS wording is legacy and must not appear in the shipped UI. Keep original application logos sourced from official/licensed assets or the TV where permitted; never generate counterfeit app logos.
+
+## Browser shell — implemented in microphase 0.4
+
+- Theme tokens: `src/themes/neon/tokens.css`; local system fonts, semantic palette, sizing, spacing, focus treatment and motion durations. No external font requests.
+- `TvShell` provides the structural hierarchy from the approved reference: header, scene space, application zone and three lower widget zones. These are explicitly placeholders without simulated active buttons or real device data.
+- The centered 16:9 surface uses CSS sizing (no per-frame React state), 4% horizontal safe margins and 2.5 logical width units vertically. Narrow/portrait windows use natural scrolling flow. Body text scales from ~28px at 1080p to ~56px at 4K.
+- `BrandLogo` imports the canonical SVG as an image. A static version is derived from that same source and selected via picture/media for reduced motion, avoiding animated-frame artifacts in external SVG decoding. Image errors show the exact brand text.
+- Current backdrop is a local CSS gradient; city layers remain in 1.1. Focus tokens are prepared, but D-pad navigation remains in 1.4; idle dimming remains in 2.3. No idle protection is claimed for this static development screen.
+- Browser acceptance evidence and reproduction steps: `docs/verification/phase-0.4.md`, screenshots/metrics alongside it, `scripts/verify-shell.mjs`. Hardware verification remains pending.

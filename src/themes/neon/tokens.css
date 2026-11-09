@@ -1,0 +1,30 @@
+/* Logical sizing scales from 1920×1080 to 3840×2160 without per-frame JS. */
+:root {
+  --tv-unit: min(1vw, 1.777778vh);
+  --color-background: #070c1b;
+  --color-surface: #10192b;
+  --color-text: #f4f7ff;
+  --color-muted: #b7c6dc;
+  --color-cyan: #00ddf5;
+  --color-magenta: #ff39cf;
+  --color-border: #30445d;
+  --font-body: Arial, Helvetica, sans-serif;
+  --text-small: calc(var(--tv-unit) * 1.15);
+  --text-body: calc(var(--tv-unit) * 1.45);
+  --text-title: calc(var(--tv-unit) * 3.2);
+  --space-1: calc(var(--tv-unit) * 0.5);
+  --space-2: var(--tv-unit);
+  --space-3: calc(var(--tv-unit) * 1.5);
+  --space-4: calc(var(--tv-unit) * 2.5);
+  --safe-inline: calc(var(--tv-unit) * 4);
+  --safe-block: calc(var(--tv-unit) * 2.5);
+  --radius-panel: calc(var(--tv-unit) * 0.65);
+  --focus-ring: calc(var(--tv-unit) * 0.15) solid var(--color-cyan);
+  --focus-glow: 0 0 calc(var(--tv-unit) * 0.8) #00ddf54d;
+  --duration-focus: 220ms;
+  --duration-section: 450ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-focus: 0ms; --duration-section: 0ms; }
+}
