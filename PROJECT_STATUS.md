@@ -1,8 +1,48 @@
 # StefCors GL1tCh 0S — Stato e passaggio tra IDE
 
-Ultimo aggiornamento: 2026-11-09.
+Ultimo aggiornamento: 2026-11-10.
 
-## Microfase 3.1 completata — 2026-11-09
+## Microfase 3.5 completata — 2026-11-10
+
+Versione locale **0.3.4, fase3 chiusa nel browser**; base4742c5e con lavoro locale3.2–3.4 preservato. Nessuna dipendenza o modifica runtime aggiunta in3.5, nessun commit/tag/release/push/deploy. Nuovo scripts/verify-mvp.mjs opt-in MVP_TEST=1: DOM/AX, tutte le14 azioni Home da tastiera a1080p/4K, Tab/Shift+Tab, nomi/ruoli, isolamento modale e campioni di latenza focus. Versione package/root lockfile allineata. Prossima **4.1 — Inventario dispositivo e fattibilità SDK**, non avviata.
+
+**156 test in23 file, lint/typecheck/build OK**, ripetuti dopo le correzioni degli script. Edge157.0.4341.42 completo run-4 exit0, runtimeErrors vuoto. DOM/AX con14 controlli nominati/Demo, nessun riferimento ARIA mancante; ogni azione da D-pad, Tab/inverso, dialoghi e ritorno focus verificati. Latenza keydown→prossimo RAF (30 campioni/viewport): mediana9,4/10,5ms, P9513,9/54ms, massimo14,7/100ms per1080p/4K; non è latenza fisica del display. Idle reale Home120.211ms/dialogo120.165ms, focus e priorità sistema/hidden preservati; stati limite/offline/timeout10.211ms, pointer/simulatore e background completi superati.
+
+Home produzione Balanced1080p/DPR1 per300.035ms con Shift sintetico periodico:30 campioni29,99–30,01draw/s, CPU medio Canvas0,327–0,402ms/max0,7ms; un RAF/Canvas,5 sprite,3 resize listener/observer stabili, zero dopo unmount. Stress30 profili/resize e120 slider riuscito. Heap dopo GC14.669.012→14.727.600byte (+58.588, circa0,40%), nodi/listener CDP invariati. Nessuna crescita incontrollata osservata nei5min; finestre CSS solo contatori main thread, profiling allocazioni non ripetuto.
+
+Screenshot Home1080p/4K, dialogo1080p e idle1080p ispezionati con riferimenti00/01; PNG SHA invariato e nessuna modifica visiva/runtime, differenze pregresse e densità feedback esplicite. Nessuna certificazione WCAG/screen reader/GPU/G5, piena fedeltà o fresh install; tastiera/pointer/rete/hidden emulati. Run-1/2/3 incompleti preservati: EBUSY cleanup e assunzioni del test su outline SVG/memoria widget corretti negli script, senza cambiare il prodotto. Cleanup temporaneo con path verificato/retry limitati e nessun mascheramento dell'errore. [Rapporto3.5](docs/verification/phase-3.5/report.md), evidenze finali run-4/. Dati reali TV e Developer Mode restano prerequisiti futuri4.1; nessuna integrazione o pubblicazione avviata.
+
+## Microfase 3.4 completata — 2026-11-10 (storico)
+
+Versione locale **0.3.3**, fase3 aperta. Base Git `4742c5e`, modifiche locali3.2/3.3 preservate; nessun commit, push, deploy o dipendenza aggiunta. Questo checkpoint prevale sullo storico. Implementati fallback/retry da D-pad, scadenza letture10s, isolamento delle risposte tardive e del busy/feedback per adapter, blocco comandi duplicati, motivi capability associati ai controlli e avviso offline senza bloccare la Demo locale. Contratti adapter, PNG, tarature, dialoghi e idle invariati.
+
+`npm run check` finale superato: **156 test in23 file**, lint/TypeScript/build. Edge completo ripetuto dopo rifinitura contrasto rail/feedback: `runtimeErrors=[]`, scadenza reale10.206ms, recupero e scarto delle risposte tardive, errori senza falso successo e nessun comando duplicato. Regressioni dialoghi/pointer/simulatore/background OK; screenshot1080p/4K ispezionati, nessun overflow TV, PNG SHA invariato. Offline CDP: avvio Demo locale riuscito, avviso rimosso al ritorno online; nessuna verifica della raggiungibilità Internet. Build finale index-Cqy5H5Vl.js/index-Bly57XtD.css. [Rapporto3.4](docs/verification/phase-3.4/report.md), evidenze final/ separate dal primo run.
+
+Nuovi file: src/platform/usePlatformResource.ts; components/ResourceNotice.tsx e test, ConnectionNotice.tsx; fixture platform-states.html/PlatformFixture.tsx; scripts/verify-platform-states.mjs richiamato con PLATFORM_TEST_URL. Nessun timeout/retry automatico per comandi, nessuna cancellazione del trasporto, cache o PWA introdotta. Limiti: test in Edge headless con input/guasti/rete simulati; nessuna prova TV, screen reader o GPU, nessuna piena fedeltà dichiarata. Due attese idle3.3 e soak/profiling2.9/2.10 non ripetuti. **3.4 chiusa in browser, prossima3.5 — Verifica MVP browser**, non avviata e nessun blocco identificato.
+
+## Microfase 3.3 completata — 2026-11-10 (storico)
+
+**Versione locale0.3.2, fase3 aperta; prossima3.4 — Stati limite, non avviata.** Base `4742c5e` con lavoro locale3.2 presente e preservato. Utente conferma2min. Nessun nuovo blocco, commit/tag/release/push/deploy o dipendenza nuovi. Questo riepilogo prevale sullo storico.
+
+IdleController/useIdleDimming:120.000ms senza input, opacità CSS45% shell/dialogo e pausa sfondo/logo; primo input ripristina ed esegue normalmente, focus conservato. Timer unico coalescente/clock monotono, niente React update per frame o per input già attivo. Hidden cancella timer, ritorno con nuova attesa; reduced motion/visibilità prevalgono sulla ripresa. Nessun nuovo controllo finale/storage o comando hardware. Dissolvenze600ms ingresso idle/180ms risveglio, dialogo opacity-only220ms senza spostare i tool fissi. Tarature, asset, profili e3.2 preservati.
+
+**152 test in22 file, lint/typecheck/build OK** sulla0.3.2. Nuovi11 casi controller/policy, inclusi proroga senza timer perinput, hidden prolungato, cleanup e priorità. Edge completo con IDLE_TEST=1 ripetuto sulla build finale: Home idle dopo120.011ms, dialogo120.477ms; Canvas statico/logo still, focus invariato. Target opacità0,45 (snapshot dialogo0,4566 entro tolleranza0,01 a fine transizione); risveglio tastiera esegue navigazione, click chiude una volta e torna al widget. Sistema reduce mantiene Canvas fermo dopo wake e disabilita transizioni; hidden/ritorno e regressioni3.1/3.2/background OK. `runtimeErrors=[]`, screenshot1080p/4K ispezionati, PNG SHA invariato.
+
+Script verify-idle.mjs opt-in: due attese reali, nessun timeout abbreviato o query di produzione. STABILITY_MS ora mantiene il campione animato attivo con Shift DOM periodico dichiarato nel JSON; questo soak5min e profiling non ripetuti qui. [Rapporto3.3](docs/verification/phase-3.3/report.md), risultati finali in docs/verification/phase-3.3/final/; preliminari separati. Package/lockfile/README0.3.2 coerenti. Limiti: input/hidden emulati, nessun TV/Magic Remote, GPU, altro browser o screen reader certificato; CSS opacity non è luminanza fisica o protezione OLED garantita. Ripresa3.4 senza anticipare hardware/servizi.
+
+## Microfase 3.2 completata — 2026-11-10 (storico)
+
+**Versione locale0.3.1, fase3 aperta; prossima3.3 — Transizioni e idle dimming, non avviata.** Base `4742c5e` (fase3 in corso), working tree inizialmente pulito. Nessun nuovo blocco identificato, commit, tag, push o deploy. Questo riepilogo prevale sullo storico.
+
+Focus manager coordinato pointer/D-pad: movimento effettivo mouse/pen seleziona senza azione, coordinate ferme non rubano focus, touch-move/trascinamento non sono hover. Click/tap nativi singoli, memoria rail/widget e modali preservati; cleanup listener. Focus cyan/magenta visibile anche da mouse/input sintetici. Nessuna modifica a motore, tarature, asset o dati Demo.
+
+Nuovo `navigation/development/RemoteSimulator.tsx`/CSS lazy solo dev + ?remoteDebug=1; inizialmente chiuso, sei comandi sintetici Home/dialoghi. Espansione in memoria nella shell e tool dentro ActionDialog quando aperto; Home sempre inerte, Tab/Enter sui comandi senza mouse. Query ignorata e modulo/CSS controlli esclusi dalla produzione. Due strumenti combinabili con remoteDebug=1&backgroundDebug=1; campi tecnici mantengono tastiera nativa. Versione package/lockfile/README0.3.1, nessuna dipendenza aggiunta.
+
+**141 test unitari in21 file, lint/typecheck/build OK**. Nuovo collaudo browser `scripts/verify-pointer.mjs`, richiamato dalla verifica Home; Edge Windows verifica hover/click/tap CDP, pointer fermo/touch-move sintetici, memoria, singola attivazione, focus visibile del widget, simulatori dev/prod, comandi Home/modale, Tab/Enter e regressioni3.1/background. `runtimeErrors=[]`, screenshot1080p/4K/mobile ispezionati, PNG SHA invariato. Primo run superato, poi rifinito focus visibile e ripetuto completo in final/. [Rapporto3.2](docs/verification/phase-3.2/report.md), evidenze docs/verification/phase-3.2/final/.
+
+Limiti: mouse/touch CDP e input DOM sintetici, nessun dispositivo fisico/Magic Remote, screen reader, altro browser o GPU/G5 certificato; nessuna nuova prova prolungata/profiling. Layout e direzione preservati, differenze visive pregresse esplicite; strumenti di sviluppo desktop non sono UI TV finale. Ripresa3.3 deve conservare questi contratti e il motore; niente idle dimming implementato ora.
+
+## Microfase 3.1 completata — 2026-11-09 (storico)
 
 **Versione locale0.3.0, fase3 aperta; prossima3.2 — Pointer e simulatore telecomando, non avviata.** Base locale `4d1ca97` (fase2 completata), working tree inizialmente pulito. Nessun nuovo blocco identificato. Questo riepilogo prevale sullo storico; nessun commit, tag, release, push o deploy.
 
@@ -52,20 +92,20 @@ Decisione esplicitamente confermata dall'utente dopo2.8: i profili vengono usati
 
 ## Stato verificato
 
-Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/CSS rimossi in2.10 e nessuna navetta montata. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (141 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
+Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e shell TV 16:9 con logo canonico e fallback statico/testuale. Header con brand e orologio locale; menu sezioni rimosso su richiesta utente; rail demo e Continua a guardare implementati; ingressi e domotica demo implementati. Lo sfondo include il PNG originale, pioggia Canvas, nebbia CSS a due veli, neon localizzati, volto olografico mascherato e 40 particelle ambientali; vecchio CityBackdrop/CSS rimossi in2.10 e nessuna navetta montata. Animazioni fisse senza controlli utente; reduced motion di sistema e pagina nascosta applicati automaticamente. Sono presenti ESLint, Vitest (156 test) e adapter mock tipizzato condiviso, collegato al catalogo e all’avvio demo. Navigazione a frecce/OK/Back disponibile tra rail e widget demo; nessun menu superiore o controllo movimento.
 
 - Microfase attiva: nessuna.
-- Prossima microfase: `3.2 — Pointer e simulatore telecomando` in `ROADMAP.md`.
-- Microfasi implementative completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`, `2.9`, `2.10`, `3.1`.
+- Prossima microfase: `4.1 — Inventario dispositivo e fattibilità SDK` in `ROADMAP.md`.
+- Microfasi completate: `0.1`, `0.2`, `0.3`, `0.4`, `1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `1.6`, `1.7`, `1.8`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `2.8`, `2.9`, `2.10`, `3.1`, `3.2`, `3.3`, `3.4`, `3.5`.
 - Fase 1: chiusa su approvazione esplicita dell’utente dopo debug browser e modifiche richieste.
-- Bloccanti per 3.2: nessuno identificato.
+- Prerequisiti per4.1: acquisire modello/firmware/webOS reali e stato Developer Mode; microfase non avviata.
 - Gate futuri: firmware/webOS esatti e accesso al G5 non disponibili; integrazioni e sostituzione Home non verificate.
 
 ## Decisioni da preservare
 
 - Nuova fase 2: Cyberpunk Animated Background Engine, specifica docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md. Dieci microfasi in cinque milestone; avanzamento reale nelle verifiche e nel punto di ripresa sopra. Vecchie fasi 2→3, 3→4, 4→5, 5→6, 6→7. Storico e rapporti precedenti mantengono gli ID originali; interpretarli con questa mappa. Pannello solo sviluppo, Balanced default, PNG intatto e video solo riferimento; niente controlli nella Home finale.
 
-- Ultima decisione utente: rimossi controllo Movimento e logo e Pausa sfondo. Nessuna impostazione manuale; vecchio storage ignorato. Animazioni automatiche salvo reduced motion di sistema/pagina nascosta. Questa regola sostituisce le precedenti preferenze persistenti.
+- Ultima decisione utente: rimossi controllo Movimento e logo e Pausa sfondo. Nessuna impostazione manuale; vecchio storage ignorato. Animazioni automatiche salvo reduced motion di sistema, pagina nascosta o inattività di2min (3.3). Questa regola sostituisce le precedenti preferenze persistenti.
 
 - Riscontro utente nel debug browser: soddisfatto della UI; richiesta e applicata pulizia dei testi introduttivi sovrapposti allo sfondo in tutte le sezioni, come Home. Titoli/descrizioni restano accessibili ma visivamente nascosti; controlli e badge Demo preservati. Non dedurre da questo riscontro prove Console/Network o percorsi specifici non riportati.
 
@@ -85,7 +125,7 @@ Il repository contiene lo scaffold React + TypeScript strict + Vite, tema neon e
 
 1. Leggere `START_HERE.md`, `docs/HANDOFF.md` e i documenti nell'ordine indicato; eseguire la baseline nel nuovo ambiente prima di confrontare prestazioni.
 2. Controllare file reali, `git status` e differenze locali: questo documento non sostituisce il codice.
-3. Riprendere3.2 — Pointer e simulatore telecomando secondo ROADMAP, preservando dialoghi, ritorno focus e Home unica. Motore2.1–2.10 e overlay3.1 completati in browser, risultati e limiti nei rispettivi rapporti. Mantenere mock, Balanced, PNG e policy; distinguere input CDP, alias sintetici e telecomando reale non verificato. Non anticipare hardware o privilegi.
+3. Riprendere4.1 — Inventario dispositivo e fattibilità SDK secondo ROADMAP: prima acquisire dati reali TV/Developer Mode, poi verificare documentazione ufficiale aggiornata e matrice capability/permessi. Non iniziare packaging4.2 o API4.3 senza i prerequisiti. Preservare il mock browser completo e i contratti verificati3.1–3.5; niente privilegi, sostituzione Home o deploy impliciti.
 4. Eseguire le verifiche disponibili e annotare comandi, esiti e limiti. Non dichiarare test TV o browser eseguiti senza averli eseguiti.
 5. Aggiornare stato, prossimo passo e storico in questo file, più roadmap e documentazione interessata.
 

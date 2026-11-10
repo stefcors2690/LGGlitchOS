@@ -1,0 +1,30 @@
+{
+  "homeWaitMs": 120211,
+  "dialogWaitMs": 120165,
+  "home": {
+    "idle": "true",
+    "opacity": "0.45",
+    "focus": "app-demo-cinema",
+    "canvas": "static",
+    "logo": "still",
+    "dialogOpacity": null,
+    "transition": "0.6s"
+  },
+  "dialog": {
+    "idle": "true",
+    "opacity": "0.450779",
+    "focus": "action-dialog-close",
+    "canvas": "static",
+    "logo": "still",
+    "dialogOpacity": "0.450779",
+    "transition": "0.6s"
+  },
+  "keyboardWakeKeepsAction": true,
+  "pointerWakeKeepsAction": true,
+  "focusPreserved": true,
+  "systemReducedMotionWins": true,
+  "reducedMotionDisablesTransitions": true,
+  "visibilityReset": true,
+  "realDeadline": true,
+  "limitations": "Headless Edge, real idle waits; input/hidden state injected via CDP/DOM, not TV/GPU measurements. Hidden duration/cancellation/cleanup verified by unit scheduler tests."
+}

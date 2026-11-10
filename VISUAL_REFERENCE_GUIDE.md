@@ -2,13 +2,21 @@
 
 ## Composizione corrente approvata — 2026-11-09
 
+Checkpoint3.5 — 2026-11-10: fase3 chiusa nel browser, nessuna modifica visiva. Ispezionati Home1080p/4K, dialogo e idle1080p con00/01; focus e proporzioni preservati. Feedback dopo le azioni possono andare a capo e aumentano la densità rispetto ai mockup. Restano differenze di header/logo, simboli Demo, cornici/widget e footer; nessuna piena fedeltà o lettura dal divano certificata. [Rapporto3.5](docs/verification/phase-3.5/report.md), evidenze run-4/; prossimo4.1 inventario dispositivo.
+
+Checkpoint3.4 — 2026-11-10: composizione regolare preservata. Solo negli stati limite compaiono messaggi/retry nelle aree dati; superficie scura dietro il messaggio rail per leggibilità. Offline segnalato nel footer, con possibile ritorno a capo; nessun nuovo menu finale. Screenshot1080p/4K e confronto con00/01 nel [rapporto3.4](docs/verification/phase-3.4/report.md); differenze pregresse e limiti hardware restano espliciti, nessuna piena fedeltà dichiarata.
+
+Checkpoint3.3 — 2026-11-10: attenuazione idle dell'interfaccia (opacità45%) dopo2min, pausa decorazioni e ripristino al primo input; dissolvenza dialogo220ms senza spostamenti. Nessuna nuova geometria, asset o controllo finale. Riferimenti00/01 preservati per la composizione attiva; immagini attenuate e limiti nel [rapporto3.3](docs/verification/phase-3.3/report.md). Non è un cambio di direzione o una dichiarazione di fedeltà completa.
+
+Checkpoint3.2 — 2026-11-10: geometria e asset Home preservati; cornice focus esistente estesa a pointer/input sintetici. Simulatore sovrapposto solo dev opt-in, dentro il modale quando aperto, escluso produzione. Screenshot1080p/4K/mobile ispezionati e confrontati con00/01, dettagli nel [rapporto3.2](docs/verification/phase-3.2/report.md). Strumento tecnico desktop, nessuna nuova direzione estetica o piena fedeltà dichiarata; differenze precedenti ancora valide.
+
 Checkpoint3.1: dialoghi Demo app/Riprendi aggiunti come componenti nativi reali, con token cyan/magenta, superficie scura e focus visibile; Home invariata a dialogo chiuso. Screenshot1080p/4K/mobile ispezionati, limiti e confronto in [rapporto3.1](docs/verification/phase-3.1/report.md). Il modale non è rappresentato nei mockup; nessuna piena fedeltà visiva dichiarata e differenze pregresse ancora esplicite. Nessuna animazione o nuovo asset aggiunto.
 
 Checkpoint2.10: integrazione del motore browser completata senza variazioni di layout o tarature; screenshot1080p/4K e fallback ispezionati con PNG e riferimenti00/01. Le differenze residue di header, simboli Demo e pannelli sono esplicite nel [rapporto2.10](docs/verification/phase-2.10/report.md); nessuna piena fedeltà visiva dichiarata. Prossima3.1, conservare questa direzione. Il vecchio CityBackdrop/CSS è stato rimosso dal sorgente.
 
 La direzione estetica00/01 resta prioritaria, con eccezioni esplicite richieste dall'utente: Home unica, menu superiore rimosso, testi introduttivi sullo sfondo rimossi, controlli Movimento e logo/Pausa sfondo rimossi. Brand/orologio, rail e tre widget Demo restano. Il pannello tecnico2.8 compare soltanto con opt-in Vite dev e non fa parte della composizione finale.
 
-Usare references/background.png come scenografia effettiva, senza modificarla; gli altri mockup non devono essere usati come UI piatta. Nessuna navetta aggiuntiva attualmente montata. Policy sistema/visibilità per le animazioni; idle dimming futuro. [Handoff e asset necessari sul nuovo PC](docs/HANDOFF.md). Le sezioni storiche seguenti vanno interpretate secondo queste decisioni.
+Usare references/background.png come scenografia effettiva, senza modificarla; gli altri mockup non devono essere usati come UI piatta. Nessuna navetta aggiuntiva attualmente montata. Policy sistema/visibilità e idle2min/45% per le animazioni. [Handoff e asset necessari sul nuovo PC](docs/HANDOFF.md). Le sezioni storiche seguenti vanno interpretate secondo queste decisioni.
 
 All images in `references/` are concept art generated for this project, not production-ready application screens or editable component layouts. Recreate UI as accessible React components, not a flattened screenshot. Images are reference assets; do not hardcode sample weather, time, app availability, watch progress, or smart-home state as real data.
 

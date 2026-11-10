@@ -1,6 +1,34 @@
 # StefCors GL1tCh 0S — Codex Development Kit v3
 
-Versione applicativa locale: **0.3.0**, avvio della fase 3 (qualità di interazione). `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+Versione applicativa locale: **0.3.4**, fase 3 (qualità di interazione) completata nel browser. `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+
+## Collaudo MVP browser — 3.5
+
+Il flag `$env:MVP_TEST = '1'` aggiunge al collaudo `node scripts/verify-shell.mjs` la matrice1080p/4K: DOM/albero accessibile Chromium, tutte le14 azioni con D-pad, Tab/Shift+Tab, dialoghi/ritorno focus e30 misure di risposta focus per risoluzione. Produce `mvp-metrics.json` e screenshot; è uno strumento di test, escluso dalla build dell'app.
+
+È combinabile con `PLATFORM_TEST_URL`, `IDLE_TEST=1` e `STABILITY_MS=300000` per stati limite, due attese idle reali e5min di animazioni tenute attive. I due scenari di inattività/stabilità restano distinti. Usare una nuova cartella `VERIFY_OUTPUT` e rimuovere i flag dalla sessione dopo la prova. AX/DOM e tempi headless non certificano screen reader, WCAG, GPU o G5. Comando completo e risultati nel [rapporto3.5](docs/verification/phase-3.5/report.md).
+
+## Stati limite — 3.4
+
+App, ingressi e domotica mostrano caricamento, errore e liste vuote con messaggi accessibili. **Riprova** rilegge i dati ed è utilizzabile con frecce/OK o pointer. Dopo10 secondi senza risposta una lettura diventa un errore recuperabile; i risultati tardivi vengono ignorati. I comandi restano singoli e lo stato cambia solo dopo conferma, senza retry automatici. Le capability assenti mostrano il motivo e impediscono l'azione.
+
+Quando il browser segnala rete assente compare un avviso; la Demo locale resta operativa. Non è una verifica della connessione Internet e non aggiunge cache offline o PWA. Per provare i casi limite: avviare `npm run dev` e aprire `/scripts/fixtures/platform-states.html`; la barra tecnica appartiene solo alla fixture, esclusa dalla build ordinaria.
+
+Per includerla nel collaudo Edge, aggiungere `$env:PLATFORM_TEST_URL = 'http://127.0.0.1:5188/scripts/fixtures/platform-states.html'` al comando browser documentato sotto, poi `Remove-Item Env:PLATFORM_TEST_URL`. [Rapporto3.4](docs/verification/phase-3.4/report.md) con comandi, casi e limiti.
+
+## Inattività e transizioni — 3.3
+
+Dopo **2 minuti** senza input, Home/dialogo vengono attenuati al45% di opacità e sfondo/logo si fermano. Primo tasto, click/tap, movimento effettivo o scroll ripristina la luminosità e mantiene la normale azione. Focus e dialoghi rimangono; nessun nuovo controllo manuale. Al ritorno da pagina nascosta l'attesa ricomincia; riduzione movimento di sistema continua a prevalere. Attenuazione CSS, nessuna modifica alla luminosità hardware TV.
+
+Ingresso dialogo con breve dissolvenza; transizioni disabilitate con reduced motion. `npm run check` include timer/policy. Per le due attese reali Home/dialogo usare anche `$env:IDLE_TEST = '1'` prima di `node scripts/verify-shell.mjs`, poi `Remove-Item Env:IDLE_TEST`. Senza flag il browser check non ripete le due attese. Dettagli in [rapporto3.3](docs/verification/phase-3.3/report.md).
+
+## Pointer e simulatore — 3.2
+
+Muovere il puntatore su una card o widget sposta il focus senza eseguire l'azione. Click o tap attivano; le frecce continuano dal controllo selezionato. Un puntatore fermo non riprende il focus dopo la tastiera.
+
+Per il simulatore: `npm run dev`, poi aprire l'URL Vite con `?remoteDebug=1` e premere **Telecomando · test**. Frecce, OK e Back funzionano sulla Home e sul dialogo aperto; Tab/Enter consentono l'uso senza mouse. Input sintetici di sviluppo, non telecomando TV reale. Il pannello parte chiuso, conserva l'espansione nella sessione della Home e non è incluso in produzione. Per entrambi gli strumenti usare `?remoteDebug=1&backgroundDebug=1`; i campi tecnici mantengono la tastiera nativa.
+
+Da un altro PC della stessa rete avviare `npm run dev -- --host 0.0.0.0 --port 5173 --strictPort` e usare l'indirizzo **Network** stampato da Vite, aggiungendo la query. Collaudo in `scripts/verify-pointer.mjs`, eseguito da `verify-shell.mjs`; esiti e limiti in [rapporto3.2](docs/verification/phase-3.2/report.md).
 
 ## Dialoghi Demo — 3.1
 
@@ -26,17 +54,19 @@ Remove-Item Env:STABILITY_MS, Env:ALLOCATION_MS
 
 Adattare il percorso al browser Chromium installato e scegliere una cartella output nuova. In bash usare `export NOME=valore` per le stesse variabili e `unset STABILITY_MS ALLOCATION_MS` alla fine. Le due prove sono indipendenti e opt-in; minimo60s per stabilità,10s per allocazioni. Il collaudo ordinario resta disponibile senza queste variabili. Include heap JS dopo GC, risorse, stress controlli/profili/resize e finestre main thread CSS on/off; non misura la GPU o il G5. Evidenze e limiti nel [rapporto2.9](docs/verification/phase-2.9/report.md).
 
+Dalla3.3 STABILITY_MS misura animazioni tenute attive con Shift DOM sintetico periodico, esplicitato nei risultati. Per inattività reale usare IDLE_TEST=1; non confondere i due scenari. I rapporti storici precedenti all'idle restano invariati.
+
 Dalla2.10 il collaudo con PROFILE_TEST_URL include anche perdita contesto simulata, errore draw/cleanup, recupero, effetti/motore off e assenza/ritorno immagine. Senza VERIFY_OUTPUT crea una cartella con timestamp; l'output esplicito non deve puntare a rapporti storici. Il fallback Canvas conserva PNG e navigazione; dopo un errore le risorse Canvas sono liberate subito, senza retry automatico. Contratto e limiti nel [rapporto2.10](docs/verification/phase-2.10/report.md).
 
-## Stato corrente e ripresa su un altro PC — 2026-11-09
+## Stato corrente e ripresa su un altro PC — 2026-11-10
 
-**Fase2 e3.1 completate in browser; fase3 aperta, prossimo lavoro3.2 — Pointer e simulatore telecomando.** La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
+**Fasi0–3 completate nel browser; prossimo lavoro4.1 — Inventario dispositivo e fattibilità SDK**, non avviato: modello/firmware/webOS e Developer Mode reali da acquisire. La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
 
 Home unica con dati Demo, PNG originale e motore animato locale. Il profilo **Balanced viene usato anche nella build di produzione**; solo il pannello tecnico è escluso. Profili e tarature finali saranno scelti dopo prove sulla TV. Nessun menu superiore, preferenza movimento o pausa manuale nella Home definitiva.
 
 Sul nuovo PC, dalla radice del repository: `npm ci`, `npm run check`, `npm run dev`. Node>=22.12; non copiare node_modules dal vecchio PC. Aprire l'URL Vite con `?backgroundDebug=1` per attivare il pulsante degli strumenti soltanto in sviluppo. Asset e lockfile sono tracciati; trasferire anche queste modifiche documentali. Nessun `.env` o SDK TV necessario per il mock.
 
-Ultima verifica3.1 su Windows: **141 test, lint, TypeScript e build superati**, Edge produzione/dev dialoghi/focus/fallback e regressioni Home/background OK, errori runtime raccolti vuoti. Screenshot1080p/4K/mobile ispezionati; alias telecomando sintetici distinti da tasti CDP. Prove prolungate e profiling precedenti restano nei rapporti2.9/2.10, non ripetuti qui. Nessuna certificazione screen reader/GPU/G5 o piena fedeltà visiva; altri sistemi/browser restano da verificare. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
+Ultima verifica3.5 su Windows/Edge157: **156 test unitari, lint, TypeScript e build superati**. DOM/AX e tutte le14 azioni con D-pad, Tab/inverso, dialoghi/focus1080p/4K; stati limite/offline e regressioni completi OK, errori runtime vuoti. Due attese idle reali120,2s ciascuna e Home animata5min a29,99–30,01draw/s, risorse stabili. Screenshot ispezionati; tempi focus e limiti nel [rapporto3.5](docs/verification/phase-3.5/report.md). Prove CDP/DOM distinte da dispositivi fisici; nessuna certificazione WCAG/screen reader/GPU/G5 o piena fedeltà, altro browser o fresh install. Nessun nuovo profiling allocazioni. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
 
 Le sezioni numerate sotto descrivono anche la progressione storica: vecchi menu, controlli movimento e frasi “non ancora implementato” si riferiscono alla fase indicata, non allo stato attuale. Per riprendere prevalgono questo riepilogo, PROJECT_STATUS e HANDOFF.
 

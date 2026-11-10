@@ -1,6 +1,6 @@
 # StefCors GL1tCh 0S — Roadmap incrementale
 
-Ultimo aggiornamento: 2026-11-09.
+Ultimo aggiornamento: 2026-11-10.
 
 ## Come usarla
 
@@ -8,8 +8,8 @@ Numerazione aggiornata: nuova fase 2 per il motore animato; le precedenti fasi 2
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** macrofasi 0, 1 e 2 completate; fase 2 validata in browser con i limiti hardware dichiarati. **3.1 completata; fase3 aperta, versione locale0.3.0. Prossima:** `3.2 — Pointer e simulatore telecomando`.
-Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto3.1](docs/verification/phase-3.1/report.md).
+**Stato corrente:** macrofasi 0, 1, 2 e 3 completate nel browser con i limiti hardware/accessibilità dichiarati. **3.5 completata, versione locale0.3.4.** Prossima: `4.1 — Inventario dispositivo e fattibilità SDK`, non avviata.
+Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto3.5](docs/verification/phase-3.5/report.md).
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
 
@@ -185,26 +185,30 @@ Completata su Windows con correzione scheduler, profiling Canvas/CSS/allocazioni
 
 ### 3.2 — Pointer e simulatore telecomando
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Coordinare hover/click e D-pad; aggiungere simulatore browser.
+- Esito: focus condiviso con movimento effettivo, hover fermo/touch-move ignorati, click/tap singoli; simulatore dev-only opt-in Home/dialoghi, escluso produzione, accessibile da tastiera. 141 test/check e nuovi casi browser pointer/simulatore/regressioni superati, runtimeErrors vuoto, screenshot1080p/4K/mobile verificati. Rapporto3.2 con input CDP/sintetici distinti e limiti G5; versione0.3.1 non pubblicata.
 - Accettazione: Cambio modalità senza perdita di focus; controlli utilizzabili senza mouse.
 
 ### 3.3 — Transizioni e idle dimming
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Aggiungere animazioni leggere e attenuazione dopo inattività.
+- Esito: attesa2min confermata dall'utente, opacità45%/pausa decorazioni, primo input ripristina senza consumo, focus preservato. Timer unico e priorità sistema/hidden; dissolvenze CSS180/600ms e ingresso dialogo220ms. 152 test/check e Edge completo, due attese reali120,0/120,5s, screenshot1080p/4K verificati; nessun risultato G5 dichiarato. Rapporto3.3, versione0.3.2 non pubblicata.
 - Accettazione: Input ripristina luminosità; timer testati; nessun aggiornamento React per frame.
 
 ### 3.4 — Stati limite
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Gestire cataloghi vuoti, caricamento, errori, offline e capability assenti.
+- Esito: fallback accessibili e Riprova da D-pad, letture con scadenza10s, risultati tardivi scartati, stato confermato e blocco doppi comandi; capability motivate, Demo locale operativa offline. 156 test/check ed Edge completo superati, attesa reale10.206ms, regressioni e screenshot1080p/4K verificati; runtimeErrors vuoto. Rapporto3.4, versione0.3.3 non pubblicata, nessuna prova hardware.
 - Accettazione: Fallback accessibili e nessun falso successo; test dei casi principali.
 
 ### 3.5 — Verifica MVP browser
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Controllare accessibilità, navigazione completa, 1080p/4K e prestazioni.
+- Esito:156 test/check e matrice Edge157 superati. DOM/AX,14 azioni da D-pad e Tab/Shift+Tab, dialoghi/focus, stati limite e idle reale120,2/120,2s; screenshot1080p/4K ispezionati e limiti espliciti. Home animata300.035ms,29,99–30,01draw/s, risorse stabili, heap dopo GC+58.588byte; runtimeErrors vuoto. Report3.5/run-4, versione0.3.4 non pubblicata. Nessuna certificazione WCAG/screen reader/GPU/G5 o piena fedeltà; fase3 chiusa in browser.
 - Accettazione: Lint, typecheck, build e test eseguiti; screenshot e risultati manuali documentati, limiti espliciti.
 
 ## 4 — Applicazione webOS pubblica

@@ -16,12 +16,12 @@ const getPageVisible = () => !document.hidden;
 const serverReducedMotion = () => true;
 const serverVisible = () => false;
 
-export function useBackgroundMotion() {
+export function useBackgroundMotion(idle = false) {
   const systemReduced = useSyncExternalStore(subscribeMotion, getReducedMotion, serverReducedMotion);
   const pageVisible = useSyncExternalStore(subscribeVisibility, getPageVisible, serverVisible);
   return {
     reducedMotion: systemReduced,
-    logoAnimated: !systemReduced && pageVisible,
-    animated: shouldAnimateBackground({ reducedMotion: systemReduced, pageVisible, userPaused: false }),
+    logoAnimated: !systemReduced && pageVisible && !idle,
+    animated: shouldAnimateBackground({ reducedMotion: systemReduced, pageVisible, userPaused: false, idle }),
   };
 }

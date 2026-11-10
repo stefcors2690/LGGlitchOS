@@ -1,0 +1,9 @@
+.remote-tools { position: fixed; right: 18px; bottom: 18px; z-index: 60; max-width: calc(100vw - 36px); font: 15px/1.4 system-ui, sans-serif; color: #e5f4ff; }
+.remote-tools button { font: inherit; color: inherit; background: #112137; border: 1px solid #438099; border-radius: 7px; padding: 8px 12px; cursor: pointer; min-height: 40px; }
+.remote-tools button:focus-visible { outline: 3px solid #fa4fe4; outline-offset: 3px; }
+.remote-panel { width: min(285px, calc(100vw - 36px)); margin-top: 8px; padding: 14px; border: 1px solid #3bd9f5; border-radius: 10px; background: #071222fa; max-height: 55vh; overflow: auto; }
+.remote-note { color: #b0c4d5; font-size: 12px; margin-block: 7px; }
+.remote-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-block: 10px; }
+.remote-buttons button:first-child { grid-column: 2; }
+.remote-buttons button:nth-child(2) { grid-column: 1; }
+.remote-buttons button:nth-child(5) { grid-column: 2; }

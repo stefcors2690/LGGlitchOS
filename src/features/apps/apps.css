@@ -32,4 +32,4 @@
 @media (max-width: 900px), (max-aspect-ratio: 4/3) { .rail-feedback { position: static; } }
 /* Keep keyboard focus within the beveled frame so scroll clipping cannot cut it off. */
 .app-card:focus-visible { outline: none; box-shadow: none; }
-.app-card:focus-visible .app-frame-inner { stroke: var(--color-cyan); opacity: 1; stroke-width: 1.5; }
+.app-card:focus .app-frame-inner { stroke: var(--color-cyan); opacity: 1; stroke-width: 1.5; }

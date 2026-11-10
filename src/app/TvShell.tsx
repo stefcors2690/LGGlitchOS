@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { ActionDialog } from '../components/ActionDialog';
 import type { ActionDialogRequest } from '../components/ActionDialog';
 import { useTvFocus } from '../navigation/useTvFocus';
@@ -10,17 +10,25 @@ import { AppRail } from '../features/apps/AppRail';
 import { ShellHeader } from './ShellHeader';
 import { HomeBackground } from '../features/background/HomeBackground';
 import { useBackgroundMotion } from '../motion/useBackgroundMotion';
+import { useIdleDimming } from '../motion/useIdleDimming';
+import { ConnectionNotice } from '../components/ConnectionNotice';
+
+const RemoteSimulator = import.meta.env.DEV ? lazy(() => import('../navigation/development/RemoteSimulator')) : null;
 
 export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
-  const motion = useBackgroundMotion();
+  const idle = useIdleDimming();
+  const motion = useBackgroundMotion(idle);
   const returnHome = useCallback(() => {}, []);
   const focusRoot = useTvFocus(returnHome);
   const [dialog, setDialog] = useState<ActionDialogRequest | null>(null);
+  const [remoteExpanded, setRemoteExpanded] = useState(false);
+  const remoteTools = import.meta.env.DEV && RemoteSimulator && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('remoteDebug') === '1'
+    ? <Suspense fallback={null}><RemoteSimulator expanded={remoteExpanded} onExpandedChange={setRemoteExpanded} /></Suspense> : null;
   // Never replace an open dialog with a late asynchronous result; inline feedback is still retained.
   const showDialog = useCallback((request: ActionDialogRequest) => setDialog(current => current ?? request), []);
   const dismissDialog = useCallback(() => setDialog(null), []);
   return (
-    <div ref={focusRoot} className="tv-shell" data-motion-reduced={motion.reducedMotion} data-theme="neon" data-section="home">
+    <div ref={focusRoot} className="tv-shell" data-idle={idle} data-motion-reduced={motion.reducedMotion} data-theme="neon" data-section="home">
       <HomeBackground animated={motion.animated} />
       <ShellHeader logoAnimated={motion.logoAnimated} />
       <main className="shell-main" id="section-content" aria-labelledby="scene-title">
@@ -36,10 +44,11 @@ export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
         </div>
       </main>
       <footer className="shell-footer">
+        <ConnectionNotice />
         <p><span className="footer-demo">Preview browser · Demo</span> · Ambiente di sviluppo: nessuna connessione al TV o a servizi esterni.</p>
         <p className="shell-signature" aria-hidden="true">SC / GL1tCh 0S</p>
       </footer>
-      {dialog && <ActionDialog request={dialog} onDismiss={dismissDialog} />}
+      {dialog ? <ActionDialog request={dialog} onDismiss={dismissDialog} tools={remoteTools} /> : remoteTools}
     </div>
   );
 }

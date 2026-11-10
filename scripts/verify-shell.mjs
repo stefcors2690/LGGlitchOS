@@ -5,6 +5,10 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { verifyActionDialogs } from './verify-dialogs.mjs';
+import { verifyPointerAndRemote } from './verify-pointer.mjs';
+import { verifyIdleDimming } from './verify-idle.mjs';
+import { verifyPlatformStates } from './verify-platform-states.mjs';
+import { verifyMvp } from './verify-mvp.mjs';
 
 const baseUrl = process.env.SHELL_URL ?? 'http://127.0.0.1:5187';
 const outputDir = process.env.VERIFY_OUTPUT ?? `docs/verification/browser-${new Date().toISOString().replace(/[:.]/g, '-')}`;
@@ -139,6 +143,10 @@ try {
   assert.equal(await activeId(),'app-demo-cinema');
   assert.equal(await evaluate('document.querySelectorAll(".motion-toggle,.motion-disclosure").length'),0);
   await verifyActionDialogs({call,evaluate,key,activeId,waitReady,reloadPage,outputDir,baseUrl,developmentUrl:process.env.BACKGROUND_TEST_URL});
+  await verifyPointerAndRemote({call,evaluate,key,activeId,waitReady,outputDir,baseUrl,developmentUrl:process.env.BACKGROUND_TEST_URL});
+  if(process.env.MVP_TEST==='1') await verifyMvp({call,evaluate,key,activeId,waitReady,outputDir,baseUrl});
+  if(process.env.IDLE_TEST==='1') await verifyIdleDimming({call,evaluate,key,activeId,waitReady,outputDir,baseUrl});
+  if(process.env.PLATFORM_TEST_URL) await verifyPlatformStates({call,evaluate,key,activeId,waitReady,outputDir,baseUrl,fixtureUrl:process.env.PLATFORM_TEST_URL});
   await evaluate('localStorage.setItem("glitchos.motion.v1",JSON.stringify({reduced:true,logo:false}))');
   // Test-only instrumentation: identify cached 32x32 particle sprites without app hooks.
   const particleProbe = await call('Page.addScriptToEvaluateOnNewDocument',{source:`
@@ -574,6 +582,8 @@ try {
     const started=Date.now();
     while(Date.now()-started<duration) {
       await sleep(Math.min(10000,duration-(Date.now()-started)));
+      // This is an awake-animation soak. Real quiet deadlines are tested separately with IDLE_TEST=1.
+      await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Shift",bubbles:true}))');
       const r=await census();samples.push({elapsedMs:Date.now()-started,...r,metrics:await metrics()});
       assert.equal(r.raf,1);assert.equal(r.canvases,1);assert.equal(r.sprites,5);assert.equal(r.resize,3);assert.equal(r.observers,3);
       assert.equal(await evaluate('document.activeElement.dataset.tvId'),initialFocus,'Animation must preserve focus');
@@ -599,7 +609,7 @@ try {
     await call('Page.removeScriptToEvaluateOnNewDocument',{identifier});
     await writeFile(`${outputDir}/stability.json`,JSON.stringify({environment:await call('Browser.getVersion'),node:process.version,
       platform:process.platform,mode:'production, headless --disable-gpu',viewport:{width:1920,height:1080,dpr:1},profile:'balanced',
-      requestedDurationMs:duration,actualDurationMs,transitions,unmounted,drag,initial,final,samples,cpuWindows,runtimeErrors,
+      requestedDurationMs:duration,actualDurationMs,awakeSoakWithPeriodicSyntheticInput:true,transitions,unmounted,drag,initial,final,samples,cpuWindows,runtimeErrors,
       limitations:'Forced-GC JS heap and resource counts, not total process/GPU memory or proof of no leaks. CSS windows are main-thread counters only. No TV test.'},null,2));
   }
   assert.deepEqual(runtimeErrors,[]);
@@ -613,5 +623,11 @@ try {
     chrome.once('exit', () => { clearTimeout(timer); resolve(); });
     chrome.kill();
   });
-  await rm(profile, { recursive: true, force: true });
+  // Edge can briefly retain temporary database locks after exit on Windows.
+  // Only remove this script's mkdtemp profile; cleanup must not hide a test failure.
+  assert.equal(path.dirname(path.resolve(profile)), path.resolve(tmpdir()));
+  assert(path.basename(profile).startsWith('glitch-chrome-'));
+  await rm(profile, { recursive: true, force: true, maxRetries: 8, retryDelay: 250 }).catch(error => {
+    console.warn(`Temporary browser profile cleanup incomplete (${error.code}): ${profile}`);
+  });
 }

@@ -1,0 +1,32 @@
+{
+  "nativeModal": true,
+  "labelled": true,
+  "focusContained": true,
+  "backgroundInert": true,
+  "focusRestored": true,
+  "repeatIgnored": true,
+  "backKeys": [
+    "Escape",
+    "Back",
+    "BrowserBack",
+    "Backspace",
+    "OK",
+    "Accept",
+    "Select",
+    "Enter"
+  ],
+  "disabledOriginFallback": true,
+  "hiddenOriginFallback": true,
+  "unsupportedNativeFallback": true,
+  "viewportChecks": [
+    1920,
+    3840,
+    390
+  ],
+  "backgroundPreserved": true,
+  "developmentPanel": true,
+  "accessibleTree": true,
+  "overlappingRequestsIgnored": true,
+  "backdropDoesNotDismiss": true,
+  "aliasDelivery": "Back/BrowserBack/OK/Accept/Select: synthetic DOM KeyboardEvent; Escape/Enter/Backspace: native CDP. No real remote tested."
+}

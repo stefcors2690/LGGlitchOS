@@ -1,12 +1,20 @@
 # StefCors GL1tCh 0S — Product & Technical Specification
 
-## Contratto corrente e continuità — 2026-11-09
+## Contratto corrente e continuità — 2026-11-10
 
-Fasi0/1/2 e3.1 completate in browser; fase3 aperta, versione locale0.3.0. Prossima3.2 — Pointer e simulatore telecomando, ancora da fare. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+Fasi0–3 completate nel browser, versione locale0.3.4 non pubblicata. Prossima4.1 — Inventario dispositivo e fattibilità SDK, ancora da fare: acquisire modello/firmware/webOS e Developer Mode reali prima di API/packaging. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+
+Ultima verifica3.5:156 test/check ed Edge157 completo superati. DOM/AX,14 azioni da tastiera, Tab/inverso e dialoghi/focus1080p/4K; stati limite/offline e due attese idle reali. Home animata300.035ms a29,99–30,01draw/s, risorse stabili, runtimeErrors vuoto. Nuovo MVP_TEST=1 e cleanup profilo temporaneo robusto, nessuna modifica runtime. Screenshot confrontati; [rapporto3.5](docs/verification/phase-3.5/report.md) con tempi, scostamenti e limiti WCAG/screen reader/GPU/G5/fresh install. Le verifiche seguenti sono storico.
+
+Ultima verifica3.4:156 test unitari/check ed Edge completo superati; fallback/retry, capability, timeout reale10.206ms, risposte tardive, doppi comandi e offline locale verificati. Screenshot1080p/4K ispezionati, runtimeErrors vuoto. [Rapporto3.4](docs/verification/phase-3.4/report.md); nessuna nuova prova hardware, attesa idle prolungata o profiling.
+
+Ultima verifica3.3:152 test unitari/check ed Edge con due attese reali di2min Home/dialogo superati. Idle al45%, pausa decorazioni, focus conservato e primo input normalmente eseguito; reduced motion/visibilità prioritari. Screenshot1080p/4K e regressioni OK, nessun nuovo servizio o comando hardware. [Rapporto3.3](docs/verification/phase-3.3/report.md); i checkpoint seguenti sono storico.
+
+Ultima verifica3.2:141 test unitari/check e nuovi casi browser Edge pointer/simulatore superati, singola attivazione e cambio modalità con focus preservato. Simulatore dev-only opt-in anche nei modali, escluso produzione; focus visibile condiviso. Nessun cambiamento motore/tarature o nuova integrazione. [Rapporto3.2](docs/verification/phase-3.2/report.md); verifiche3.1/2.10 sotto restano storico.
 
 Ultima verifica3.1:141 test/check ed Edge produzione/dev superati, dialoghi app/Riprendi, focus/tasti/fallback e regressioni Home/background verificati. Screenshot1080p/4K/mobile, esiti e limiti nel [rapporto3.1](docs/verification/phase-3.1/report.md). Alias telecomando DOM sintetici distinti da input CDP e dispositivo reale non verificato. Dialoghi nativi webOS, screen reader e altri browser non certificati. La verifica2.10 sotto riguarda lo storico del motore.
 
-Le decisioni correnti sostituiscono le descrizioni storiche numerate più sotto: Home unica senza menu superiore; logo/orologio locale, app e tre widget Demo; niente controlli movimento finali. Motore React/TS/Canvas con immagine originale ferma e overlay, nessun video principale o navetta aggiuntiva montata. Reduced motion e visibilità sempre rispettati, idle dimming ancora in3.3.
+Le decisioni correnti sostituiscono le descrizioni storiche numerate più sotto: Home unica senza menu superiore; logo/orologio locale, app e tre widget Demo; niente controlli movimento finali. Motore React/TS/Canvas con immagine originale ferma e overlay, nessun video principale o navetta aggiuntiva montata. Reduced motion e visibilità sempre rispettati; idle dimming automatico dopo2min implementato in3.3.
 
 I profili fanno parte della produzione: Balanced predefinito, Cinematic ed Eco configurabili nel codice; sceglieremo profilo e tarature fissi dopo prove hardware. Solo il pannello è dev-only con opt-in esplicito; nessuna selezione utente o auto-degrado implementati. Buffer effetti massimoFull HD, target30fps da verificare sul G5. Contratti dettagliati nel README tecnico del background.
 
@@ -76,12 +84,30 @@ The adapter is wired to app catalog/launch in microphase 1.3; input listing/acti
 
 ## Remote navigation acceptance
 
+### Contratto stati limite 3.4
+
+App, ingressi e domotica espongono caricamento (`aria-busy`), errore e lista vuota valida. Dopo errore/vuoto, Riprova rilegge capability e dati ed è utilizzabile da D-pad/pointer. La lettura completa ha scadenza10s; risultati tardivi dopo timeout, retry, cambio adapter o unmount non aggiornano UI/dialoghi. Nessuna nuova API o dipendenza. Comandi serializzati per area, stato aggiornato solo dopo conferma; nessun retry/timeout automatico dei comandi e nessuna cancellazione del trasporto implicita. Capability mancanti impediscono l'invio, con motivo associato ai controlli leggibili.
+
+Il browser offline mostra un avviso senza bloccare la Demo locale. navigator.onLine è solo un indizio, non una verifica Internet/servizi; nessun service worker o cache offline introdotti. Fixture solo sviluppo per guasti, ritardi e recuperi, collaudo opt-in PLATFORM_TEST_URL. [Rapporto3.4](docs/verification/phase-3.4/report.md) per evidenze e limiti.
+
+### Contratto idle e transizioni 3.3
+
+Utente conferma2min: dopo120.000ms senza input la Home e il dialogo passano a opacità0,45 (600ms), sfondo/logo sospesi. Primo input ripristina (180ms) ed esegue normalmente senza essere consumato, focus preservato. Pointer fermo/aggiornamenti UI non sono attività; tastiera, click, pointerdown/movimento effettivo e wheel sì, inclusi comandi sintetici di sviluppo. Nessun controllo finale nuovo.
+
+In pagina nascosta niente timer idle, al ritorno nuova attesa intera. Sistema reduced motion/visibilità prevalgono sulla ripresa, e media reduce elimina anche dissolvenze/transizioni. Controller con unico timeout e clock monotono, nessun RAF/React update per frame. Ingresso dialogo opacity-only220ms, nessuno spostamento dei tool fissi. È attenuazione CSS, non luminosità hardware. [Rapporto3.3](docs/verification/phase-3.3/report.md) per test e limiti.
+
+### Contratto pointer e simulatore 3.2
+
+Movimento mouse/pen effettivo sul controllo TV lo mette a fuoco senza azione; hover fermo non annulla una scelta D-pad. Touch-move/trascinamento non sono hover; click/tap primari nativi attivano una sola volta. Il focus visibile e la memoria rail/widget sono condivisi; dialoghi e input tecnici mantengono l'isolamento. Nessun autofocus da semplice entrata del puntatore senza movimento.
+
+Simulatore solo Vite dev con ?remoteDebug=1, inizialmente chiuso; frecce/OK/Back sintetici sulla Home e sul modale corrente, senza intercettare tasti di sistema. Espansione in memoria; Tab/Enter disponibili. Nel dialogo il pannello è parte della superficie modale e la Home resta inerte. Nessun controllo/CSS simulatore nella produzione ordinaria, query ignorata. Pannello background indipendente. Dettagli, input reali/sintetici e limiti nel [rapporto3.2](docs/verification/phase-3.2/report.md).
+
 ### Contratto overlay 3.1
 
 Home unica, con dialoghi informativi per esiti avvio app e ripresa Demo; HDMI/domotica restano inline. Un solo ActionDialog nativo modale posseduto da TvShell, etichettato e descritto, con focus iniziale su Chiudi e Home inerte. Tab/Shift+Tab/frecce restano nel dialogo, OK/Enter/Chiudi o Back/Escape lo chiudono; autorepeat ignorato. Il primo Back chiude solo il modale e ripristina l'origine, il successivo torna alla prima app come prima. Origine assente/non disponibile: prima app utilizzabile, poi altro controllo disponibile. Nessuno stack di sezioni o nuova navigazione superiore.
 
 Feedback inline conservati per errori e browser senza showModal; nessun successo ottimistico. Richieste arrivate mentre un modale è aperto non lo sostituiscono, nessuna coda. Motore e policy movimento continuano indipendenti; pannello background dev non modale separato. API piattaforma e dati Demo invariati. Test e limiti nel [rapporto3.1](docs/verification/phase-3.1/report.md).
-- D-pad cycles predictably among top nav, app rail and lower widgets; no traps.
+- D-pad moves predictably between the app rail and lower widgets, with remembered row positions and no traps. The approved current Home has no top navigation or manual movement controls.
 - Focus always visible and stays consistent when UI rerenders.
 - OK activates focused tile; Back closes overlays/returns to prior section.
 - Pointer hover and click work when available without breaking D-pad focus.
@@ -101,7 +127,7 @@ Feedback inline conservati per errori e browser senza showModal; nessun successo
 - Keep stock Home untouched until a verified recovery path exists.
 
 ## MVP definition
-A runnable desktop preview of the approved cyberpunk Home with animated background, keyboard-based remote simulation, focus navigation, functional internal sections, mock apps/inputs/widgets, settings for reduced motion, and clean modular architecture. Include build, lint, tests, and setup instructions.
+A runnable desktop preview of the approved cyberpunk Home: one Home with animated background, keyboard/pointer focus navigation, development-only remote simulator, Demo app/resume dialogs, mock inputs/switches, accessible read/retry fallbacks and browser offline hint. System reduced motion, hidden-page pause and2min idle dimming apply automatically; no manual movement controls or former internal-section menu. Include build, lint, tests, setup instructions and a browser acceptance report with explicit device/accessibility/performance limitations.
 
 ## Non-goals for MVP
 Root, privileged autostart, actual Home button interception, DRM playback integration, accurate cross-app continue-watching, unverified third-party app launching, real smart-home device control.

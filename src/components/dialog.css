@@ -1,4 +1,7 @@
 .action-dialog {
+  opacity: var(--idle-opacity, 1);
+  transition: opacity 180ms ease-out;
+  animation: action-dialog-enter 220ms ease-out;
   width: min(90vw, calc(var(--tv-unit) * 43));
   max-width: calc(100vw - 2 * var(--space-3));
   max-height: calc(100vh - 2 * var(--space-3));
@@ -24,3 +27,7 @@
   border: 1px solid var(--color-magenta); border-radius: var(--radius-panel); cursor: pointer;
 }
 .action-dialog-close:focus { outline: var(--focus-ring); outline-offset: var(--space-1); box-shadow: var(--focus-glow); }
+@keyframes action-dialog-enter {
+  from { opacity: 0; }
+  to { opacity: var(--idle-opacity, 1); }
+}

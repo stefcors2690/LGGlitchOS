@@ -1,4 +1,5 @@
 import { useId, useLayoutEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import { mapRemoteKey } from '../navigation/focusGraph';
 import type { FocusZone } from '../navigation/focusGraph';
 import { getDialogReturnId } from './dialogFocus';
@@ -26,7 +27,7 @@ function restoreFocus(originId: string) {
 }
 
 /** A single native modal: the browser makes the underlying Home inert. No platform/system Back hook. */
-export function ActionDialog({ request, onDismiss }: { readonly request: ActionDialogRequest; readonly onDismiss: () => void }) {
+export function ActionDialog({ request, onDismiss, tools }: { readonly request: ActionDialogRequest; readonly onDismiss: () => void; readonly tools?: ReactNode }) {
   const ref = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = useId(), descriptionId = useId();
@@ -50,13 +51,19 @@ export function ActionDialog({ request, onDismiss }: { readonly request: ActionD
     onCancel={event => { event.preventDefault(); onDismiss(); }}
     onKeyDown={event => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.nativeEvent.isComposing) return;
+      if (event.key === 'Tab') {
+        const controls = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')].filter(element => element.getClientRects().length > 0);
+        const index = controls.findIndex(element => element === document.activeElement);
+        const next = controls[(index + (event.shiftKey ? -1 : 1) + controls.length) % controls.length];
+        event.preventDefault(); event.stopPropagation(); next?.focus({ preventScroll: true }); return;
+      }
       const action = mapRemoteKey(event.key);
       if (action === 'back' || action === 'activate') {
         // Enter/Space retain native button activation; remote OK aliases activate exactly once.
         if (action === 'activate' && event.key === 'Enter' && event.target instanceof HTMLButtonElement && !event.repeat) return;
         event.preventDefault(); event.stopPropagation();
         if (!event.repeat) onDismiss();
-      } else if (event.key === 'Tab' || action) {
+      } else if (action) {
         event.preventDefault(); event.stopPropagation(); closeRef.current?.focus({ preventScroll: true });
       }
     }}>
@@ -65,5 +72,6 @@ export function ActionDialog({ request, onDismiss }: { readonly request: ActionD
     <p className="action-dialog-message" id={descriptionId}>{request.message}</p>
     <p className="action-dialog-help">OK per chiudere · Back o Esc per tornare</p>
     <button ref={closeRef} className="action-dialog-close" type="button" onClick={onDismiss}>Chiudi</button>
+    {tools}
   </dialog>;
 }

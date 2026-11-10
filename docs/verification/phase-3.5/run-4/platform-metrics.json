@@ -1,0 +1,17 @@
+{
+  "empty": true,
+  "retryWithDpad": true,
+  "rejectedReads": true,
+  "unsupportedLists": true,
+  "unsupportedCommandsBlocked": true,
+  "noFalseSuccess": true,
+  "commandsNotOptimistic": true,
+  "duplicateCommandsBlocked": true,
+  "staleReadsIgnored": true,
+  "staleCommandsIgnored": true,
+  "realDeadlineWaitMs": 10211,
+  "timeoutLateSuccessIgnored": true,
+  "timeoutRetryRecovers": true,
+  "offlineLocalDemoWorks": true,
+  "offlineIsBrowserHint": true
+}

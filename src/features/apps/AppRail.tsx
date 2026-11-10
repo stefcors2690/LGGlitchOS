@@ -1,53 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import type { AppInfo, PlatformAdapter } from '../../platform/contracts';
 import { launchApp, loadAppCatalog } from './appActions';
-import type { CatalogState } from './appActions';
+import { usePlatformResource } from '../../platform/usePlatformResource';
+import { ResourceNotice } from '../../components/ResourceNotice';
 import type { ActionDialogRequest } from '../../components/ActionDialog';
 import './apps.css';
 
 interface AppRailProps { readonly platform: PlatformAdapter; readonly visible: boolean; readonly onDialogRequest?: (request: ActionDialogRequest) => void }
 
 export function AppRail({ platform, visible, onDialogRequest }: AppRailProps) {
-  const [catalog, setCatalog] = useState<CatalogState | null>(null);
+  const { state: catalog, busy, reload, runCommand } = usePlatformResource(platform, loadAppCatalog);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [message, setMessage] = useState('Seleziona un’app · Catalogo demo');
-  const [busy, setBusy] = useState(false);
-  const lock = useRef(false);
-  const mounted = useRef(false);
-  useEffect(() => {
-    mounted.current = true;
-    let active = true;
-    void loadAppCatalog(platform).then(result => { if (active) setCatalog(result); });
-    return () => { active = false; mounted.current = false; };
-  }, [platform]);
-
+  const initialMessage = 'Seleziona un’app · Catalogo demo';
+  const [feedback, setFeedback] = useState({ platform, text: initialMessage });
+  const message = feedback.platform === platform ? feedback.text : initialMessage;
+  const setMessage = (text: string) => setFeedback({ platform, text });
   async function activate(app: AppInfo) {
-    if (lock.current || catalog?.status !== 'ready' || catalog.launchDisabledReason) return;
-    lock.current = true;
-    setBusy(true);
+    if (catalog?.status !== 'ready' || catalog.launchDisabledReason !== undefined) return;
     setSelectedId(app.id);
     setMessage(`Avvio demo in corso: ${app.name}…`);
-    const feedback = await launchApp(platform, app);
-    if (mounted.current) {
-      setMessage(feedback); setBusy(false);
+    await runCommand(() => launchApp(platform, app), feedback => {
+      setMessage(feedback);
       onDialogRequest?.({ title: app.name, message: feedback, returnFocusId: `app-${app.id}` });
-    }
-    lock.current = false;
+    });
   }
 
-  const activeId = selectedId ?? (catalog?.status === 'ready' ? catalog.apps[0]?.id : undefined);
+  const activeId = catalog?.status === 'ready' ? catalog.apps.find(app => app.id === selectedId)?.id ?? catalog.apps[0]?.id : undefined;
   return (
-    <section className="apps-section" aria-labelledby="apps-title" hidden={!visible}>
+    <section className="apps-section" aria-labelledby="apps-title" aria-busy={!catalog || busy} hidden={!visible}>
       <h2 className="visually-hidden" id="apps-title">Applicazioni demo</h2>
-      {!catalog && <p className="rail-notice" role="status">Caricamento catalogo demo…</p>}
-      {catalog?.status === 'error' && <p className="rail-notice" role="alert">{catalog.message}</p>}
-      {catalog?.status === 'ready' && <>
-        {catalog.apps.length === 0 && <p className="rail-notice">Nessuna applicazione demo disponibile.</p>}
+      <ResourceNotice id="apps" zone="rail" label="applicazioni demo" loading={!catalog}
+        error={catalog?.status === 'error' ? catalog.message : undefined}
+        empty={catalog?.status === 'ready' && catalog.apps.length === 0}
+        onRetry={() => { setMessage('Seleziona un’app · Catalogo demo'); reload(); }} />
+      {catalog?.status === 'ready' && catalog.apps.length > 0 && <>
         <div className="app-rail" role="list" aria-label="Catalogo applicazioni demo">
           {catalog.apps.map((app, index) => (
             <div className="app-slot" role="listitem" key={app.id}>
               <button className="app-card" type="button" data-tv-id={`app-${app.id}`} data-tv-zone="rail" aria-label={`${app.name} · Avvio ${app.mode === 'demo' ? 'simulato' : 'applicazione'}`}
-                aria-pressed={activeId === app.id} aria-disabled={busy || !!catalog.launchDisabledReason}
+                aria-pressed={activeId === app.id} aria-disabled={busy || catalog.launchDisabledReason !== undefined} aria-describedby="apps-feedback"
                 onFocus={() => setSelectedId(app.id)}
                 onClick={() => { void activate(app); }}>
                 <svg className="app-frame" viewBox="0 0 240 145" preserveAspectRatio="none" aria-hidden="true">
@@ -65,7 +56,7 @@ export function AppRail({ platform, visible, onDialogRequest }: AppRailProps) {
             </div>
           ))}
         </div>
-        <p className="rail-feedback" role="status" aria-atomic="true">{catalog.launchDisabledReason ?? message}</p>
+        <p id="apps-feedback" className="rail-feedback" role="status" aria-atomic="true">{catalog.launchDisabledReason ?? message}</p>
       </>}
     </section>
   );

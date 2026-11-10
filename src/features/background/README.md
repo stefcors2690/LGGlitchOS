@@ -1,5 +1,7 @@
 # Motore background — stato corrente 2.10
 
+Integrazione3.3: la Home passa al motore animated=false anche in idle dopo120.000ms; logo statico e CSS/layer seguono la policy esistente. Non cambia profilo, config canonica o tarature. Al primo input ripresa solo se pagina visibile e sistema non ridotto; hidden concede una nuova attesa al ritorno. Controller idle nella cartella src/motion/, risultati in [rapporto3.3](../../../docs/verification/phase-3.3/report.md). Le sezioni numerate sotto restano lo storico implementativo del motore.
+
 ## Verifiche di stabilità 2.9
 
 `AnimationController` conserva il residuo delle scadenze per evitare la caduta a20–24draw/s con RAF irregolare; il delta simulazione è separato dall'ultimo draw reale, limitato e senza recuperi a raffica. Nessun nuovo RAF, stato React/frame o cambio tarature. Risoluzione config canonica sempre una sola volta.

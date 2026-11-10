@@ -1,0 +1,28 @@
+{
+  "mouseHover": true,
+  "noHoverActivation": true,
+  "singleClick": true,
+  "stationaryPointerIgnored": true,
+  "touchMoveIgnored": true,
+  "singleTouchTap": true,
+  "pointerKeyboardContinuity": true,
+  "modalIsolation": true,
+  "railMemory": true,
+  "simulator": {
+    "developmentOptIn": true,
+    "startsClosed": true,
+    "focusPreserved": true,
+    "homeCommands": true,
+    "modalCommands": true,
+    "keyboardControls": true,
+    "singleActivation": true,
+    "productionExcluded": true,
+    "backgroundPanelNativeInput": true,
+    "viewportChecks": [
+      1920,
+      3840,
+      390
+    ]
+  },
+  "limitations": "Mouse/touch via CDP, stationary/touch-move probes via synthetic PointerEvent; simulator sends DOM KeyboardEvent. No real Magic Remote or TV verified."
+}

@@ -6,7 +6,7 @@
 .watch-heading svg { flex-shrink: 0; width: var(--space-3); height: var(--space-3); color: #ff73e2; }
 .watch-demo { margin-left: auto; color: var(--color-muted); font-size: calc(var(--tv-unit) * .8); text-transform: uppercase; }
 .watch-resume { display: grid; grid-template-columns: 43% minmax(0,1fr); align-items: center; gap: var(--space-2); width: 100%; padding: 0; border: 0; background: transparent; text-align: left; color: var(--color-text); font: inherit; cursor: pointer; border-radius: var(--radius-panel); }
-.watch-resume:focus-visible { outline-color: var(--color-magenta); box-shadow: 0 0 var(--space-1) #ff39cf70; }
+.watch-resume:focus { outline-color: var(--color-magenta); box-shadow: 0 0 var(--space-1) #ff39cf70; }
 .watch-artwork { display: block; height: calc(var(--tv-unit) * 5); border-radius: var(--radius-panel); background: #12263d url('../../../references/background.png') 8% 35% / auto 165% no-repeat; border: 1px solid #00ddf570; }
 .watch-details { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
 .watch-name { font-size: var(--text-small); overflow-wrap: anywhere; }

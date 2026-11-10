@@ -1,12 +1,16 @@
 # Animation specification — StefCors GL1tCh 0S
 
-## Policy corrente alla 2.10
+## Policy corrente alla 3.3 — 2026-11-10
 
-Fase2 completata in browser; ripresa dalla3.1: [HANDOFF](docs/HANDOFF.md), [stato](PROJECT_STATUS.md). La2.9 ha corretto lo scheduler; la2.10 ha rimosso la scena legacy e consolidato cleanup/fallback Canvas, senza cambiare tarature, policy o logo. Verifiche integrate e prova locale5min nel [rapporto2.10](docs/verification/phase-2.10/report.md); profiling storico nel2.9, nessuna misura GPU/G5. Le sezioni successive conservano anche comportamenti storici sostituiti.
+Motore fase2 completato in browser; stato e ripresa in [HANDOFF](docs/HANDOFF.md) e [PROJECT_STATUS](PROJECT_STATUS.md). La3.3 aggiunge idle e dissolvenze senza cambiare asset, tarature o profili. Verifiche correnti nel [rapporto3.3](docs/verification/phase-3.3/report.md); prove prestazionali2.9/2.10 restano storico separato, nessuna misura GPU/G5. Le sezioni successive conservano comportamenti storici sostituiti.
 
-Home e logo si animano automaticamente salvo prefers-reduced-motion o pagina nascosta. Nessun controllo manuale movimento/logo/pausa nella versione finale; idle dimming ancora previsto in3.3. Background originale fermo, nessuna camera animata, video soltanto riferimento, navette legacy non montate. Layer attivi: pioggia/particelle in un unico Canvas/RAF, nebbia, neon e ologramma localizzati. Preservare tarature approvate e maschere nel config.
+Home e logo si animano automaticamente salvo prefers-reduced-motion, pagina nascosta o inattività. Attesa **120.000ms** confermata dall'utente: opacità CSS della shell e del dialogo0,45 in600ms, sfondo/logo fermi, focus preservato. Primo input ripristina in180ms ed esegue la sua normale azione, senza essere consumato. Hidden sospende il timer e al ritorno concede un nuovo periodo intero. Input catturati senza interferire con i gestori; pointer fermo e aggiornamenti automatici non sono attività. Nessun controllo manuale finale o scrittura storage.
 
-Balanced è il default anche in produzione; Cinematic/Eco sono profili del motore, non funzionalità limitate al debug. Solo il pannello di taratura è dev-only, richiede ?backgroundDebug=1 ed è inizialmente chiuso. Target30fps e capFull HD non certificano il G5. Ultimi browser check nel rapporto2.10; profiling allocazioni separato nel2.9. Tutti gli asset richiesti sono nel repository, senza percorsi runtime legati al vecchio PC.
+Ingresso dialogo: dissolvenza220ms, solo opacity (nessun transform che sposti i tool fissi); keyframe finale rispetta --idle-opacity. Movimento ridotto disabilita tutte queste transizioni/animazioni, ma lascia possibile l'attenuazione statica. Idle usa un timeout coalescente e clock monotono, nessun RAF/interval o React update per frame. Non è modifica alla luminosità hardware o protezione OLED certificata.
+
+Background originale fermo, nessuna camera animata, video soltanto riferimento, navette legacy non montate. Layer attivi quando consentiti: pioggia/particelle in un unico Canvas/RAF, nebbia, neon e ologramma localizzati. Preservare tarature approvate e maschere nel config.
+
+Balanced è il default anche in produzione; Cinematic/Eco sono profili del motore. Pannelli backgroundDebug/remoteDebug solo dev e opt-in, inizialmente chiusi. Target30fps e capFull HD non certificano il G5. IDLE_TEST=1 verifica attese reali, STABILITY_MS tiene invece la scena attiva con Shift DOM periodico dichiarato nei risultati; non confondere i due scenari. Profiling allocazioni2.9 separato; asset locali senza percorsi runtime legati al vecchio PC.
 
 ## Logo v3 — slow cinematic glitch
 - Canonical asset: `assets/branding/StefCors_GL1tCh_0S_Glitch_Slow.svg`.
