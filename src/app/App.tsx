@@ -1,8 +1,13 @@
 import { TvShell } from './TvShell';
-import { MockPlatformAdapter } from '../platform/mock/MockPlatformAdapter';
+import { useMemo, useState } from 'react';
+import { selectPlatform } from '../platform/selectPlatform';
+import { getWebosRuntime } from '../platform/webos/runtime';
 
-const platform = new MockPlatformAdapter();
+const runtime = getWebosRuntime();
+const platformBack = runtime ? () => runtime.platformBack() : undefined;
 
 export function App() {
-  return <TvShell platform={platform} />;
+  const [demo, setDemo] = useState(false);
+  const platform = useMemo(() => selectPlatform(runtime, demo), [demo]);
+  return <TvShell platform={platform} onPlatformBack={platformBack} onModeChange={runtime ? () => setDemo(value => !value) : undefined} />;
 }

@@ -1,8 +1,38 @@
 # Ripresa su un altro PC — StefCors GL1tCh 0S
 
-Aggiornato: 2026-11-10. Punto di ripresa: **4.1 — Inventario dispositivo e fattibilità SDK**, ancora `DA FARE`.
+Aggiornato: 2026-11-11. **Fase4 completata**; punto di ripresa **5.1 — Catalogo applicazioni**, `DA FARE`.
 
-## Stato corrente dopo la 3.5
+## Stato corrente — 4.4 completata
+
+0.4.3 installata/avviata e lasciata sulla G5, lavoro locale4.1–4.4 da preservare; nessun commit/push/root/Home/autostart/fase5. Install/update/launch, getSystemInfo reale, telecomando/focus/Demo, uscita LG/riapertura e idle/ripristino riusciti con Inspector e riscontri utente distinti. Chrome132.0.6834.207/FHD/DPR1. Dopo due ritocchi richiesti per piccoli scatti, utente accetta TV-only Canvas1600×900/179gocce/32particelle/30fps anche Demo; browser Balanced/PNG/CSS/logo invariati.179 test/check/IPK/CLI ed Edge browser/file://1080p/4K passati. Campione130s con idle45% e Canvas fermo, ripresa al primo tasto fisico e snapshot running; metriche draw indicative e screenshot nel [rapporto4.4](verification/phase-4.4/report.md). Pressione lunga/suspend lungo/riavvio/GPU/WCAG/disinstallazione/downgrade non provati. Endpoint Inspector cambia dopo riapertura e resta fuori Git; helper inspect-g5.mjs non incluso nel pacchetto. Riprendere5.1 verificando API pubbliche e permessi del catalogo/icone, senza anticipare launch5.2 o dedurre privilegi da SSH/getSystemInfo; nuovi deploy richiedono istruzione esplicita.
+
+## Stato dopo la 4.3 (storico)
+
+Versione **0.4.1**, fase4 aperta, lavoro locale4.1–4.3 da preservare. Adapter webOS predefinito sulla TV riconosciuta da webOSTV.js; pulsante footer Demo/TV, scelta solo di sessione, browser sempre mock. SDK ufficiale1.2.13 locale13.818byte con Apache2.0, hash/ordine/licenza verificati nel packaging. getSystemInfo pubblico legge solo tre campi opzionali, validati senza inventare dati: modello/firmware/SDK.8s/cancel/errori tradotti/retry, sei capability fase5 indisponibili con motivo e comandi senza trasporto. Manifest systemconfig.query e disableBackHistoryAPI:true; Back461 chiude prima il dialogo, poi platformBack dalla Home. Nessun Home/autostart, nuova integrazione5.x, servizio JS o dipendenza npm frontend.
+
+178 test/25 file e check passati, IPK0.4.1 finale2.974.414byte/SHA25666d05e5aa22c5b8e01239fdc32c48f87f14d9129e8b4a31c26a89e48c32f2f21,nove file identici allo stage. Edge HTTP/file:// e bridge sintetico con SDK originale1080p/4K superati in browser-final; rifinitura etichette/leggibilità verificata dal successivo browser-release, exit0/runtimeErrors vuoto, vedere PROJECT_STATUS e [rapporto4.3](verification/phase-4.3/report.md). Nessuna installazione G5 o prova del grant effettivo/telecomando/lifecycle/GPU. Le policy visibilità/idle/reduced motion restano quelle esistenti; nessun handler launch/relaunch.
+
+Trasferire anche webos/vendor/ con licenza, src/platform/webos/, selectPlatform/SystemInfoNotice e script packaging/test. Rigenerare IPK, non presumere hash identico. Target glitch-g5 già associato solo su questo PC; su altro PC seguire4.1 senza copiare chiavi nel progetto. Prima4.4 controllare sessione, richiedere l'istruzione esplicita per installare/avviare la nostra app; verificare campo reale/consensi, Back da modale/Home/pressione lunga, pointer/D-pad, Demo/ritorno TV, background/ripresa, viewport e prestazioni. Non usare risultati CLI o TEST TV del bridge come dati di runtime G5.
+
+## Stato dopo la 4.2 (storico)
+
+Versione **0.4.0**, fase4 aperta. Base553bbf8 con lavoro locale4.1 preservato, nessuna dipendenza frontend nuova/commit/push/deploy. Manifest webos/appinfo.json, icone80/130 dal canonico statico, build separata Chromium132/FHD/IIFE, CSS/URL relativi e requiredACG:[]; mock invariato e footer TV/Demo. Nessuna API Luna, servizio, Back custom o app installata sul G5. [Guida completa](../webos/README.md), [rapporto4.2](verification/phase-4.2/report.md).
+
+Comandi npm build:webos/package:webos/verify:webos; output dist-webos/ e artifacts/ ignorati. IPK com.stefcors.glitchos_0.4.0_all.ipk,2.964.650byte,SHA256c4ed8d7c0cfaeb6064b05e78ee43460466970c208b90e94af4735cdd565b672c. Sette file app identici allo stage, --no-minify preserva Vite, CLI --check/--info superati. Trasferire webos/ e script insieme ai sorgenti; rigenerare output, senza presumere hash IPK identici fra esecuzioni.
+
+**165 test/24 file e check finali OK**, Edge157 HTTP/file://1080p/4K con DOM/AX,14 azioni/focus/dialoghi e regressioni, runtimeErrors vuoto. Screenshot/icone ispezionati e PNG/logo invariati, differenze pregresse esplicite. Non ripetuti idle reale/soak3.5, fresh install o profiling. Nessuna prova WebAppManager/G5/WCAG/screen reader/Back461/GPU. Install/launch/inspect/rimozione app sono solo istruzioni con sintassi CLI verificata.
+
+Riprendere4.3: API pubbliche/adapter e selezione mock/device, capability/timeout/errori, Back/lifecycle e ACG necessari da verificare. Non anticipare integrazioni5.x, privilegi o deploy. CLI3.2.6 su Node24 e target glitch-g5 associato restano su questo PC; IP/chiavi fuori Git. Su altro PC seguire4.1; verificare sessione prima delle successive prove. Nessuna pubblicazione implicita.
+
+## Stato dopo la 4.1 (storico)
+
+Base Git553bbf8 con lavoro locale4.1 preservato. App0.3.4 invariata; nessuna dipendenza frontend nuova, packaging o deploy. **Accesso reale confermato via system-info exit0**: modello OLED55G56LS.DPIQLJP, firmware43.21.96, SDK11.2.0. Menu utente webOS26/11.2.0-3711; Developer Mode/Key Server attivi,999h59m residui riferiti al suo checkpoint. [EvidenzaCLI](verification/phase-4.1/device-info.md). Non è ancora una prova della nostra app sul TV.
+
+[Dossier4.1](webos/PHASE_4_1.md) con inventario, matrice API/permessi e fonti ufficiali11/11, vincoli grafica Full HD/video4K e motori web, preparazione Developer Mode/CLI/lettura informazioni. CLI3.2.6 installata globalmente con approvazione (Node>=20 nel pacchetto), versione/help verificati con Node24.22.2 fuori sandbox dopo NVM4306; nessun runtime Node o firewall trust modificati. Dipendenze transitive deprecate/lifecycle non sbloccati documentati; Accesso SSH e system-info ora riusciti; packaging/installazione app non ancora provati. Su altro PC reinstallare la CLI separatamente: non è nel lockfile frontend. Nessuna capability hardware certificata/promossa nel mock; test/check/browser3.5 restano lo storico, non ripetuti.
+
+Su questo PC **glitch-g5** associato (getkey eseguito nel terminale utente), prisoner/9922; emulatore ancora predefinito. IP e chiave nella configurazione CLI locale fuori Git. Su altro PC installareCLI e associare il target separatamente; non trasferire credenziali nel repository. Riprendere **4.2**: manifest/icone/IPK e versione0.4.0, con target Chromium132 e grafica Full HD documentati ma da collaudare nell'app. Non implementare adapter4.3 o pubblicazione anticipatamente; verificare validità sessione prima di successive prove.
+
+## Stato dopo la 3.5 (storico)
 
 Versione locale **0.3.4, fase3 chiusa nel browser**, nessuna modifica runtime in3.5 o nuova dipendenza. Base4742c5e con lavoro locale3.2–3.4 preservato; nessun commit/tag/push/deploy. Nuovo `scripts/verify-mvp.mjs` e flag `MVP_TEST=1` in verify-shell per DOM/AX e percorso completo delle14 azioni Home da tastiera a1080p/4K, Tab/inverso, dialoghi/focus e30 campioni input→RAF per risoluzione. Cleanup del profilo Edge temporaneo con verifica percorso/retry limitati, senza mascherare gli errori.
 
@@ -96,7 +126,7 @@ La produzione usa **Balanced** dalla configurazione TypeScript e ignora `?backgr
 | Area | File principali / contratto corrente |
 | --- | --- |
 | Home | `src/app/TvShell.tsx`, header con brand/orologio, rail e tre widget sempre visibili. Nessun menu superiore. |
-| Stato esterno | `src/platform/contracts.ts`, `src/platform/mock/MockPlatformAdapter.ts`; dati Demo, nessuna connessione reale. |
+| Stato esterno | `src/platform/contracts.ts`, `mock/MockPlatformAdapter.ts`, `webos/WebosPlatformAdapter.ts`, `webos/runtime.ts`, `selectPlatform.ts`, `SystemInfoNotice.tsx`; browser Demo e lettura pubblica TV da collaudare sul dispositivo. |
 | Focus | `src/navigation/useTvFocus.ts`, `focusGraph.ts`; frecce/OK/Back, input/dialog/strumenti con tastiera nativa. |
 | Motion | `src/motion/useBackgroundMotion.ts`; sistema reduced motion e documento nascosto prevalgono; vecchie preferenze storage ignorate. |
 | Sfondo | `src/features/background/HomeBackground.tsx` → `CyberpunkBackgroundEngine.tsx`; immagine originale e layer indipendenti dietro UI. |

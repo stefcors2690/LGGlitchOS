@@ -1,11 +1,22 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { backgroundConfig, resolveBackgroundConfig } from './background.config';
+import { backgroundConfig, webosBackgroundConfig, resolveBackgroundConfig } from './background.config';
 import type { BackgroundConfig, BackgroundProfile } from './background.types';
 import { CyberpunkBackgroundEngine } from './CyberpunkBackgroundEngine';
 import { RainEngine, getRainBuffer } from './engine/RainEngine';
 import { ParticleEngine } from './engine/ParticleEngine';
 describe('performance profile resolution', () => {
+  it('reduces only TV overlay work, preserving scene, timing and browser calibration', () => {
+    const tv = resolveBackgroundConfig(webosBackgroundConfig);
+    expect(getRainBuffer(1920, 1080, 1, tv.rendering.maxDpr, tv.rendering.maxWidth, tv.rendering.maxHeight)).toEqual({ width: 1600, height: 900 });
+    expect(new RainEngine(tv.rain).count).toBe(179);
+    expect(new ParticleEngine(tv.particles).count).toBe(32);
+    expect(tv.rendering.targetFps).toBe(30);
+    expect(tv.imageSrc).toBe(backgroundConfig.imageSrc);
+    expect(tv.neon).toBe(backgroundConfig.neon); expect(tv.fog).toBe(backgroundConfig.fog); expect(tv.hologram).toBe(backgroundConfig.hologram);
+    expect(backgroundConfig.rendering.maxWidth).toBe(1920);
+    expect(new RainEngine(backgroundConfig.rain).count).toBe(208);
+  });
   it('preserves the approved Balanced calibration exactly', () => {
     expect(backgroundConfig.profile).toBe('balanced');
     expect(resolveBackgroundConfig(backgroundConfig)).toEqual(backgroundConfig);

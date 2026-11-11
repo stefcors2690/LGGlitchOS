@@ -27,12 +27,12 @@ export function InputsWidget({ platform }: { readonly platform: PlatformAdapter 
       <path className="inputs-cyan" d="M25 197 3 177V23L25 3H575L597 23M530 11h35" />
       <path className="inputs-magenta" d="M597 145V177L575 197H80M14 40V25L30 11" />
     </svg>
-    <h2 id="inputs-title" className="inputs-heading"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="4" width="26" height="20" rx="2" /><path d="M8 11h16v6H8zM10 29h12" /></svg>Ingressi<span>Demo</span></h2>
-    <ResourceNotice id="inputs" zone="widgets" label="ingressi demo" loading={!state}
+    <h2 id="inputs-title" className="inputs-heading"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="4" width="26" height="20" rx="2" /><path d="M8 11h16v6H8zM10 29h12" /></svg>Ingressi<span>{platform.mode === 'demo' ? 'Demo' : 'TV'}</span></h2>
+    <ResourceNotice id="inputs" zone="widgets" label={platform.mode === 'demo' ? 'ingressi demo' : 'ingressi TV'} loading={!state}
       error={state?.status === 'error' ? state.message : undefined} empty={state?.status === 'ready' && state.inputs.length === 0}
       onRetry={() => { setMessage(''); reload(); }} />
     {state?.status === 'ready' && <>
-      <div className="input-buttons" aria-label="Sorgenti demo">
+      <div className="input-buttons" aria-label={platform.mode === 'demo' ? 'Sorgenti demo' : 'Sorgenti TV'}>
         {state.inputs.map(input => <button key={input.id} type="button" className="input-button" data-tv-id={`input-${input.id}`} data-tv-zone="widgets"
           aria-label={`${input.name} · ${input.mode === 'demo' ? 'Cambio simulato' : 'Seleziona ingresso'}`} aria-pressed={input.active}
           aria-disabled={busy || state.disabledReason !== undefined} aria-describedby="inputs-feedback" onClick={() => { void activate(input); }}>

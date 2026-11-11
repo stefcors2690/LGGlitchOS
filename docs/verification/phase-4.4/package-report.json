@@ -1,0 +1,31 @@
+{
+  "id": "com.stefcors.glitchos",
+  "version": "0.4.3",
+  "artifact": "artifacts/com.stefcors.glitchos_0.4.3_all.ipk",
+  "bytes": 2974470,
+  "sha256": "2bb7aedfd390df02ddbd565ff60c8b2ee601d97f9900c0bc3c746e45f33c82f8",
+  "appFiles": [
+    "appinfo.json",
+    "assets/LICENSE-webOSTV.txt",
+    "assets/background-DBdo95cH.png",
+    "assets/index-CAOpXcXF.js",
+    "assets/style-DHf2zjpD.css",
+    "assets/webOSTV.js",
+    "icon.png",
+    "index.html",
+    "largeIcon.png"
+  ],
+  "archiveFiles": [
+    "usr/palm/applications/com.stefcors.glitchos/appinfo.json",
+    "usr/palm/applications/com.stefcors.glitchos/assets/LICENSE-webOSTV.txt",
+    "usr/palm/applications/com.stefcors.glitchos/assets/background-DBdo95cH.png",
+    "usr/palm/applications/com.stefcors.glitchos/assets/index-CAOpXcXF.js",
+    "usr/palm/applications/com.stefcors.glitchos/assets/style-DHf2zjpD.css",
+    "usr/palm/applications/com.stefcors.glitchos/assets/webOSTV.js",
+    "usr/palm/applications/com.stefcors.glitchos/icon.png",
+    "usr/palm/applications/com.stefcors.glitchos/index.html",
+    "usr/palm/applications/com.stefcors.glitchos/largeIcon.png",
+    "usr/palm/packages/com.stefcors.glitchos/packageinfo.json"
+  ],
+  "validated": "Manifest, icon sizes, local HTML assets, allowed files, no dev tools, byte comparison IPK/stage. No TV installation performed."
+}

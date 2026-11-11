@@ -1,7 +1,7 @@
 {
   "name": "stefcors-gl1tch-0s",
   "private": true,
-  "version": "0.3.4",
+  "version": "0.4.3",
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
@@ -9,6 +9,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:webos": "tsc --noEmit && vite build --mode webos && node scripts/prepare-webos.mjs",
+    "package:webos": "npm run build:webos && node scripts/package-webos.mjs",
+    "verify:webos": "node scripts/verify-webos-ipk.mjs",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit",

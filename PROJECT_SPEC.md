@@ -1,8 +1,16 @@
 # StefCors GL1tCh 0S — Product & Technical Specification
 
-## Contratto corrente e continuità — 2026-11-10
+## Contratto corrente e continuità — 2026-11-11
 
-Fasi0–3 completate nel browser, versione locale0.3.4 non pubblicata. Prossima4.1 — Inventario dispositivo e fattibilità SDK, ancora da fare: acquisire modello/firmware/webOS e Developer Mode reali prima di API/packaging. [Handoff su un altro PC](docs/HANDOFF.md), [stato verificato](PROJECT_STATUS.md), [roadmap](ROADMAP.md).
+Fasi0–3 e4.1–4.3 completate; **4.4 COMPLETATA**, versione **0.4.3** installata/avviata sulla G5. Runtime ufficiale LG locale1.2.13/Apache2.0, unico ACG systemconfig.query. Inspector reale conferma Chrome132.0.6834.207, grafica1920×1080/DPR1 e getSystemInfo riuscito. Utente conferma navigazione, Back/uscita, riapertura, leggibilità/pointer, taratura e primo input dopo idle. Nessuna certificazione generale GPU/latency. [Guida](webos/README.md), [rapporto4.4](docs/verification/phase-4.4/report.md), [inventario4.1](docs/webos/PHASE_4_1.md).
+
+Taratura4.4 accettata dall'utente dopo due piccoli alleggerimenti per scatti al cambio icona: browser Balanced canonico invariato; sul runtime TV, anche Demo, webosBackgroundConfig limita solo overlay Canvas1600×900, pioggia179 gocce e32 particelle, target30fps. Immagine originale e CSS restano a risoluzione/layout app, logo/colori/focus conservati. Nessun auto-degrado o controllo utente aggiunto. Inspector conferma budget reale e idle45% con stop/ripresa Canvas; misure draw distinte dalla fluidità percepita e dai FPS UI/GPU.
+
+Contratto4.3: DeviceInfo include getSystemInfo(): Result<SystemInfo>, con modelName/firmwareVersion/sdkVersion opzionali e validati; mai numero di serie o altri campi. Il mock restituisce UNSUPPORTED per le informazioni reali. Il runtime LG con platform.tv seleziona l'adapter device per default; Demo opzionale nel footer, senza persistenza, e sempre predefinita nel browser. Nessuna promozione delle sei capability future: tutte unsupported con motivo e comandi senza trasporto. La lettura sistema usa service.request/getSystemInfo, subscribe:false, scadenza8s/cancel, errori tradotti, retry esplicito e risposte tardive ignorate; la UI conserva il limite10s e l'isolamento per adapter. Consensi LG possono limitare i campi; vengono mostrati soltanto quelli ricevuti, errore se risposta vuota/non valida. Nessun fallback silenzioso ai dati Demo dopo errore del servizio.
+
+Back4.3: disableBackHistoryAPI:true; 461 viene interpretato solo nell'app TV, anche in modalità Demo. Un dialogo aperto si chiude conservando l'origine; sulla Home viene chiamato webOS.platformBack() per il flusso LG di uscita. Escape/alias browser restano locali nel browser. Nessuna intercettazione Home, pressione lunga, autostart o modifica sistema. Lifecycle: policy visibilitychange/idle/reduced motion preservata; nessun handler launch/relaunch o stato esterno introdotto. Utente4.4 conferma Home LG→riapertura, senza distinzione strumentale tra rilancio freddo/ripresa calda; suspend lungo/riavvio TV non provati.
+
+Packaging: dist/ browser ES modules senza libreria LG; dist-webos/ con SDK ufficiale defer prima dell'app IIFE, licenza locale inclusa. Verificatore controlla hash SDK, ordine, ACG/Back, versione, asset locali e identità IPK/stage; nessun servizio JS/tool/credenziale nell'app. Scene, logo, icone e tarature invariati. Il footer TV mostra provenienza e lettura reale; Continua a guardare rimane un esempio Demo indipendente dalle capability del TV.
 
 Ultima verifica3.5:156 test/check ed Edge157 completo superati. DOM/AX,14 azioni da tastiera, Tab/inverso e dialoghi/focus1080p/4K; stati limite/offline e due attese idle reali. Home animata300.035ms a29,99–30,01draw/s, risorse stabili, runtimeErrors vuoto. Nuovo MVP_TEST=1 e cleanup profilo temporaneo robusto, nessuna modifica runtime. Screenshot confrontati; [rapporto3.5](docs/verification/phase-3.5/report.md) con tempi, scostamenti e limiti WCAG/screen reader/GPU/G5/fresh install. Le verifiche seguenti sono storico.
 
@@ -27,8 +35,8 @@ A cinematic, responsive, cyberpunk custom Home experience for an LG OLED G5. App
 Ultimately replace the stock webOS Home experience, including Home button behavior and startup, **only if confirmed feasible for the exact TV firmware**. No root, system hooks, firmware modification, or privileged operations in the initial phases. Do not claim that an ordinary webOS application can replace the Home button or autostart via official public APIs.
 
 ## Target and constraints
-- LG OLED G5; firmware and webOS versions **unknown** until inspected on the TV.
-- Primary canvas 3840x2160 16:9; design in logical units and scale cleanly to 1920x1080.
+- LG OLED evo G5 OLED55G56LS.DPIQLJP, firmware43.21.96 and sdkVersion11.2.0 read from the TV via CLI on2026-11-11; menu webOS26/11.2.0-3711 reported by user. Developer Mode/Key Server active and authenticated PC access confirmed. LG documents Chromium132 for webOS26; actual installed app environment remains to be tested.
+- Browser layout scales between1920x1080 and3840x2160 at16:9. LG documents1920x1080 app graphics on UHD TVs, separately from4K video; verify the actual app viewport during packaging/device work. Sources and remaining engine/build checks are in docs/webos/PHASE_4_1.md; no rendering change made in4.1.
 - Use React + TypeScript + Vite for the UI, with a webOS packaging layer when supported.
 - Primary interaction: LG Magic Remote D-pad, OK, Back, and pointer where supported. Never require touch or mouse.
 - Background target:30fps, with explicit quality profiles and static fallback. Measure navigation and background on the actual TV before making performance claims; no automatic profile changes currently implemented.

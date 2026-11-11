@@ -23,7 +23,8 @@ export function nextFocus(nodes: readonly FocusNode[], currentId: string | null,
 }
 
 export type RemoteAction = Direction | 'activate' | 'back';
-export function mapRemoteKey(key: string): RemoteAction | null {
+export function mapRemoteKey(key: string, keyCode = 0, webos = false): RemoteAction | null {
+  if (webos && keyCode === 461) return 'back';
   switch (key) {
     case 'ArrowLeft': return 'left';
     case 'ArrowRight': return 'right';

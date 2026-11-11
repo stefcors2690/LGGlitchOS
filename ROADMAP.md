@@ -1,6 +1,6 @@
 # StefCors GL1tCh 0S — Roadmap incrementale
 
-Ultimo aggiornamento: 2026-11-10.
+Ultimo aggiornamento: 2026-11-11.
 
 ## Come usarla
 
@@ -8,7 +8,7 @@ Numerazione aggiornata: nuova fase 2 per il motore animato; le precedenti fasi 2
 
 Stati ammessi: `DA FARE`, `IN CORSO`, `BLOCCATA`, `COMPLETATA`. Una microfase è completata solo con criteri soddisfatti e verifiche registrate. Non segnare come verificato ciò che non è stato provato.
 
-**Stato corrente:** macrofasi 0, 1, 2 e 3 completate nel browser con i limiti hardware/accessibilità dichiarati. **3.5 completata, versione locale0.3.4.** Prossima: `4.1 — Inventario dispositivo e fattibilità SDK`, non avviata.
+**Stato corrente:** **macrofasi0–4 completate**, versione **0.4.3** installata/collaudata sulla G5. Lettura reale, telecomando/uscita/riapertura e idle/ripristino verificati; taratura TV ridotta su richiesta e accettata.179 test/check/IPK/CLI e regressioni Edge1080p/4K superati, limiti espliciti nel [rapporto4.4](docs/verification/phase-4.4/report.md). Prossima **5.1 — Catalogo applicazioni**, non avviata.
 Il dettaglio operativo, gli esiti dei controlli e lo storico sono in `PROJECT_STATUS.md`. Per riprendere su un altro PC usare [docs/HANDOFF.md](docs/HANDOFF.md) e il [rapporto3.5](docs/verification/phase-3.5/report.md).
 
 A fine lavoro aggiornare questa roadmap e `PROJECT_STATUS.md`; aggiornare anche istruzioni, specifiche e README quando cambiano contratti, decisioni o comandi. Il passaggio a un altro IDE non deve dipendere dalla cronologia della chat.
@@ -215,26 +215,30 @@ Completata su Windows con correzione scheduler, profiling Canvas/CSS/allocazioni
 
 ### 4.1 — Inventario dispositivo e fattibilità SDK
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Rilevare modello, firmware/webOS esatti e accesso Developer Mode; verificare documentazione ufficiale aggiornata.
+- Esito11/11: matrice/fonti LG, Developer Mode/Key Server, CLI3.2.6/Node24 verificati; target glitch-g5 con default emulatore preservato, getkey eseguito dall'utente e system-info exit0. Modello OLED55G56LS.DPIQLJP, firmware43.21.96, SDK11.2.0 reali; webOS26/11.2.0-3711 dichiarato dal menu. Accesso confermato, nessun IPK/app/adapter reale provato. Evidenza docs/verification/phase-4.1/device-info.md, versione0.3.4 invariata.
 - Accettazione: Matrice capability e permessi con fonti; accesso al G5 confermato prima delle prove hardware.
 
 ### 4.2 — Packaging standalone
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Aggiungere manifest, icone e procedura IPK usando strumenti verificati.
+- Esito: manifest com.stefcors.glitchos0.4.0/FHD/ACG vuoto, icone80/130 dal canonico, build separata Chromium132/IIFE e script packaging/verify. IPK2.964.650byte validato CLI, sette file app identici allo stage;165 test/check e regressioni Edge browser+file://1080p/4K superati. Guida completa, install/launch TV non eseguiti; rapporto4.2 con limiti e hash. Nessun deploy/privilegio.
 - Accettazione: Pacchetto generabile e sezione deploy del README aggiornata con prerequisiti e comandi verificati per preparazione, connessione, packaging, installazione e avvio; nessuna modifica al sistema TV.
 
 ### 4.3 — Adapter webOS di base
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Implementare solo API pubbliche verificate e selezione adapter.
+- Esito: runtime LG locale, getSystemInfo pubblico/ACG minimo/timeout8s/errori e retry, adapter TV predefinito e Demo opzionale, sei capability future indisponibili con motivo, Back461 e platformBack.178 test/check e IPK validato, collaudo Edge browser/file:// e bridge sintetico1080p/4K superato, runtimeErrors vuoto. Nessuna prova dispositivo o integrazione5.x; rapporto4.3 e limiti aggiornati, prossima4.4.
 - Accettazione: Mock ancora disponibile; funzioni assenti disabilitate con motivo, timeout ed errori gestiti.
 
 ### 4.4 — Collaudo G5
 
-- Stato: `DA FARE`
+- Stato: `COMPLETATA`
 - Ambito: Installare e avviare app standalone in Developer Mode; provare remote, rendering e prestazioni.
+- Esito: install/launch/update fino0.4.3 riusciti, getSystemInfo reale/FHD/DPR1/Chrome132 e budget TV confermati da Inspector; utente conferma navigazione, Back/uscita LG/riapertura e primo input dopo idle. Due ritocchi leggeri richiesti, taratura1600×900/179/32/30fps accettata. Campione hardware130s con idle45% e pausa/ripresa, metriche e limiti nel rapporto;179 test/check/package/verify/CLI e regressioni Edge1080p/4K OK. README deploy/diagnosi/sessione completato; pressione lunga/GPU/latency/disinstallazione/downgrade non certificati.
 - Accettazione: Risultati misurati sul dispositivo, regressioni registrate e funzioni non verificate dichiarate; sezione deploy del README completata con collaudo, log, diagnosi, aggiornamento, disinstallazione e gestione sessione Developer Mode.
 
 ## 5 — Integrazioni reali verificate

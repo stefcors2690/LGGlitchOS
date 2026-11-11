@@ -6,7 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default defineConfig([
-  globalIgnores(['dist/**', 'node_modules/**', 'coverage/**', '.vitest/**']),
+  globalIgnores(['dist/**', 'dist-webos/**', 'artifacts/**', 'node_modules/**', 'coverage/**', '.vitest/**', 'webos/vendor/**']),
   {
     files: ['**/*.{js,mjs,ts,tsx}'],
     extends: [js.configs.recommended, tseslint.configs.recommended],

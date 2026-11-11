@@ -1,26 +1,29 @@
 # START HERE — StefCors GL1tCh 0S
 
-Aggiornato:2026-11-10. Punto di ingresso per qualsiasi IDE o PC: la continuità è nel repository, non nella chat.
+Aggiornato:2026-11-11. Punto di ingresso per qualsiasi IDE o PC: la continuità è nel repository, non nella chat.
 
 ## Stato corrente
 
-- Fasi0–3 chiuse nel browser, con i limiti hardware/accessibilità documentati. Versione locale **0.3.4**, non pubblicata.
-- Prossima microfase: **4.1 — Inventario dispositivo e fattibilità SDK**, ancora da iniziare. Prima acquisire modello, firmware/webOS reali e stato Developer Mode; nessun packaging o accesso privilegiato già verificato.
+- Fasi0–3 e4.1–4.3 completate; **4.4 COMPLETATA**, versione **0.4.3** installata e avviata sulla G5, nessuna release/commit/push.
+- IPK artifacts/com.stefcors.glitchos_0.4.3_all.ipk generato/validato e installato; [guida](webos/README.md), [rapporto4.4](docs/verification/phase-4.4/report.md). Inspector reale: Chrome132.0.6834.207/FHD/DPR1 e tre campi getSystemInfo riusciti. Telecomando/uscita LG/riapertura/idle e risveglio confermati; taratura finale accettata. **Prossima5.1 — Catalogo applicazioni**, non avviata, da verificare con API pubbliche e fallback, senza dedurre permessi dal getSystemInfo.
+- Solo runtime TV, anche Demo: overlay Canvas1600×900,179 gocce/32 particelle,30fps; browser Balanced invariato208/40/FHD. PNG originale/CSS/logo invariati.179 test/check/package/verify/CLI e regressioni Edge1080p/4K superati; equilibrio fluidità/dettaglio0.4.3 accettato dall'utente. Campione130s/idle45% e ripresa registrati, senza certificare GPU/UI fps/latency/WCAG.
+- Scelta utente4.3: adapter webOS di default sul TV riconosciuto dal runtime LG, Demo opzionale dal footer, browser ancora Demo. Lettura sistema pubblica8s/cancel/retry; capability app/HDMI/domotica indisponibili con motivo fino alla fase5, Continua a guardare sempre Demo. Back461 chiude il dialogo e poi platformBack dalla Home; nessuna modifica Home/autostart. Riapertura fisica provata, pressione lunga/suspend lungo/riavvio TV non provati.
+- Accesso reale4.1 al target locale glitch-g5: OLED55G56LS.DPIQLJP, firmware43.21.96, SDK11.2.0; menu webOS26/11.2.0-3711. CLI3.2.6 e associazione già preparati su questo PC: non rifare pairing se valido. [Inventario4.1](docs/webos/PHASE_4_1.md).
 - Letture piattaforma con caricamento, errore/vuoto e Riprova da D-pad; scadenza10s, risultati tardivi ignorati, capability motivate e nessun comando duplicato o falso successo. Offline segnalato dal browser senza bloccare la Demo locale; fixture tecnica `/scripts/fixtures/platform-states.html` solo dev.
 - Dopo 2 minuti senza input: opacità al 45% e pausa sfondo/logo. Il primo input ripristina la luminosità ed esegue la propria azione; focus conservato, reduced motion e visibilità prioritari. Nessun comando alla luminosità hardware.
 - Home unica con brand/orologio, rail e tre widget Demo. Nessun menu superiore o controllo movimento per l'utente.
 - Dialoghi informativi Demo per avvio app e Riprendi: Home inerte, Back/Escape/OK/Chiudi torna all'origine; secondo Back agisce sulla Home. HDMI/domotica inline, fallback inline se dialogo nativo assente.
 - Pointer e D-pad condividono il focus: movimento seleziona, click/tap attivano, hover fermo non ruba focus. Simulatore dev-only con ?remoteDebug=1, poi **Telecomando · test**; frecce/OK/Back anche nel modale, input sintetici. Non incluso in produzione.
 - Motore React/TypeScript/Canvas con PNG originale, pioggia, nebbia, neon/ologramma localizzati e particelle; veicoli opzionali non montati.
-- Profili presenti anche in produzione: **Balanced attivo**; profilo/tarature finali saranno scelti dopo prove TV. Solo il pannello è escluso dalla produzione.
+- Profili presenti anche in produzione: **Balanced attivo**, con la taratura TV dedicata sopra accettata in4.4. Solo il pannello è escluso dalla produzione.
 - Pannello tecnico: `npm run dev`, URL Vite con `?backgroundDebug=1`, poi **Sfondo · debug**. Modifiche solo di sessione; riduzione movimento di sistema e pagina nascosta prevalgono.
-- Ultima verifica3.5 su Windows/Edge157:156 test unitari e lint/typecheck/build; DOM/AX,14 azioni da D-pad, Tab/inverso, dialoghi/focus1080p/4K e regressioni superati. Due attese idle reali e5min animati:29,99–30,01draw/s, risorse stabili, runtimeErrors vuoto. Screenshot ispezionati; [rapporto3.5](docs/verification/phase-3.5/report.md). Nessuna certificazione WCAG/screen reader/GPU/G5 o piena fedeltà; prove CDP/DOM distinte da hardware reale.
+- Verifica4.4:179 test/25file, lint/typecheck/build/IPK/CLI e Edge HTTP/file:// con bridge sintetico1080p/4K OK, runtimeErrors vuoto. Sul G5 reale: install/update/launch, lettura runtime/viewport/dati, idle con stop e primo input fisico, metriche/screenshot e riscontri utente. Limiti e tentativi corretti nel rapporto, nessuna prova hardware prolungata o disinstallazione/downgrade.
 
 ## Ordine di lettura
 
 1. `AGENTS.md`: regole, autorizzazioni e limiti.
 2. `PROJECT_STATUS.md`: stato verificato, decisioni e prossima attività.
-3. [Trasferimento e ripresa su un altro PC](docs/HANDOFF.md): installazione, asset, comandi portabili, mappa dei file e punto di ripresa4.1.
+3. [Trasferimento e ripresa su un altro PC](docs/HANDOFF.md): installazione, asset, comandi portabili, mappa dei file e punto di ripresa5.1.
 4. `PROJECT_SPEC.md` e `ROADMAP.md`: contratti e criteri della microfase.
 5. `BRAND_IDENTITY.md`, `VISUAL_REFERENCE_GUIDE.md`, `ANIMATION_SPEC.md`: riferimenti e vincoli correnti.
 6. `README.md`, `src/features/background/README.md`, `docs/specs/CYBERPUNK_BACKGROUND_ENGINE.md` e codice reale.
@@ -41,4 +44,4 @@ Aprire l'indirizzo stampato da Vite. La cartella del vecchio PC non deve coincid
 
 ## Prompt da dare all'altro IDE
 
-> Leggi START_HERE.md, AGENTS.md, PROJECT_STATUS.md, docs/HANDOFF.md, PROJECT_SPEC.md, ROADMAP.md e docs/verification/phase-3.5/report.md. Verifica codice e Git preservando modifiche locali. Fasi0–3 completate nel browser, versione0.3.4; riprendi solo4.1 — Inventario dispositivo e fattibilità SDK. Prima acquisisci modello, firmware/webOS reali e stato Developer Mode; verifica fonti ufficiali aggiornate e prepara matrice capability/permessi. Non inventare dati TV, non anticipare packaging4.2, API4.3 o privilegi. Prima delle modifiche dichiara file e criteri. Preserva Home unica, mock/Demo, pointer/D-pad/simulatore dev-only, dialoghi/focus, fallback/retry/timeout letture10s, offline locale, idle2min/45%, sistema reduced motion/visibilità, brand, PNG, tarature e Balanced. Aggiorna documenti/evidenze; nessuna compatibilità G5, piena fedeltà, deploy, sostituzione Home o privilegio impliciti.
+> Leggi START_HERE.md, AGENTS.md, PROJECT_STATUS.md, docs/HANDOFF.md, PROJECT_SPEC.md, ROADMAP.md, webos/README.md e rapporto4.4. Preserva il lavoro locale4.1–4.4; fase4 completata,0.4.3 installata/collaudata sulla G5. Riprendi solo5.1 — Catalogo applicazioni: API pubbliche e permessi verificati, icone autentiche e fallback se assenti; non dedurre supporto da SSH/getSystemInfo. Taratura TV1600×900/179/32/30fps accettata da preservare, browser Balanced invariato. Target glitch-g5 già associato su questo PC; niente pairing/reinstallazione senza necessità, nuovi deploy richiedono istruzione esplicita. Distingui Inspector/feedback fisico/bridge sintetico; niente Home/autostart/root o5.2 anticipata. Aggiorna evidenze/versioni/documenti; niente credenziali o endpoint in Git.

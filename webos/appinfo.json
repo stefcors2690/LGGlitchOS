@@ -1,0 +1,15 @@
+{
+  "id": "com.stefcors.glitchos",
+  "version": "0.4.3",
+  "vendor": "StefCors",
+  "type": "web",
+  "main": "index.html",
+  "title": "StefCors GL1tCh 0S",
+  "appDescription": "Home standalone in prova con informazioni TV e Demo opzionale.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "requiredACG": ["systemconfig.query"],
+  "disableBackHistoryAPI": true,
+  "iconColor": "#070c1b"
+}

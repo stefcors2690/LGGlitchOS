@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-11T09:09:44.154Z",
+  "snapshot": {
+    "title": "StefCors GL1tCh 0S",
+    "userAgent": "Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.207 Safari/537.36 WebAppManager",
+    "viewport": {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1
+    },
+    "visibility": "visible",
+    "webosTv": true,
+    "shell": {
+      "idle": "false",
+      "motionReduced": "false",
+      "theme": "neon",
+      "section": "home",
+      "inputMode": "pointer"
+    },
+    "footer": "TV · webOS · App standalone in prova. Continua a guardare resta Demo.OLED55G56LS.DPIQLJP · Firmware 43.21.96 · SDK 11.2.0Apri modalità DemoSC / GL1tCh 0S",
+    "system": "OLED55G56LS.DPIQLJP · Firmware 43.21.96 · SDK 11.2.0",
+    "image": {
+      "loaded": true
+    },
+    "canvas": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "data": {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.10",
+          "averageDrawMs": "7.128",
+          "maxDrawMs": "11.400"
+        }
+      }
+    ],
+    "controls": [
+      {
+        "id": "apps-retry",
+        "label": "Riprova · applicazioni demo",
+        "disabled": null
+      },
+      {
+        "id": "watch-neon-district",
+        "label": "Riprendi Neon District · Demo · 42 minuti rimanenti",
+        "disabled": null
+      },
+      {
+        "id": "inputs-retry",
+        "label": "Riprova · ingressi TV",
+        "disabled": null
+      },
+      {
+        "id": "devices-retry",
+        "label": "Riprova · domotica",
+        "disabled": null
+      },
+      {
+        "id": "platform-mode",
+        "label": "Apri modalità Demo",
+        "disabled": null
+      }
+    ],
+    "activeId": "platform-mode",
+    "overflow": false
+  },
+  "observedErrors": [],
+  "limitations": "Device Inspector DOM snapshot; no physical remote or display verification. Errors observed only since attachment."
+}

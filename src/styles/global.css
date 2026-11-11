@@ -88,6 +88,8 @@ p { line-height: 1.5; }
 .zone-number { font-variant-numeric: tabular-nums; }
 .shell-footer { display: flex; justify-content: space-between; gap: var(--space-2); color: var(--color-muted); font-size: var(--text-small); }
 .shell-signature { white-space: nowrap; }
+.shell-footer[data-platform-controls='true'] { flex-wrap: wrap; align-items: center; }
+.shell-footer [data-system-info] { flex-basis: 100%; overflow-wrap: anywhere; }
 
 /* Small/non-TV windows use natural document flow instead of shrinking couch typography. */
 @media (max-width: 900px), (max-aspect-ratio: 4/3) {

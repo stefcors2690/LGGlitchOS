@@ -1,0 +1,57 @@
+{
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "initial": {
+        "footer": "TV · webOS · App standalone in prova. Continua a guardare resta Demo.TEST TV · Firmware test-firmware · SDK test-sdkApri modalità DemoSC / GL1tCh 0S",
+        "calls": [
+          {
+            "uri": "luna://com.webos.service.tv.systemproperty/getSystemInfo",
+            "parameters": {
+              "keys": [
+                "modelName",
+                "firmwareVersion",
+                "sdkVersion"
+              ]
+            }
+          }
+        ],
+        "appCards": 0,
+        "overflow": false
+      },
+      "modalBack461": true,
+      "homePlatformBack": true,
+      "demoAndReturn": true,
+      "deniedAndRetry": true,
+      "bridge": "fake; official LG SDK unmodified"
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "initial": {
+        "footer": "TV · webOS · App standalone in prova. Continua a guardare resta Demo.TEST TV · Firmware test-firmware · SDK test-sdkApri modalità DemoSC / GL1tCh 0S",
+        "calls": [
+          {
+            "uri": "luna://com.webos.service.tv.systemproperty/getSystemInfo",
+            "parameters": {
+              "keys": [
+                "modelName",
+                "firmwareVersion",
+                "sdkVersion"
+              ]
+            }
+          }
+        ],
+        "appCards": 0,
+        "overflow": false
+      },
+      "modalBack461": true,
+      "homePlatformBack": true,
+      "demoAndReturn": true,
+      "deniedAndRetry": true,
+      "bridge": "fake; official LG SDK unmodified"
+    }
+  ],
+  "limitations": "Synthetic Palm bridge in Edge, not TV permission, remote or lifecycle certification."
+}

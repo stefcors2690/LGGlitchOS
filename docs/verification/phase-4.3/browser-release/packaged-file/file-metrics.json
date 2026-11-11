@@ -1,0 +1,8 @@
+{
+  "footer": "Anteprima TV · Demo · App standalone in prova: dati e comandi simulati.SC / GL1tCh 0S",
+  "classicEntry": true,
+  "imageLoaded": true,
+  "localAssets": true,
+  "noTools": true,
+  "limitations": "Edge file-scheme with normal browser security; validates local startup and interactions, not TV webOS lifecycle, Back461 or hardware performance."
+}

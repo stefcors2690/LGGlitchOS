@@ -1,0 +1,94 @@
+{
+  "settings": {
+    "productionExcluded": true,
+    "developmentOptIn": true,
+    "startsClosed": true,
+    "liveControls": true,
+    "canonicalProfiles": true,
+    "reset": {
+      "rainIntensity": 65,
+      "rainSpeed": 1,
+      "fogDensity": 65,
+      "neonIntensity": 100,
+      "particleCount": 40
+    },
+    "keyboard": true,
+    "escapeReturnsHome": true,
+    "reducedMotion": true,
+    "reloadResets": true,
+    "mobile": true
+  },
+  "profiles": null,
+  "particlePool": {
+    "count": 40,
+    "canvases": 1,
+    "pointerEvents": "none"
+  },
+  "particleCoverage": {
+    "visible": 1290,
+    "peak": 149
+  },
+  "particleMotion": true,
+  "particleReducedMotion": true,
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontal": false,
+      "vertical": true
+    }
+  ],
+  "onePage": true,
+  "keyboardWidgets": true,
+  "fixedMotionIgnoresStorage": true,
+  "systemReducedMotion": true,
+  "neonPulseRange": {
+    "low": 0.12,
+    "high": 1,
+    "duration": 3600
+  },
+  "hologramMapping": true,
+  "hologramScan": true,
+  "holoSample": {
+    "sample": {
+      "opacity": 0.18,
+      "transform": "matrix(1, 0, 0, 1, 1.6896, 0)",
+      "filter": "url(\"#hologram-_r_0_-red\")"
+    },
+    "saved": 1766.624999999546
+  },
+  "hologramPause": true,
+  "neonMapping": true,
+  "neonPulse": true,
+  "neonSample": {
+    "dim": 0.492,
+    "normal": 0.6
+  },
+  "neonVisibilityPause": true,
+  "runtimeErrors": [],
+  "rainCoverage": {
+    "visible": 11920,
+    "peak": 169
+  },
+  "fogTimelineAndContinuity": true,
+  "fogVisibilityPause": true,
+  "fogNoFilters": true,
+  "imageFailureFallback": true,
+  "rainAnimation": true,
+  "rainResizeBudget": true,
+  "visibilityStopResume": true,
+  "canvasUnavailableFallback": true,
+  "originalObjectFit": "cover"
+}

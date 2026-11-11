@@ -9,6 +9,8 @@ import { verifyPointerAndRemote } from './verify-pointer.mjs';
 import { verifyIdleDimming } from './verify-idle.mjs';
 import { verifyPlatformStates } from './verify-platform-states.mjs';
 import { verifyMvp } from './verify-mvp.mjs';
+import { verifyPackagedFile } from './verify-packaged-file.mjs';
+import { verifyWebosRuntime } from './verify-webos-runtime.mjs';
 
 const baseUrl = process.env.SHELL_URL ?? 'http://127.0.0.1:5187';
 const outputDir = process.env.VERIFY_OUTPUT ?? `docs/verification/browser-${new Date().toISOString().replace(/[:.]/g, '-')}`;
@@ -145,6 +147,8 @@ try {
   await verifyActionDialogs({call,evaluate,key,activeId,waitReady,reloadPage,outputDir,baseUrl,developmentUrl:process.env.BACKGROUND_TEST_URL});
   await verifyPointerAndRemote({call,evaluate,key,activeId,waitReady,outputDir,baseUrl,developmentUrl:process.env.BACKGROUND_TEST_URL});
   if(process.env.MVP_TEST==='1') await verifyMvp({call,evaluate,key,activeId,waitReady,outputDir,baseUrl});
+  if(process.env.PACKAGED_FILE_URL) await verifyPackagedFile({call,evaluate,key,activeId,waitReady,outputDir,baseUrl},process.env.PACKAGED_FILE_URL);
+  if(process.env.WEBOS_RUNTIME_URL) await verifyWebosRuntime({call,evaluate,key,activeId,waitReady,outputDir,baseUrl},process.env.WEBOS_RUNTIME_URL);
   if(process.env.IDLE_TEST==='1') await verifyIdleDimming({call,evaluate,key,activeId,waitReady,outputDir,baseUrl});
   if(process.env.PLATFORM_TEST_URL) await verifyPlatformStates({call,evaluate,key,activeId,waitReady,outputDir,baseUrl,fixtureUrl:process.env.PLATFORM_TEST_URL});
   await evaluate('localStorage.setItem("glitchos.motion.v1",JSON.stringify({reduced:true,logo:false}))');

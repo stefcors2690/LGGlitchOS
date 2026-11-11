@@ -1,0 +1,248 @@
+{
+  "settings": {
+    "productionExcluded": true,
+    "developmentOptIn": true,
+    "startsClosed": true,
+    "liveControls": true,
+    "canonicalProfiles": true,
+    "reset": {
+      "rainIntensity": 65,
+      "rainSpeed": 1,
+      "fogDensity": 65,
+      "neonIntensity": 100,
+      "particleCount": 40
+    },
+    "keyboard": true,
+    "escapeReturnsHome": true,
+    "reducedMotion": true,
+    "reloadResets": true,
+    "mobile": true
+  },
+  "profiles": {
+    "baseline": {
+      "raf": 1,
+      "resize": 3,
+      "observers": 3,
+      "sprites": 5,
+      "canvases": 1,
+      "rain": 208,
+      "particles": 40,
+      "sameImage": true
+    },
+    "monitor": {
+      "frames": 61,
+      "windowMs": 2025.3000000002794,
+      "fps": 30.11899471682792,
+      "averageDrawMs": 0.4016393442470275,
+      "maxDrawMs": 0.7000000001862645
+    },
+    "transitions": [
+      {
+        "profile": "cinematic",
+        "raf": 1,
+        "resize": 3,
+        "observers": 3,
+        "sprites": 5,
+        "canvases": 1,
+        "rain": 291,
+        "particles": 80,
+        "sameImage": true
+      },
+      {
+        "profile": "eco",
+        "raf": 0,
+        "resize": 0,
+        "observers": 0,
+        "sprites": 0,
+        "canvases": 0,
+        "rain": 0,
+        "particles": 0,
+        "sameImage": true
+      },
+      {
+        "profile": "balanced",
+        "raf": 1,
+        "resize": 3,
+        "observers": 3,
+        "sprites": 5,
+        "canvases": 1,
+        "rain": 208,
+        "particles": 40,
+        "sameImage": true
+      },
+      {
+        "profile": "cinematic",
+        "raf": 1,
+        "resize": 3,
+        "observers": 3,
+        "sprites": 5,
+        "canvases": 1,
+        "rain": 291,
+        "particles": 80,
+        "sameImage": true
+      },
+      {
+        "profile": "balanced",
+        "raf": 1,
+        "resize": 3,
+        "observers": 3,
+        "sprites": 5,
+        "canvases": 1,
+        "rain": 208,
+        "particles": 40,
+        "sameImage": true
+      }
+    ],
+    "reduced": {
+      "raf": 0,
+      "resize": 2,
+      "observers": 2,
+      "sprites": 0,
+      "canvases": 1,
+      "rain": 208,
+      "particles": 40,
+      "sameImage": true
+    },
+    "unmounted": {
+      "raf": 0,
+      "resize": 0,
+      "observers": 0,
+      "sprites": 0,
+      "canvases": 0,
+      "rain": 0,
+      "particles": 0,
+      "sameImage": false
+    },
+    "remounted": {
+      "raf": 1,
+      "resize": 3,
+      "observers": 3,
+      "sprites": 5,
+      "canvases": 1,
+      "rain": 208,
+      "particles": 40,
+      "sameImage": false
+    },
+    "fallbackChecks": [
+      {
+        "mode": "contextlost",
+        "raf": 0,
+        "resize": 2,
+        "observers": 2,
+        "sprites": 0,
+        "canvases": 1,
+        "rain": 208,
+        "particles": 40,
+        "sameImage": true
+      },
+      {
+        "mode": "draw-error",
+        "raf": 0,
+        "resize": 2,
+        "observers": 2,
+        "sprites": 0,
+        "canvases": 1,
+        "rain": 208,
+        "particles": 40,
+        "sameImage": true
+      }
+    ],
+    "disabledChecks": [
+      {
+        "id": "toggle-effects",
+        "raf": 0,
+        "resize": 0,
+        "observers": 0,
+        "sprites": 0,
+        "canvases": 0,
+        "rain": 0,
+        "particles": 0,
+        "sameImage": true
+      },
+      {
+        "id": "toggle-scene",
+        "raf": 0,
+        "resize": 0,
+        "observers": 0,
+        "sprites": 0,
+        "canvases": 0,
+        "rain": 0,
+        "particles": 0,
+        "sameImage": true
+      }
+    ],
+    "imageSourceRecovery": true
+  },
+  "particlePool": {
+    "count": 40,
+    "canvases": 1,
+    "pointerEvents": "none"
+  },
+  "particleCoverage": {
+    "visible": 1463,
+    "peak": 137
+  },
+  "particleMotion": true,
+  "particleReducedMotion": true,
+  "results": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "horizontal": false,
+      "vertical": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontal": false,
+      "vertical": true
+    }
+  ],
+  "onePage": true,
+  "keyboardWidgets": true,
+  "fixedMotionIgnoresStorage": true,
+  "systemReducedMotion": true,
+  "neonPulseRange": {
+    "low": 0.12,
+    "high": 1,
+    "duration": 3600
+  },
+  "hologramMapping": true,
+  "hologramScan": true,
+  "holoSample": {
+    "sample": {
+      "opacity": 0.18,
+      "transform": "matrix(1, 0, 0, 1, 1.6896, 0)",
+      "filter": "url(\"#hologram-_r_0_-red\")"
+    },
+    "saved": 1799.9370000001109
+  },
+  "hologramPause": true,
+  "neonMapping": true,
+  "neonPulse": true,
+  "neonSample": {
+    "dim": 0.492,
+    "normal": 0.6
+  },
+  "neonVisibilityPause": true,
+  "runtimeErrors": [],
+  "rainCoverage": {
+    "visible": 12473,
+    "peak": 168
+  },
+  "fogTimelineAndContinuity": true,
+  "fogVisibilityPause": true,
+  "fogNoFilters": true,
+  "imageFailureFallback": true,
+  "rainAnimation": true,
+  "rainResizeBudget": true,
+  "visibilityStopResume": true,
+  "canvasUnavailableFallback": true,
+  "originalObjectFit": "cover"
+}

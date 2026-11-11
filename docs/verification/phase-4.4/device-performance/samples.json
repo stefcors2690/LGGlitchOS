@@ -1,0 +1,502 @@
+{
+  "requestedMs": 60000,
+  "actualMs": 60060,
+  "samples": [
+    {
+      "elapsedMs": 2005,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.69",
+          "averageDrawMs": "7.272",
+          "maxDrawMs": "11.100"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 4069,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.00",
+          "averageDrawMs": "6.862",
+          "maxDrawMs": "9.400"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 6128,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.51",
+          "averageDrawMs": "7.092",
+          "maxDrawMs": "12.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 8182,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.837",
+          "maxDrawMs": "9.000"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 10240,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.893",
+          "maxDrawMs": "9.600"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 12302,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.01",
+          "averageDrawMs": "6.582",
+          "maxDrawMs": "7.500"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 14354,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.882",
+          "maxDrawMs": "9.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 16413,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.52",
+          "averageDrawMs": "7.080",
+          "maxDrawMs": "11.600"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 18475,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.86",
+          "averageDrawMs": "7.045",
+          "maxDrawMs": "10.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 20552,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.15",
+          "averageDrawMs": "7.266",
+          "maxDrawMs": "13.900"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 22615,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.947",
+          "maxDrawMs": "11.000"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 24675,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.00",
+          "averageDrawMs": "7.103",
+          "maxDrawMs": "10.700"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 26729,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.01",
+          "averageDrawMs": "6.869",
+          "maxDrawMs": "9.600"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 28802,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.00",
+          "averageDrawMs": "7.115",
+          "maxDrawMs": "9.200"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 30862,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.00",
+          "averageDrawMs": "6.784",
+          "maxDrawMs": "13.100"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 32922,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.913",
+          "maxDrawMs": "12.500"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 34975,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.02",
+          "averageDrawMs": "7.136",
+          "maxDrawMs": "12.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 37025,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.75",
+          "averageDrawMs": "6.677",
+          "maxDrawMs": "10.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 39084,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.25",
+          "averageDrawMs": "7.043",
+          "maxDrawMs": "16.000"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 41149,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.99",
+          "averageDrawMs": "6.788",
+          "maxDrawMs": "8.300"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 43200,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "30.02",
+          "averageDrawMs": "7.102",
+          "maxDrawMs": "9.400"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 45262,
+      "visibility": "visible",
+      "idle": "false",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "running",
+          "rainCount": "208",
+          "particleCount": "40",
+          "fps": "29.98",
+          "averageDrawMs": "6.710",
+          "maxDrawMs": "9.000"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 47320,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 49493,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 51499,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 53545,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 55601,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 57648,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 59702,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    },
+    {
+      "elapsedMs": 60008,
+      "visibility": "visible",
+      "idle": "true",
+      "activeId": "platform-mode",
+      "canvas": [
+        {
+          "state": "static",
+          "rainCount": "208",
+          "particleCount": "40",
+          "frames": "8344"
+        }
+      ],
+      "nodes": 121
+    }
+  ],
+  "observedErrors": [],
+  "limitations": "Read-only samples on physical TV; existing Canvas draw monitor, not GPU or physical input latency. User input is not generated or blocked."
+}

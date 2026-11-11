@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { focusZones, mapRemoteKey, nextFocus } from './focusGraph';
 import type { FocusMemory, FocusZone } from './focusGraph';
 
-/** Browser-only input handling. No system-key interception or privileged webOS API. */
-export function useTvFocus(onBack: () => void) {
+/** In-app navigation; optional documented TV Back461, never the system Home key. */
+export function useTvFocus(onBack: () => void, webos = false) {
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const root = rootRef.current;
@@ -54,7 +54,7 @@ export function useTvFocus(onBack: () => void) {
       if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable="true"], dialog, [role="dialog"], [data-background-tools]')) return;
       const active = document.activeElement;
       if (active && active !== document.body && !root.contains(active)) return;
-      const action = mapRemoteKey(event.key);
+      const action = mapRemoteKey(event.key, event.keyCode, webos);
       if (!action) return;
       root.dataset.inputMode = 'keyboard';
       const available = controls();
@@ -103,6 +103,6 @@ export function useTvFocus(onBack: () => void) {
       root.removeEventListener('pointerdown', pointerDown);
       observer.disconnect();
     };
-  }, [onBack]);
+  }, [onBack, webos]);
   return rootRef;
 }

@@ -1,0 +1,27 @@
+{
+  "id": "com.stefcors.glitchos",
+  "version": "0.4.0",
+  "artifact": "artifacts/com.stefcors.glitchos_0.4.0_all.ipk",
+  "bytes": 2964650,
+  "sha256": "c4ed8d7c0cfaeb6064b05e78ee43460466970c208b90e94af4735cdd565b672c",
+  "appFiles": [
+    "appinfo.json",
+    "assets/background-DBdo95cH.png",
+    "assets/index-Cxw2HFuf.js",
+    "assets/style-CAC46949.css",
+    "icon.png",
+    "index.html",
+    "largeIcon.png"
+  ],
+  "archiveFiles": [
+    "usr/palm/applications/com.stefcors.glitchos/appinfo.json",
+    "usr/palm/applications/com.stefcors.glitchos/assets/background-DBdo95cH.png",
+    "usr/palm/applications/com.stefcors.glitchos/assets/index-Cxw2HFuf.js",
+    "usr/palm/applications/com.stefcors.glitchos/assets/style-CAC46949.css",
+    "usr/palm/applications/com.stefcors.glitchos/icon.png",
+    "usr/palm/applications/com.stefcors.glitchos/index.html",
+    "usr/palm/applications/com.stefcors.glitchos/largeIcon.png",
+    "usr/palm/packages/com.stefcors.glitchos/packageinfo.json"
+  ],
+  "validated": "Manifest, icon sizes, local HTML assets, allowed files, no dev tools, byte comparison IPK/stage. No TV installation performed."
+}

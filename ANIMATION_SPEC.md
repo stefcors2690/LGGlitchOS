@@ -1,5 +1,9 @@
 # Animation specification — StefCors GL1tCh 0S
 
+## Taratura G5 — 4.4 / 2026-11-11
+
+L'utente ha chiesto due piccoli alleggerimenti dopo scatti nel passaggio fra card e ha accettato la0.4.3. Sul solo runtime TV, anche Demo: webosBackgroundConfig/Canvas1600×900, pioggia179 gocce (intensità56),32 particelle,target30fps. Immagine originale, CSS nebbia/neon/ologramma, logo e profilo browser Balanced208/40/FHD conservati. Nessun auto-degrado, disattivazione effetti o controllo utente. I vincoli delle sezioni storiche sulla taratura si riferiscono al canonico browser; questa è l'eccezione hardware concordata. Idle120s/45%, reduced motion e pagina nascosta restano prioritari. Misure del draw Canvas distinte da GPU/UI e riscontri sul display nel [rapporto4.4](docs/verification/phase-4.4/report.md).
+
 ## Policy corrente alla 3.3 — 2026-11-10
 
 Motore fase2 completato in browser; stato e ripresa in [HANDOFF](docs/HANDOFF.md) e [PROJECT_STATUS](PROJECT_STATUS.md). La3.3 aggiunge idle e dissolvenze senza cambiare asset, tarature o profili. Verifiche correnti nel [rapporto3.3](docs/verification/phase-3.3/report.md); prove prestazionali2.9/2.10 restano storico separato, nessuna misura GPU/G5. Le sezioni successive conservano comportamenti storici sostituiti.

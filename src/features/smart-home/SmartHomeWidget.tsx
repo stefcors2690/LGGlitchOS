@@ -27,12 +27,12 @@ export function SmartHomeWidget({ platform }: { readonly platform: PlatformAdapt
       <path className="smart-cyan" d="M25 197 3 177V23L25 3H575L597 23M530 11h35" />
       <path className="smart-magenta" d="M597 145V177L575 197H80M14 40V25L30 11" />
     </svg>
-    <h2 id="smart-title" className="smart-heading"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="m3 15 13-12 13 12M7 12v17h7V19h5v10h7V12" /></svg>Domotica<span>Demo</span></h2>
-    <ResourceNotice id="devices" zone="widgets" label="dispositivi demo" loading={!state}
+    <h2 id="smart-title" className="smart-heading"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="m3 15 13-12 13 12M7 12v17h7V19h5v10h7V12" /></svg>Domotica<span>{platform.mode === 'demo' ? 'Demo' : 'TV'}</span></h2>
+    <ResourceNotice id="devices" zone="widgets" label={platform.mode === 'demo' ? 'dispositivi demo' : 'domotica'} loading={!state}
       error={state?.status === 'error' ? state.message : undefined} empty={state?.status === 'ready' && state.devices.length === 0}
       onRetry={() => { setMessage(''); reload(); }} />
     {state?.status === 'ready' && <>
-      <div className="device-buttons" aria-label="Dispositivi demo">
+      <div className="device-buttons" aria-label={platform.mode === 'demo' ? 'Dispositivi demo' : 'Dispositivi'}>
         {state.devices.map(device => <button key={device.id} type="button" className="device-button" data-tv-id={`device-${device.id}`} data-tv-zone="widgets"
           aria-label={`${device.name} · ${device.mode === 'demo' ? 'Comando simulato' : 'Interruttore'}`} role="switch" aria-checked={device.on}
           aria-disabled={busy || state.disabledReason !== undefined} aria-describedby="devices-feedback" onClick={() => { void activate(device); }}>

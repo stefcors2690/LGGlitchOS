@@ -23,6 +23,13 @@ export const backgroundConfig: BackgroundConfig = {
   particles: { enabled: true, count: 40 },
   flyingVehicles: { enabled: false },
 };
+/** Small TV-only reduction after G5 remote tests; the original image/CSS layers stay sharp. */
+export const webosBackgroundConfig: BackgroundConfig = {
+  ...backgroundConfig,
+  rendering: { ...backgroundConfig.rendering, maxWidth: 1600, maxHeight: 900 },
+  rain: { ...backgroundConfig.rain, intensity: 56 },
+  particles: { ...backgroundConfig.particles, count: 32 },
+};
 const finiteRange = (value: number, min: number, max: number) => Number.isFinite(value) && value >= min && value <= max;
 export function isRegion(region: Region): boolean {
   return finiteRange(region.x, 0, 1) && finiteRange(region.y, 0, 1) && finiteRange(region.width, Number.EPSILON, 1) && finiteRange(region.height, Number.EPSILON, 1) && region.x + region.width <= 1 && region.y + region.height <= 1;

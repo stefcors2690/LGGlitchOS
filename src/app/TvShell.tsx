@@ -12,14 +12,15 @@ import { HomeBackground } from '../features/background/HomeBackground';
 import { useBackgroundMotion } from '../motion/useBackgroundMotion';
 import { useIdleDimming } from '../motion/useIdleDimming';
 import { ConnectionNotice } from '../components/ConnectionNotice';
+import { SystemInfoNotice } from '../platform/SystemInfoNotice';
 
 const RemoteSimulator = import.meta.env.DEV ? lazy(() => import('../navigation/development/RemoteSimulator')) : null;
 
-export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
+export function TvShell({ platform, onPlatformBack, onModeChange }: { readonly platform: PlatformAdapter; readonly onPlatformBack?: () => void; readonly onModeChange?: () => void }) {
   const idle = useIdleDimming();
   const motion = useBackgroundMotion(idle);
-  const returnHome = useCallback(() => {}, []);
-  const focusRoot = useTvFocus(returnHome);
+  const returnHome = useCallback(() => { onPlatformBack?.(); }, [onPlatformBack]);
+  const focusRoot = useTvFocus(returnHome, !!onPlatformBack);
   const [dialog, setDialog] = useState<ActionDialogRequest | null>(null);
   const [remoteExpanded, setRemoteExpanded] = useState(false);
   const remoteTools = import.meta.env.DEV && RemoteSimulator && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('remoteDebug') === '1'
@@ -29,7 +30,7 @@ export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
   const dismissDialog = useCallback(() => setDialog(null), []);
   return (
     <div ref={focusRoot} className="tv-shell" data-idle={idle} data-motion-reduced={motion.reducedMotion} data-theme="neon" data-section="home">
-      <HomeBackground animated={motion.animated} />
+      <HomeBackground animated={motion.animated} tv={!!onPlatformBack} />
       <ShellHeader logoAnimated={motion.logoAnimated} />
       <main className="shell-main" id="section-content" aria-labelledby="scene-title">
         <section className="shell-scene clean-scene" aria-labelledby="scene-title">
@@ -43,12 +44,14 @@ export function TvShell({ platform }: { readonly platform: PlatformAdapter }) {
           <SmartHomeWidget platform={platform} />
         </div>
       </main>
-      <footer className="shell-footer">
+      <footer className="shell-footer" data-platform-controls={!!onModeChange}>
         <ConnectionNotice />
-        <p><span className="footer-demo">Preview browser · Demo</span> · Ambiente di sviluppo: nessuna connessione al TV o a servizi esterni.</p>
+        {platform.mode === 'device' ? <><p className="footer-demo">TV · webOS · App standalone in prova. Continua a guardare resta Demo.</p><SystemInfoNotice platform={platform} /></>
+          : <p><span className="footer-demo">{import.meta.env.MODE === 'webos' ? 'Anteprima TV · Demo' : 'Preview browser · Demo'}</span> · {import.meta.env.MODE === 'webos' ? 'App standalone in prova: dati e comandi simulati.' : 'Ambiente di sviluppo: nessuna connessione al TV o a servizi esterni.'}</p>}
+        {onModeChange && <button className="resource-retry" type="button" data-tv-id="platform-mode" data-tv-zone="settings" onClick={onModeChange}>{platform.mode === 'device' ? 'Apri modalità Demo' : 'Torna alla modalità TV'}</button>}
         <p className="shell-signature" aria-hidden="true">SC / GL1tCh 0S</p>
       </footer>
-      {dialog ? <ActionDialog request={dialog} onDismiss={dismissDialog} tools={remoteTools} /> : remoteTools}
+      {dialog ? <ActionDialog request={dialog} onDismiss={dismissDialog} tools={remoteTools} webos={!!onPlatformBack} /> : remoteTools}
     </div>
   );
 }

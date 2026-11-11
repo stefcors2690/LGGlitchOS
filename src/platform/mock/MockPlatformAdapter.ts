@@ -63,6 +63,7 @@ export class MockPlatformAdapter implements PlatformAdapter {
   }
 
   readonly deviceInfo = {
+    getSystemInfo: async (): Promise<Result<import('../contracts').SystemInfo>> => this.failure('UNSUPPORTED', 'Le informazioni del TV non sono disponibili in Demo.'),
     getCapabilities: async (): Promise<Result<Capabilities>> => this.guard('getCapabilities', () =>
       this.success({
         appCatalog: this.capability('appCatalog'),

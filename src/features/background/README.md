@@ -111,6 +111,10 @@ Nessun nuovo asset/dipendenza. Filtri SVG e blend sono limitati alle piccole cop
 Ordine attuale: PNG → scrim → neon → ologramma → Canvas pioggia+particelle → nebbia → UI. Pointer-events none su tutti i layer decorativi; nessuna modifica a focus/card o immagine originale. Profili implementati in2.7, pannello previsto in2.8. Evidenze e limiti in docs/verification/phase-2.6/.
 
 
+## Taratura reale G5 — 4.4
+
+La0.4.3 usa webosBackgroundConfig solo quando TvShell riceve il runtime TV (anche in Demo): buffer1600×900, intensità pioggia56→179 gocce e32 particelle, target30fps. Dopo la prima riduzione0.4.2, l'utente ha richiesto un altro piccolo ritocco e accettato questo equilibrio. Il canonico browser e i budget dei profili sotto rimangono invariati; non reinserire il risultato risolto nei controlli. PNG/CSS/logo conservano qualità/layout, si riduce soltanto il lavoro Canvas. Nessun Eco o auto-degrado. Test di isolamento in profiles.test.tsx; dati hardware e limiti nel rapporto4.4, senza confondere draw/s del Canvas con FPS UI/GPU.
+
 ## Profili e monitor 2.7
 
 La configurazione esportata `backgroundConfig` contiene i **controlli canonici**, con Balanced di default. `CyberpunkBackgroundEngine` chiama `resolveBackgroundConfig` una sola volta per riferimento config (useMemo) e distribuisce i valori effettivi ai layer. I chiamanti devono conservare i controlli canonici: per cambiare profilo passare `{ ...controls, profile: 'cinematic' }`, senza reinserire un risultato già risolto nella funzione (i moltiplicatori verrebbero applicati di nuovo). Nessuna mutazione dei controlli, regioni o asset. Nessun cambio automatico di profilo, storage, query string o nuovo controllo Home.

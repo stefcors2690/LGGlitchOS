@@ -53,7 +53,15 @@ export interface InputSource {
   list(): Promise<Result<readonly InputInfo[]>>;
   activate(id: string): Promise<Result<InputInfo>>;
 }
-export interface DeviceInfo { getCapabilities(): Promise<Result<Capabilities>> }
+export interface SystemInfo {
+  readonly modelName?: string;
+  readonly firmwareVersion?: string;
+  readonly sdkVersion?: string;
+}
+export interface DeviceInfo {
+  getCapabilities(): Promise<Result<Capabilities>>;
+  getSystemInfo(): Promise<Result<SystemInfo>>;
+}
 export interface SmartHome {
   listDevices(): Promise<Result<readonly SmartHomeDevice[]>>;
   setState(id: string, state: { readonly on: boolean }): Promise<Result<SmartHomeDevice>>;

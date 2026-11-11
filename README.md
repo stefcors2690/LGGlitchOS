@@ -1,12 +1,32 @@
 # StefCors GL1tCh 0S — Codex Development Kit v3
 
-Versione applicativa locale: **0.3.4**, fase 3 (qualità di interazione) completata nel browser. `package.json` e lockfile allineati; nessuna release, tag o pubblicazione eseguita.
+Versione applicativa **0.4.3**, installata e avviata sulla G5 nel collaudo4.4; controlli finali in PROJECT_STATUS. Package, lockfile e manifest allineati; nessuna release, tag, commit o push.
+
+## Collaudo reale G5 — 4.4
+
+Inspector sul dispositivo conferma getSystemInfo reale, WebAppManagerChrome132.0.6834.207 e grafica1920×1080/DPR1. L'utente conferma frecce/OK, Back del dialogo e ritorno focus, uscita LG, Home LG/riapertura, pointer e leggibilità. Dopo due piccoli alleggerimenti richiesti per gli scatti sulle card, ha accettato la0.4.3: solo overlay TV1600×900/179gocce/32particelle a target30fps, anche nella Demo; browser Balanced e immagine originale/CSS/logo invariati.
+
+Idle reale osservato sul dispositivo (inizio controllato con Shift sintetico):45%, Canvas statico e frame fermi; risveglio al primo tasto fisico confermato dall'utente e snapshot con Canvas running/dati TV/focus. Campioni Canvas, limiti e screenshot nel [rapporto4.4](docs/verification/phase-4.4/report.md). Non sono misure GPU o latenza fisica; pressione lunga, disinstallazione e downgrade non provati. [Guida operativa](webos/README.md) con aggiornamento, Inspector, log/diagnosi e sessione Developer Mode.
+
+## Pacchetto e adapter webOS — 4.3
+
+**IPK generato e verificato localmente**, ID **com.stefcors.glitchos**: `artifacts/com.stefcors.glitchos_0.4.3_all.ipk`. Manifest/icone/runtime ufficiale tracciati in webos/, stage dist-webos/ e artefatti ignorati da Git. `npm run package:webos` ricostruisce e controlla il pacchetto; `npm run verify:webos` controlla quello esistente. Nessuna installazione o avvio automatici sulla TV.
+
+Build separata Chromium132/FHD, IIFE e asset relativi. Il runtime ufficiale LG riconosce la TV: adapter device predefinito, pulsante nel footer per aprire la Demo e tornare alla TV; la scelta dura solo nella sessione. Nel browser rimane la Demo e non viene caricato il runtime LG. La sola lettura pubblica getSystemInfo mostra i campi realmente restituiti; app/HDMI/domotica restano indisponibili con motivo fino alla fase5. Continua a guardare resta esplicitamente Demo anche sulla TV. Timeout8s, Riprova e nessun errore di sistema grezzo mostrato o registrato. Manifest con il solo systemconfig.query; Back461 chiude prima il dialogo e dalla Home richiama webOS.platformBack(), senza intercettare Home. Visibilità/reduced motion/idle conservati; nessun hook di riavvio o deep link. Implementazione4.3 seguita dal collaudo reale4.4 sopra; [guida](webos/README.md), storico [rapporto4.3](docs/verification/phase-4.3/report.md).
 
 ## Collaudo MVP browser — 3.5
 
 Il flag `$env:MVP_TEST = '1'` aggiunge al collaudo `node scripts/verify-shell.mjs` la matrice1080p/4K: DOM/albero accessibile Chromium, tutte le14 azioni con D-pad, Tab/Shift+Tab, dialoghi/ritorno focus e30 misure di risposta focus per risoluzione. Produce `mvp-metrics.json` e screenshot; è uno strumento di test, escluso dalla build dell'app.
 
 È combinabile con `PLATFORM_TEST_URL`, `IDLE_TEST=1` e `STABILITY_MS=300000` per stati limite, due attese idle reali e5min di animazioni tenute attive. I due scenari di inattività/stabilità restano distinti. Usare una nuova cartella `VERIFY_OUTPUT` e rimuovere i flag dalla sessione dopo la prova. AX/DOM e tempi headless non certificano screen reader, WCAG, GPU o G5. Comando completo e risultati nel [rapporto3.5](docs/verification/phase-3.5/report.md).
+
+## Fase4 — Inventario e preparazione TV, 11/11/2026
+
+Inventario/accesso **4.1 completati**: CLI restituisce **OLED55G56LS.DPIQLJP**, firmware **43.21.96**, SDK **11.2.0** dal target locale **glitch-g5**. Menu utente **webOS26 / 11.2.0-3711**; Developer Mode/Key Server attivi. [Dossier4.1](docs/webos/PHASE_4_1.md), [evidenzaCLI](docs/verification/phase-4.1/device-info.md). Packaging4.2 e adapter pubblico di base4.3 completati alla0.4.1; nessuna nostra app ancora installata o collaudata sul dispositivo.
+
+Su questo PC installata globalmente **@webos-tools/cli3.2.6**, versione/help e system-info verificati con Node24.22.2; nessuna dipendenza aggiunta all'app. Installazione, requisiti, limiti npm/NVM e associazione per gli altri PC sono nel dossier. Chiave e indirizzo restano nella configurazione locale fuori Git; non rifare pairing se ancora valido.
+
+La documentazione LG distingue grafica app Full HD e video4K sulle TV UHD; il motore web dipende dalla versione webOS reale. Non dedurre compatibilità dal collaudo Edge. L'attivazione Developer Mode riavvia la TV e ha durata di sessione limitata; dettagli e gestione credenziali locali nel dossier.
 
 ## Stati limite — 3.4
 
@@ -58,15 +78,15 @@ Dalla3.3 STABILITY_MS misura animazioni tenute attive con Shift DOM sintetico pe
 
 Dalla2.10 il collaudo con PROFILE_TEST_URL include anche perdita contesto simulata, errore draw/cleanup, recupero, effetti/motore off e assenza/ritorno immagine. Senza VERIFY_OUTPUT crea una cartella con timestamp; l'output esplicito non deve puntare a rapporti storici. Il fallback Canvas conserva PNG e navigazione; dopo un errore le risorse Canvas sono liberate subito, senza retry automatico. Contratto e limiti nel [rapporto2.10](docs/verification/phase-2.10/report.md).
 
-## Stato corrente e ripresa su un altro PC — 2026-11-10
+## Stato corrente e ripresa su un altro PC — 2026-11-11
 
-**Fasi0–3 completate nel browser; prossimo lavoro4.1 — Inventario dispositivo e fattibilità SDK**, non avviato: modello/firmware/webOS e Developer Mode reali da acquisire. La guida operativa è [docs/HANDOFF.md](docs/HANDOFF.md); il prompt per il nuovo IDE è in [START_HERE.md](START_HERE.md).
+**Fasi0–4 completate**, versione0.4.3 installata/collaudata sulla G5; prossima5.1 — Catalogo applicazioni. Prove, taratura accettata e limiti nel rapporto4.4. [Handoff](docs/HANDOFF.md), [prompt IDE](START_HERE.md), [guida packaging](webos/README.md).
 
 Home unica con dati Demo, PNG originale e motore animato locale. Il profilo **Balanced viene usato anche nella build di produzione**; solo il pannello tecnico è escluso. Profili e tarature finali saranno scelti dopo prove sulla TV. Nessun menu superiore, preferenza movimento o pausa manuale nella Home definitiva.
 
 Sul nuovo PC, dalla radice del repository: `npm ci`, `npm run check`, `npm run dev`. Node>=22.12; non copiare node_modules dal vecchio PC. Aprire l'URL Vite con `?backgroundDebug=1` per attivare il pulsante degli strumenti soltanto in sviluppo. Asset e lockfile sono tracciati; trasferire anche queste modifiche documentali. Nessun `.env` o SDK TV necessario per il mock.
 
-Ultima verifica3.5 su Windows/Edge157: **156 test unitari, lint, TypeScript e build superati**. DOM/AX e tutte le14 azioni con D-pad, Tab/inverso, dialoghi/focus1080p/4K; stati limite/offline e regressioni completi OK, errori runtime vuoti. Due attese idle reali120,2s ciascuna e Home animata5min a29,99–30,01draw/s, risorse stabili. Screenshot ispezionati; tempi focus e limiti nel [rapporto3.5](docs/verification/phase-3.5/report.md). Prove CDP/DOM distinte da dispositivi fisici; nessuna certificazione WCAG/screen reader/GPU/G5 o piena fedeltà, altro browser o fresh install. Nessun nuovo profiling allocazioni. Deploy TV ancora da preparare nelle fasi4.1–4.4, procedura più sotto.
+Ultima verifica4.2: **165 test/24 file, lint, TypeScript, build, package/verify e analisi CLI superati**. Edge157 HTTP e file://1080p/4K con DOM/AX,14 azioni da tastiera, focus/dialoghi e regressioni completi; runtimeErrors vuoto, screenshot/icone ispezionati. [Rapporto4.2](docs/verification/phase-4.2/report.md). Idle reale/soak3.5 e profiling2.x restano storici, non ripetuti qui. Nessuna certificazione WebAppManager/G5, Back461, GPU, WCAG/screen reader o piena fedeltà. Nessun altro browser/fresh install; installazione e avvio TV solo istruzioni, non esiti già provati.
 
 Le sezioni numerate sotto descrivono anche la progressione storica: vecchi menu, controlli movimento e frasi “non ancora implementato” si riferiscono alla fase indicata, non allo stato attuale. Per riprendere prevalgono questo riepilogo, PROJECT_STATUS e HANDOFF.
 
@@ -273,24 +293,36 @@ Con gli strumenti sviluppatore del browser (Ispeziona) si possono controllare Co
 
 Dopo la **1.8**, come richiesto, faremo una sessione interattiva di collaudo della Home completa prima della fase 3: confronto references a 1080p/4K, navigazione senza mouse, widget e feedback demo, console/rete, movimento ridotto e difetti visivi. Esiti e interventi andranno nel contesto e nel rapporto di verifica. I controlli automatici headless sono già disponibili, ma questa sessione con l’utente non è ancora stata svolta. Non serve installare l’app sulla TV per iniziare il debug browser.
 
-## Deploy sulla TV LG OLED G5 — procedura da completare nella fase 4
+## Pacchetto e successivo deploy sulla TV LG OLED G5
 
-**Stato: non ancora disponibile né verificato sul dispositivo.** La build browser in `dist/` non è ancora un pacchetto installabile sulla TV. Questa sezione sarà aggiornata con tutte le operazioni e i comandi effettivamente collaudati durante le microfasi 4.1–4.4.
+**Installazione/avvio e aggiornamenti della nostra app eseguiti sulla G5 nella4.4 richiesta dall'utente**, ultima versione0.4.3. La build browser dist/ è distinta dallo stage webOS dist-webos/; non confezionare sorgenti o cartella progetto. La delega di questo collaudo non introduce deploy automatici futuri.
 
-La procedura completa dovrà coprire, nell'ordine:
+Prerequisiti: Node>=22.12 (verificato24.22.2), npm, CLI ufficiale @webos-tools/cli3.2.6 separata dal frontend. Per un nuovo PC seguire il [dossier4.1](docs/webos/PHASE_4_1.md): stessa rete, Developer Mode valida, Key Server per getkey, alias glitch-g5, chiave fuori Git. Modello/firmware/SDK e accesso CLI di questo PC già verificati; non rifare pairing se valido. Installazione CLI se assente:
 
-1. Rilevamento di modello completo, firmware e versione webOS; verifica dei requisiti e delle API pubbliche supportate.
-2. Preparazione del computer: strumenti webOS richiesti, versioni verificate e istruzioni di installazione per il sistema operativo utilizzato.
-3. Preparazione della TV in Developer Mode, connessione di rete e gestione della sessione secondo la documentazione ufficiale verificata in fase 4.1.
-4. Configurazione del dispositivo di sviluppo, associazione e verifica della connessione; credenziali e chiavi conservate fuori dal repository.
-5. Installazione delle dipendenze del progetto, controlli di qualità, build e preparazione di manifest, icone e asset per webOS.
-6. Generazione del pacchetto IPK, con comando esatto, identificativo applicazione, versione e percorso dell'artefatto.
-7. Installazione e avvio sul G5, con comandi collaudati e risultati attesi.
-8. Collaudo di telecomando, Back/OK, focus, rendering, movimento ridotto, prestazioni e capability realmente disponibili.
-9. Raccolta dei log e diagnosi dei problemi di connessione, packaging, installazione e avvio.
-10. Aggiornamento dell'app, nuova installazione, disinstallazione e ripristino della precedente versione dell'app; gestione delle eventuali scadenze della sessione di sviluppo.
+```powershell
+npm install -g @webos-tools/cli@3.2.6
+ares -V
+```
 
-Per ogni passaggio registrare prerequisiti, comandi, risultato atteso, problemi noti e data/dispositivo di verifica. I comandi webOS saranno inseriti dopo la verifica della documentazione ufficiale e degli strumenti effettivamente disponibili, senza presentarli anticipatamente come testati.
+Dalla radice, dopo npm ci su un nuovo checkout:
+
+```powershell
+npm run check
+npm run package:webos
+npm run verify:webos
+ares-package --info artifacts/com.stefcors.glitchos_0.4.3_all.ipk
+```
+
+Questi controlli sono stati eseguiti fino alla0.4.3. Installazione/avvio/Inspector sotto sono riusciti nella4.4; per un successivo aggiornamento autorizzato rigenerare e usare il nome IPK della nuova versione:
+
+```powershell
+ares-device --device glitch-g5 --system-info
+ares-install --device glitch-g5 artifacts/com.stefcors.glitchos_0.4.3_all.ipk
+ares-launch --device glitch-g5 com.stefcors.glitchos
+ares-inspect --device glitch-g5 --app com.stefcors.glitchos
+```
+
+Per chiudere l'app prima di un aggiornamento: `ares-launch --device glitch-g5 --close com.stefcors.glitchos` (riuscito in4.4). Per rimuovere **solo la nostra app**, quando richiesto: `ares-install --device glitch-g5 --remove com.stefcors.glitchos` (non eseguito). [webos/README.md](webos/README.md) dettaglia Console/Network, endpoint Inspector da rinnovare dopo riapertura, rigenerazione icone, test file:// e gestione della sessione Developer Mode. La lettura remota e le osservazioni utente del rapporto4.4 restano distinte dai test con bridge sintetico.
 
 Il deploy previsto è quello di un'app standalone. Root, sostituzione della Home, rimappatura del telecomando e avvio automatico rimangono nelle fasi separate con le rispettive autorizzazioni.
 

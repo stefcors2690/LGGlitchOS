@@ -26,8 +26,8 @@ function restoreFocus(originId: string) {
   target?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
 }
 
-/** A single native modal: the browser makes the underlying Home inert. No platform/system Back hook. */
-export function ActionDialog({ request, onDismiss, tools }: { readonly request: ActionDialogRequest; readonly onDismiss: () => void; readonly tools?: ReactNode }) {
+/** A single native modal; Back closes it before the Home can request platform exit. */
+export function ActionDialog({ request, onDismiss, tools, webos = false }: { readonly request: ActionDialogRequest; readonly onDismiss: () => void; readonly tools?: ReactNode; readonly webos?: boolean }) {
   const ref = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = useId(), descriptionId = useId();
@@ -57,7 +57,7 @@ export function ActionDialog({ request, onDismiss, tools }: { readonly request: 
         const next = controls[(index + (event.shiftKey ? -1 : 1) + controls.length) % controls.length];
         event.preventDefault(); event.stopPropagation(); next?.focus({ preventScroll: true }); return;
       }
-      const action = mapRemoteKey(event.key);
+      const action = mapRemoteKey(event.key, event.keyCode, webos);
       if (action === 'back' || action === 'activate') {
         // Enter/Space retain native button activation; remote OK aliases activate exactly once.
         if (action === 'activate' && event.key === 'Enter' && event.target instanceof HTMLButtonElement && !event.repeat) return;
